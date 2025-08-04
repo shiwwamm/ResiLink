@@ -1,0 +1,5 @@
+
+MININET: sudo mn --custom tree_topo.py --topo looptree --controller=remote,ip=127.0.0.1,port=6653 --switch ovsk,protocols=OpenFlow13 --mac
+
+RYU: ryu-manager ryu.app.simple_switch_13 ryu.app.ofctl_rest ryu.app.rest_topology --observe-links
+
