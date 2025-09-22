@@ -1,1777 +1,323 @@
-[
-    {
-        "timestamp": "2025-08-25 09:37:47",
-        "controller_data": {
-            "cpu_percent": 5.25,
-            "memory_percent": 33.6
-        },
-        "topology": {
-            "switches": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "hosts": [
-                "2e:d2:b1:48:31:77",
-                "22:a7:73:72:a9:3f",
-                "d2:1e:7d:79:34:61",
-                "5a:1f:78:d8:e4:8b",
-                "ca:e0:92:89:c8:68"
-            ],
-            "switch_switch_links": [
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 1,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 4,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 1,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 4,
-                    "dst_dpid": 3,
-                    "src_port": 2,
-                    "dst_port": 3,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 1,
-                    "dst_dpid": 4,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 4,
-                    "src_port": 4,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                }
-            ],
-            "host_switch_links": [
-                {
-                    "host_mac": "2e:d2:b1:48:31:77",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "host_mac": "22:a7:73:72:a9:3f",
-                    "switch_dpid": 4,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "host_mac": "d2:1e:7d:79:34:61",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "host_mac": "5a:1f:78:d8:e4:8b",
-                    "switch_dpid": 3,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "host_mac": "ca:e0:92:89:c8:68",
-                    "switch_dpid": 1,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                }
-            ]
-        },
-        "nodes": [
-            {
-                "id": 1,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0
-                }
-            },
-            {
-                "id": 2,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0
-                }
-            },
-            {
-                "id": 3,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0
-                }
-            },
-            {
-                "id": 4,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0
-                }
-            },
-            {
-                "id": "2e:d2:b1:48:31:77",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.2",
-                        "::",
-                        "fe80::2cd2:b1ff:fe48:3177"
-                    ]
-                }
-            },
-            {
-                "id": "22:a7:73:72:a9:3f",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.4",
-                        "::",
-                        "fe80::20a7:73ff:fe72:a93f"
-                    ]
-                }
-            },
-            {
-                "id": "d2:1e:7d:79:34:61",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.5",
-                        "::",
-                        "fe80::d01e:7dff:fe79:3461"
-                    ]
-                }
-            },
-            {
-                "id": "5a:1f:78:d8:e4:8b",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.3",
-                        "::",
-                        "fe80::581f:78ff:fed8:e48b"
-                    ]
-                }
-            },
-            {
-                "id": "ca:e0:92:89:c8:68",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.1",
-                        "::",
-                        "fe80::c8e0:92ff:fe89:c868"
-                    ]
-                }
-            }
-        ],
-        "centralities": {
-            "degree": {
-                "1": 0.5,
-                "2": 0.5,
-                "3": 0.375,
-                "4": 0.5,
-                "2e:d2:b1:48:31:77": 0.125,
-                "22:a7:73:72:a9:3f": 0.125,
-                "d2:1e:7d:79:34:61": 0.125,
-                "5a:1f:78:d8:e4:8b": 0.125,
-                "ca:e0:92:89:c8:68": 0.125
-            },
-            "betweenness": {
-                "1": 0.3571428571428571,
-                "2": 0.46428571428571425,
-                "3": 0.25,
-                "4": 0.3571428571428571,
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "closeness": {
-                "1": 0.6666666666666666,
-                "2": 0.6153846153846154,
-                "3": 0.5333333333333333,
-                "4": 0.6666666666666666,
-                "2e:d2:b1:48:31:77": 0.4,
-                "22:a7:73:72:a9:3f": 0.42105263157894735,
-                "d2:1e:7d:79:34:61": 0.4,
-                "5a:1f:78:d8:e4:8b": 0.36363636363636365,
-                "ca:e0:92:89:c8:68": 0.42105263157894735
-            }
-        },
-        "time_delta_sec": 0.0,
-        "changes": {},
-        "delta_centralities": {}
+{
+    "controller_data": {
+        "cpu_percent": 0.625,
+        "memory_percent": 38.5
     },
-    {
-        "timestamp": "2025-08-25 09:37:52",
-        "controller_data": {
-            "cpu_percent": 5.25,
-            "memory_percent": 33.9
-        },
-        "topology": {
-            "switches": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "hosts": [
-                "2e:d2:b1:48:31:77",
-                "22:a7:73:72:a9:3f",
-                "d2:1e:7d:79:34:61",
-                "5a:1f:78:d8:e4:8b",
-                "ca:e0:92:89:c8:68"
-            ],
-            "switch_switch_links": [
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 1,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 4,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 4,
-                    "dst_dpid": 1,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 4,
-                    "src_port": 4,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 1,
-                    "dst_dpid": 2,
-                    "src_port": 2,
-                    "dst_port": 3,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 2,
-                    "src_port": 2,
-                    "dst_port": 4,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                }
-            ],
-            "host_switch_links": [
-                {
-                    "host_mac": "2e:d2:b1:48:31:77",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "22:a7:73:72:a9:3f",
-                    "switch_dpid": 4,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "d2:1e:7d:79:34:61",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "5a:1f:78:d8:e4:8b",
-                    "switch_dpid": 3,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "ca:e0:92:89:c8:68",
-                    "switch_dpid": 1,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                }
-            ]
-        },
-        "nodes": [
+    "topology": {
+        "switches": [
+            4,
+            2,
+            3,
+            1
+        ],
+        "hosts": [
+            "e6:6d:14:7d:78:09",
+            "de:e8:7a:fe:1e:46",
+            "02:36:26:b1:cc:9c",
+            "62:6e:c8:31:7c:fa",
+            "12:b3:d4:99:3d:9a"
+        ],
+        "switch_switch_links": [
             {
-                "id": 1,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
+                "src_dpid": 4,
+                "dst_dpid": 3,
+                "src_port": 2,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 55,
+                    "tx_bytes": 4736,
+                    "tx_dropped": 0,
+                    "rx_packets": 55,
+                    "rx_bytes": 4736,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
                 }
             },
             {
-                "id": 2,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
+                "src_dpid": 2,
+                "dst_dpid": 3,
+                "src_port": 4,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 54,
+                    "tx_bytes": 4676,
+                    "tx_dropped": 0,
+                    "rx_packets": 55,
+                    "rx_bytes": 4736,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
                 }
             },
             {
-                "id": 3,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
+                "src_dpid": 1,
+                "dst_dpid": 2,
+                "src_port": 2,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 55,
+                    "tx_bytes": 4736,
+                    "tx_dropped": 0,
+                    "rx_packets": 55,
+                    "rx_bytes": 4736,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
                 }
             },
             {
-                "id": 4,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
+                "src_dpid": 3,
+                "dst_dpid": 2,
+                "src_port": 2,
+                "dst_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 55,
+                    "tx_bytes": 4736,
+                    "tx_dropped": 0,
+                    "rx_packets": 54,
+                    "rx_bytes": 4676,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
                 }
             },
             {
-                "id": "2e:d2:b1:48:31:77",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.2",
-                        "::",
-                        "fe80::2cd2:b1ff:fe48:3177"
-                    ]
+                "src_dpid": 2,
+                "dst_dpid": 1,
+                "src_port": 3,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 55,
+                    "tx_bytes": 4736,
+                    "tx_dropped": 0,
+                    "rx_packets": 55,
+                    "rx_bytes": 4736,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
                 }
             },
             {
-                "id": "22:a7:73:72:a9:3f",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.4",
-                        "::",
-                        "fe80::20a7:73ff:fe72:a93f"
-                    ]
-                }
-            },
-            {
-                "id": "d2:1e:7d:79:34:61",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.5",
-                        "::",
-                        "fe80::d01e:7dff:fe79:3461"
-                    ]
-                }
-            },
-            {
-                "id": "5a:1f:78:d8:e4:8b",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.3",
-                        "::",
-                        "fe80::581f:78ff:fed8:e48b"
-                    ]
-                }
-            },
-            {
-                "id": "ca:e0:92:89:c8:68",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.1",
-                        "::",
-                        "fe80::c8e0:92ff:fe89:c868"
-                    ]
+                "src_dpid": 3,
+                "dst_dpid": 4,
+                "src_port": 3,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 55,
+                    "tx_bytes": 4736,
+                    "tx_dropped": 0,
+                    "rx_packets": 55,
+                    "rx_bytes": 4736,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
                 }
             }
         ],
-        "centralities": {
-            "degree": {
-                "1": 0.375,
-                "2": 0.625,
-                "3": 0.375,
-                "4": 0.5,
-                "2e:d2:b1:48:31:77": 0.125,
-                "22:a7:73:72:a9:3f": 0.125,
-                "d2:1e:7d:79:34:61": 0.125,
-                "5a:1f:78:d8:e4:8b": 0.125,
-                "ca:e0:92:89:c8:68": 0.125
+        "host_switch_links": [
+            {
+                "host_mac": "e6:6d:14:7d:78:09",
+                "switch_dpid": 2,
+                "host_port": "eth0",
+                "switch_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 54,
+                    "tx_bytes": 4676,
+                    "tx_dropped": 0,
+                    "rx_packets": 9,
+                    "rx_bytes": 726,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
+                }
             },
-            "betweenness": {
-                "1": 0.25,
-                "2": 0.5357142857142857,
-                "3": 0.25,
-                "4": 0.3214285714285714,
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
+            {
+                "host_mac": "de:e8:7a:fe:1e:46",
+                "switch_dpid": 4,
+                "host_port": "eth0",
+                "switch_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 55,
+                    "tx_bytes": 4736,
+                    "tx_dropped": 0,
+                    "rx_packets": 9,
+                    "rx_bytes": 726,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
+                }
             },
-            "closeness": {
-                "1": 0.5714285714285714,
-                "2": 0.7272727272727273,
-                "3": 0.5714285714285714,
-                "4": 0.6666666666666666,
-                "2e:d2:b1:48:31:77": 0.4444444444444444,
-                "22:a7:73:72:a9:3f": 0.42105263157894735,
-                "d2:1e:7d:79:34:61": 0.4444444444444444,
-                "5a:1f:78:d8:e4:8b": 0.38095238095238093,
-                "ca:e0:92:89:c8:68": 0.38095238095238093
+            {
+                "host_mac": "02:36:26:b1:cc:9c",
+                "switch_dpid": 1,
+                "host_port": "eth0",
+                "switch_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 55,
+                    "tx_bytes": 4736,
+                    "tx_dropped": 0,
+                    "rx_packets": 12,
+                    "rx_bytes": 852,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
+                }
+            },
+            {
+                "host_mac": "62:6e:c8:31:7c:fa",
+                "switch_dpid": 2,
+                "host_port": "eth0",
+                "switch_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 54,
+                    "tx_bytes": 4676,
+                    "tx_dropped": 0,
+                    "rx_packets": 9,
+                    "rx_bytes": 726,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
+                }
+            },
+            {
+                "host_mac": "12:b3:d4:99:3d:9a",
+                "switch_dpid": 3,
+                "host_port": "eth0",
+                "switch_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 54,
+                    "tx_bytes": 4676,
+                    "tx_dropped": 0,
+                    "rx_packets": 9,
+                    "rx_bytes": 726,
+                    "rx_dropped": 0,
+                    "duration_sec": 43
+                }
+            }
+        ]
+    },
+    "nodes": [
+        {
+            "id": 4,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 2,
+                "total_packets": 36,
+                "total_bytes": 2274,
+                "avg_flow_duration": 28.1545
             }
         },
-        "time_delta_sec": 5.826079,
-        "changes": {
-            "added_switches": [],
-            "removed_switches": [],
-            "added_hosts": [],
-            "removed_hosts": []
+        {
+            "id": 2,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 2,
+                "total_packets": 72,
+                "total_bytes": 4548,
+                "avg_flow_duration": 28.177999999999997
+            }
         },
-        "delta_centralities": {
-            "degree": {
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0,
-                "2": 0.125,
-                "1": -0.125,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "3": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "betweenness": {
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": -0.0357142857142857,
-                "2": 0.07142857142857145,
-                "1": -0.1071428571428571,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "3": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "closeness": {
-                "2e:d2:b1:48:31:77": 0.0444444444444444,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0,
-                "2": 0.11188811188811187,
-                "1": -0.09523809523809523,
-                "d2:1e:7d:79:34:61": 0.0444444444444444,
-                "5a:1f:78:d8:e4:8b": 0.017316017316017285,
-                "3": 0.03809523809523807,
-                "ca:e0:92:89:c8:68": -0.040100250626566414
+        {
+            "id": 3,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 2,
+                "total_packets": 70,
+                "total_bytes": 4418,
+                "avg_flow_duration": 28.194499999999998
+            }
+        },
+        {
+            "id": 1,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 2,
+                "total_packets": 36,
+                "total_bytes": 2274,
+                "avg_flow_duration": 28.204
+            }
+        },
+        {
+            "id": "e6:6d:14:7d:78:09",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "fe80::e46d:14ff:fe7d:7809"
+                ]
+            }
+        },
+        {
+            "id": "de:e8:7a:fe:1e:46",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "fe80::dce8:7aff:fefe:1e46"
+                ]
+            }
+        },
+        {
+            "id": "02:36:26:b1:cc:9c",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "fe80::36:26ff:feb1:cc9c"
+                ]
+            }
+        },
+        {
+            "id": "62:6e:c8:31:7c:fa",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "fe80::606e:c8ff:fe31:7cfa"
+                ]
+            }
+        },
+        {
+            "id": "12:b3:d4:99:3d:9a",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "fe80::10b3:d4ff:fe99:3d9a"
+                ]
             }
         }
-    },
-    {
-        "timestamp": "2025-08-25 09:37:58",
-        "controller_data": {
-            "cpu_percent": 5.55,
-            "memory_percent": 33.9
+    ],
+    "centralities": {
+        "degree": {
+            "4": 0.25,
+            "2": 0.5,
+            "3": 0.375,
+            "1": 0.25,
+            "e6:6d:14:7d:78:09": 0.125,
+            "de:e8:7a:fe:1e:46": 0.125,
+            "02:36:26:b1:cc:9c": 0.125,
+            "62:6e:c8:31:7c:fa": 0.125,
+            "12:b3:d4:99:3d:9a": 0.125
         },
-        "topology": {
-            "switches": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "hosts": [
-                "2e:d2:b1:48:31:77",
-                "22:a7:73:72:a9:3f",
-                "d2:1e:7d:79:34:61",
-                "5a:1f:78:d8:e4:8b",
-                "ca:e0:92:89:c8:68"
-            ],
-            "switch_switch_links": [
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 1,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 4,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 1,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 4,
-                    "dst_dpid": 3,
-                    "src_port": 2,
-                    "dst_port": 3,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 4,
-                    "src_port": 4,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 1,
-                    "dst_dpid": 4,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                }
-            ],
-            "host_switch_links": [
-                {
-                    "host_mac": "2e:d2:b1:48:31:77",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "22:a7:73:72:a9:3f",
-                    "switch_dpid": 4,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "d2:1e:7d:79:34:61",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "5a:1f:78:d8:e4:8b",
-                    "switch_dpid": 3,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "ca:e0:92:89:c8:68",
-                    "switch_dpid": 1,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                }
-            ]
+        "betweenness": {
+            "4": 0.25,
+            "2": 0.75,
+            "3": 0.6071428571428571,
+            "1": 0.25,
+            "e6:6d:14:7d:78:09": 0.0,
+            "de:e8:7a:fe:1e:46": 0.0,
+            "02:36:26:b1:cc:9c": 0.0,
+            "62:6e:c8:31:7c:fa": 0.0,
+            "12:b3:d4:99:3d:9a": 0.0
         },
-        "nodes": [
-            {
-                "id": 1,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": 2,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": 3,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": 4,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": "2e:d2:b1:48:31:77",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.2",
-                        "::",
-                        "fe80::2cd2:b1ff:fe48:3177"
-                    ]
-                }
-            },
-            {
-                "id": "22:a7:73:72:a9:3f",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.4",
-                        "::",
-                        "fe80::20a7:73ff:fe72:a93f"
-                    ]
-                }
-            },
-            {
-                "id": "d2:1e:7d:79:34:61",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.5",
-                        "::",
-                        "fe80::d01e:7dff:fe79:3461"
-                    ]
-                }
-            },
-            {
-                "id": "5a:1f:78:d8:e4:8b",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.3",
-                        "::",
-                        "fe80::581f:78ff:fed8:e48b"
-                    ]
-                }
-            },
-            {
-                "id": "ca:e0:92:89:c8:68",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.1",
-                        "::",
-                        "fe80::c8e0:92ff:fe89:c868"
-                    ]
-                }
-            }
-        ],
-        "centralities": {
-            "degree": {
-                "1": 0.5,
-                "2": 0.5,
-                "3": 0.375,
-                "4": 0.5,
-                "2e:d2:b1:48:31:77": 0.125,
-                "22:a7:73:72:a9:3f": 0.125,
-                "d2:1e:7d:79:34:61": 0.125,
-                "5a:1f:78:d8:e4:8b": 0.125,
-                "ca:e0:92:89:c8:68": 0.125
-            },
-            "betweenness": {
-                "1": 0.3571428571428571,
-                "2": 0.46428571428571425,
-                "3": 0.25,
-                "4": 0.3571428571428571,
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "closeness": {
-                "1": 0.6666666666666666,
-                "2": 0.6153846153846154,
-                "3": 0.5333333333333333,
-                "4": 0.6666666666666666,
-                "2e:d2:b1:48:31:77": 0.4,
-                "22:a7:73:72:a9:3f": 0.42105263157894735,
-                "d2:1e:7d:79:34:61": 0.4,
-                "5a:1f:78:d8:e4:8b": 0.36363636363636365,
-                "ca:e0:92:89:c8:68": 0.42105263157894735
-            }
-        },
-        "time_delta_sec": 6.115088,
-        "changes": {
-            "added_switches": [],
-            "removed_switches": [],
-            "added_hosts": [],
-            "removed_hosts": []
-        },
-        "delta_centralities": {
-            "degree": {
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0,
-                "2": -0.125,
-                "1": 0.125,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "3": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "betweenness": {
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0357142857142857,
-                "2": -0.07142857142857145,
-                "1": 0.1071428571428571,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "3": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "closeness": {
-                "2e:d2:b1:48:31:77": -0.0444444444444444,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0,
-                "2": -0.11188811188811187,
-                "1": 0.09523809523809523,
-                "d2:1e:7d:79:34:61": -0.0444444444444444,
-                "5a:1f:78:d8:e4:8b": -0.017316017316017285,
-                "3": -0.03809523809523807,
-                "ca:e0:92:89:c8:68": 0.040100250626566414
-            }
-        }
-    },
-    {
-        "timestamp": "2025-08-25 09:38:03",
-        "controller_data": {
-            "cpu_percent": 6.55,
-            "memory_percent": 34.0
-        },
-        "topology": {
-            "switches": [
-                1,
-                2,
-                3,
-                4
-            ],
-            "hosts": [
-                "2e:d2:b1:48:31:77",
-                "22:a7:73:72:a9:3f",
-                "d2:1e:7d:79:34:61",
-                "5a:1f:78:d8:e4:8b",
-                "ca:e0:92:89:c8:68"
-            ],
-            "switch_switch_links": [
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 1,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 4,
-                    "src_port": 3,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 3,
-                    "dst_dpid": 1,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 2,
-                    "dst_dpid": 4,
-                    "src_port": 4,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "src_dpid": 4,
-                    "dst_dpid": 1,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    }
-                },
-                {
-                    "src_dpid": 1,
-                    "dst_dpid": 4,
-                    "src_port": 2,
-                    "dst_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                }
-            ],
-            "host_switch_links": [
-                {
-                    "host_mac": "2e:d2:b1:48:31:77",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "22:a7:73:72:a9:3f",
-                    "switch_dpid": 4,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "d2:1e:7d:79:34:61",
-                    "switch_dpid": 2,
-                    "host_port": "eth0",
-                    "switch_port": 2,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "5a:1f:78:d8:e4:8b",
-                    "switch_dpid": 3,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                },
-                {
-                    "host_mac": "ca:e0:92:89:c8:68",
-                    "switch_dpid": 1,
-                    "host_port": "eth0",
-                    "switch_port": 1,
-                    "bandwidth_mbps": 0.0,
-                    "stats": {
-                        "tx_packets": 0,
-                        "tx_bytes": 0,
-                        "tx_dropped": 0,
-                        "rx_packets": 0,
-                        "rx_bytes": 0,
-                        "rx_dropped": 0,
-                        "duration_sec": 0
-                    },
-                    "delta_stats": {
-                        "delta_tx_packets": 0,
-                        "delta_tx_bytes": 0,
-                        "delta_tx_dropped": 0,
-                        "delta_rx_packets": 0,
-                        "delta_rx_bytes": 0,
-                        "delta_rx_dropped": 0,
-                        "tx_packet_rate_pps": 0.0,
-                        "tx_byte_rate_bps": 0.0,
-                        "packet_loss_rate": 0.0
-                    }
-                }
-            ]
-        },
-        "nodes": [
-            {
-                "id": 1,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": 2,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": 3,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": 4,
-                "attributes": {
-                    "type": "switch",
-                    "num_flows": 0,
-                    "total_packets": 0,
-                    "total_bytes": 0,
-                    "avg_flow_duration": 0.0,
-                    "delta_total_packets": 0,
-                    "delta_total_bytes": 0
-                }
-            },
-            {
-                "id": "2e:d2:b1:48:31:77",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.2",
-                        "::",
-                        "fe80::2cd2:b1ff:fe48:3177"
-                    ]
-                }
-            },
-            {
-                "id": "22:a7:73:72:a9:3f",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.4",
-                        "::",
-                        "fe80::20a7:73ff:fe72:a93f"
-                    ]
-                }
-            },
-            {
-                "id": "d2:1e:7d:79:34:61",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.5",
-                        "::",
-                        "fe80::d01e:7dff:fe79:3461"
-                    ]
-                }
-            },
-            {
-                "id": "5a:1f:78:d8:e4:8b",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.3",
-                        "::",
-                        "fe80::581f:78ff:fed8:e48b"
-                    ]
-                }
-            },
-            {
-                "id": "ca:e0:92:89:c8:68",
-                "attributes": {
-                    "type": "host",
-                    "ips": [
-                        "10.0.0.1",
-                        "::",
-                        "fe80::c8e0:92ff:fe89:c868"
-                    ]
-                }
-            }
-        ],
-        "centralities": {
-            "degree": {
-                "1": 0.5,
-                "2": 0.5,
-                "3": 0.375,
-                "4": 0.5,
-                "2e:d2:b1:48:31:77": 0.125,
-                "22:a7:73:72:a9:3f": 0.125,
-                "d2:1e:7d:79:34:61": 0.125,
-                "5a:1f:78:d8:e4:8b": 0.125,
-                "ca:e0:92:89:c8:68": 0.125
-            },
-            "betweenness": {
-                "1": 0.3571428571428571,
-                "2": 0.46428571428571425,
-                "3": 0.25,
-                "4": 0.3571428571428571,
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "closeness": {
-                "1": 0.6666666666666666,
-                "2": 0.6153846153846154,
-                "3": 0.5333333333333333,
-                "4": 0.6666666666666666,
-                "2e:d2:b1:48:31:77": 0.4,
-                "22:a7:73:72:a9:3f": 0.42105263157894735,
-                "d2:1e:7d:79:34:61": 0.4,
-                "5a:1f:78:d8:e4:8b": 0.36363636363636365,
-                "ca:e0:92:89:c8:68": 0.42105263157894735
-            }
-        },
-        "time_delta_sec": 5.401775,
-        "changes": {
-            "added_switches": [],
-            "removed_switches": [],
-            "added_hosts": [],
-            "removed_hosts": []
-        },
-        "delta_centralities": {
-            "degree": {
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0,
-                "2": 0.0,
-                "1": 0.0,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "3": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "betweenness": {
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0,
-                "2": 0.0,
-                "1": 0.0,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "3": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            },
-            "closeness": {
-                "2e:d2:b1:48:31:77": 0.0,
-                "22:a7:73:72:a9:3f": 0.0,
-                "4": 0.0,
-                "2": 0.0,
-                "1": 0.0,
-                "d2:1e:7d:79:34:61": 0.0,
-                "5a:1f:78:d8:e4:8b": 0.0,
-                "3": 0.0,
-                "ca:e0:92:89:c8:68": 0.0
-            }
+        "closeness": {
+            "4": 0.42105263157894735,
+            "2": 0.6153846153846154,
+            "3": 0.5714285714285714,
+            "1": 0.4444444444444444,
+            "e6:6d:14:7d:78:09": 0.4,
+            "de:e8:7a:fe:1e:46": 0.3076923076923077,
+            "02:36:26:b1:cc:9c": 0.32,
+            "62:6e:c8:31:7c:fa": 0.4,
+            "12:b3:d4:99:3d:9a": 0.38095238095238093
         }
     }
-]
+}

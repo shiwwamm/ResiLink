@@ -4,7 +4,6 @@ import json
 import time
 import os
 import psutil
-import datetime
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -73,8 +72,6 @@ class NetworkFeatureExtractor:
             port_map[switch_dpid].add(int(host["port"]["port_no"]))
 
         for sw in switches:
-            # dpid_str = str(int(sw["dpid"]))
-            # dpid_int = int(dpid_str)
             dpid_int = int(sw["dpid"], 16)
             dpid_str = str(dpid_int) 
 
@@ -198,8 +195,6 @@ class NetworkFeatureExtractor:
         logging.info(f"Graph updated: {self.topo_graph.number_of_nodes()} nodes, {self.topo_graph.number_of_edges()} edges")
 
     def extract_features(self):
-        current_time = datetime.datetime.now()
-        timestamp = current_time.strftime("%Y-%m-%d %H:%M:%S")
         try:
             switches, links, hosts = self.fetch_topology_data()
         except Exception as e:
@@ -301,7 +296,6 @@ class NetworkFeatureExtractor:
             logging.warning("Graph has no nodes, centralities are empty")
 
         update_data = {
-            "timestamp": timestamp,
             "controller_data": controller_load,
             "topology": {
                 "switches": switch_ids,
@@ -317,108 +311,13 @@ class NetworkFeatureExtractor:
             }
         }
 
-        existing_data = self.load_existing_data()
-        if existing_data:
-            prev = existing_data[-1]
-            prev_time = datetime.datetime.strptime(prev["timestamp"], "%Y-%m-%d %H:%M:%S")
-            delta_time = (current_time - prev_time).total_seconds()
-            update_data["time_delta_sec"] = delta_time
-
-            prev_switches = set(prev["topology"]["switches"])
-            curr_switches = set(switch_ids)
-            prev_hosts = set(prev["topology"]["hosts"])
-            curr_hosts = set(host_macs)
-            changes = {
-                "added_switches": list(curr_switches - prev_switches),
-                "removed_switches": list(prev_switches - curr_switches),
-                "added_hosts": list(curr_hosts - prev_hosts),
-                "removed_hosts": list(prev_hosts - curr_hosts)
-            }
-            update_data["changes"] = changes
-
-            delta_centralities = {}
-            for c_type in ["degree", "betweenness", "closeness"]:
-                delta = {}
-                all_nodes = set(update_data["centralities"][c_type].keys()) | set(prev["centralities"][c_type].keys())
-                for node in all_nodes:
-                    curr_v = update_data["centralities"][c_type].get(node, 0)
-                    prev_v = prev["centralities"][c_type].get(node, 0)
-                    delta[node] = curr_v - prev_v
-                delta_centralities[c_type] = delta
-            update_data["delta_centralities"] = delta_centralities
-
-            prev_nodes = {n["id"]: n["attributes"] for n in prev.get("nodes", [])}
-            for node in update_data["nodes"]:
-                if node["attributes"]["type"] == "switch":
-                    id_ = node["id"]
-                    if id_ in prev_nodes:
-                        prev_attr = prev_nodes[id_]
-                        node["attributes"]["delta_total_packets"] = node["attributes"]["total_packets"] - prev_attr.get("total_packets", 0)
-                        node["attributes"]["delta_total_bytes"] = node["attributes"]["total_bytes"] - prev_attr.get("total_bytes", 0)
-
-            prev_ss_links = {(l["src_dpid"], l["src_port"], l["dst_dpid"], l["dst_port"]): l.get("stats", {}) for l in prev["topology"].get("switch_switch_links", [])}
-            for link in update_data["topology"]["switch_switch_links"]:
-                key = (link["src_dpid"], link["src_port"], link["dst_dpid"], link["dst_port"])
-                if key in prev_ss_links:
-                    prev_stats = prev_ss_links[key]
-                    delta_stats = {
-                        "delta_tx_packets": link["stats"]["tx_packets"] - prev_stats.get("tx_packets", 0),
-                        "delta_tx_bytes": link["stats"]["tx_bytes"] - prev_stats.get("tx_bytes", 0),
-                        "delta_tx_dropped": link["stats"]["tx_dropped"] - prev_stats.get("tx_dropped", 0),
-                        "delta_rx_packets": link["stats"]["rx_packets"] - prev_stats.get("rx_packets", 0),
-                        "delta_rx_bytes": link["stats"]["rx_bytes"] - prev_stats.get("rx_bytes", 0),
-                        "delta_rx_dropped": link["stats"]["rx_dropped"] - prev_stats.get("rx_dropped", 0)
-                    }
-                    if delta_time > 0:
-                        delta_stats["tx_packet_rate_pps"] = delta_stats["delta_tx_packets"] / delta_time
-                        delta_stats["tx_byte_rate_bps"] = delta_stats["delta_tx_bytes"] * 8 / delta_time
-                        delta_stats["packet_loss_rate"] = (max(0, delta_stats["delta_tx_packets"] - delta_stats["delta_rx_packets"]) / delta_stats["delta_tx_packets"]) if delta_stats["delta_tx_packets"] > 0 else 0.0
-                    link["delta_stats"] = delta_stats
-
-            prev_hs_links = {(l["host_mac"], l["switch_dpid"], l["switch_port"]): l.get("stats", {}) for l in prev["topology"].get("host_switch_links", [])}
-            for link in update_data["topology"]["host_switch_links"]:
-                key = (link["host_mac"], link["switch_dpid"], link["switch_port"])
-                if key in prev_hs_links:
-                    prev_stats = prev_hs_links[key]
-                    delta_stats = {
-                        "delta_tx_packets": link["stats"]["tx_packets"] - prev_stats.get("tx_packets", 0),
-                        "delta_tx_bytes": link["stats"]["tx_bytes"] - prev_stats.get("tx_bytes", 0),
-                        "delta_tx_dropped": link["stats"]["tx_dropped"] - prev_stats.get("tx_dropped", 0),
-                        "delta_rx_packets": link["stats"]["rx_packets"] - prev_stats.get("rx_packets", 0),
-                        "delta_rx_bytes": link["stats"]["rx_bytes"] - prev_stats.get("rx_bytes", 0),
-                        "delta_rx_dropped": link["stats"]["rx_dropped"] - prev_stats.get("rx_dropped", 0)
-                    }
-                    if delta_time > 0:
-                        delta_stats["tx_packet_rate_pps"] = delta_stats["delta_tx_packets"] / delta_time
-                        delta_stats["tx_byte_rate_bps"] = delta_stats["delta_tx_bytes"] * 8 / delta_time
-                        delta_stats["packet_loss_rate"] = (max(0, delta_stats["delta_tx_packets"] - delta_stats["delta_rx_packets"]) / delta_stats["delta_tx_packets"]) if delta_stats["delta_tx_packets"] > 0 else 0.0
-                    link["delta_stats"] = delta_stats
-        else:
-            update_data["time_delta_sec"] = 0.0
-            update_data["changes"] = {}
-            update_data["delta_centralities"] = {}
-
-        existing_data = self.load_existing_data()
-        existing_data.append(update_data)
         try:
             with open(self.output_file, "w") as f:
-                json.dump(existing_data, f, indent=4)
-            logging.info(f"Network features appended to {self.output_file} at {timestamp}")
+                json.dump(update_data, f, indent=4)
+            logging.info(f"Network features written to {self.output_file}")
         except IOError as e:
             logging.error(f"Error writing to JSON file: {e}")
             raise
-
-    def load_existing_data(self):
-        if os.path.exists(self.output_file):
-            try:
-                with open(self.output_file, "r") as f:
-                    data = json.load(f)
-                    return data if isinstance(data, list) else [data]
-            except (IOError, json.JSONDecodeError) as e:
-                logging.error(f"Error reading existing JSON file: {e}, starting with empty list")
-                return []
-        logging.info(f"No existing JSON file found at {self.output_file}, starting with empty list")
-        return []
 
 class GATLayer(nn.Module):
     def __init__(self, in_dim, out_dim, edge_dim, alpha=0.2):
@@ -443,7 +342,6 @@ class GATLayer(nn.Module):
 def build_graph_data(entry):
     topology = entry['topology']
     centralities = entry['centralities']
-    delta_centralities = entry['delta_centralities']
     nodes_data = {str(node['id']): node['attributes'] for node in entry['nodes']}
     G = nx.Graph()
     for node_id in nodes_data:
@@ -465,22 +363,17 @@ def build_graph_data(entry):
         deg = centralities.get('degree', {}).get(node_id, 0.0)
         bet = centralities.get('betweenness', {}).get(node_id, 0.0)
         clo = centralities.get('closeness', {}).get(node_id, 0.0)
-        d_deg = delta_centralities.get('degree', {}).get(node_id, 0.0)
-        d_bet = delta_centralities.get('betweenness', {}).get(node_id, 0.0)
-        d_clo = delta_centralities.get('closeness', {}).get(node_id, 0.0)
-        base_f = [deg, bet, clo, d_deg, d_bet, d_clo]
+        base_f = [deg, bet, clo]
         attrs = nodes_data.get(node_id, {})
         if attrs.get('type') == 'switch':
             switch_f = [
                 attrs.get('num_flows', 0.0),
                 attrs.get('total_packets', 0.0),
                 attrs.get('total_bytes', 0.0),
-                attrs.get('avg_flow_duration', 0.0),
-                attrs.get('delta_total_packets', 0.0),
-                attrs.get('delta_total_bytes', 0.0)
+                attrs.get('avg_flow_duration', 0.0)
             ]
         else:
-            switch_f = [0.0] * 6
+            switch_f = [0.0] * 4
         f = base_f + switch_f
         features.append(f)
     scaler = StandardScaler()
@@ -489,17 +382,15 @@ def build_graph_data(entry):
     adj_np = nx.to_numpy_array(G)
     adj = torch.tensor(adj_np, dtype=torch.float)
     adj += torch.eye(num_nodes)
-    edge_dim = 17
+    edge_dim = 8
     edge_attr_dense = torch.zeros(num_nodes, num_nodes, edge_dim)
     stats_keys = ['tx_packets', 'tx_bytes', 'tx_dropped', 'rx_packets', 'rx_bytes', 'rx_dropped', 'duration_sec']
-    delta_keys = ['delta_tx_packets', 'delta_tx_bytes', 'delta_tx_dropped', 'delta_rx_packets', 'delta_rx_bytes', 'delta_rx_dropped', 'tx_packet_rate_pps', 'tx_byte_rate_bps', 'packet_loss_rate']
     for src, dst, link_data in G.edges(data=True):
         i = node_id_to_idx[src]
         j = node_id_to_idx[dst]
         stats = link_data.get('stats', {})
-        d_stats = link_data.get('delta_stats', {})
         bandwidth = link_data.get('bandwidth_mbps', 0.0)
-        e_f = [bandwidth] + [stats.get(k, 0.0) for k in stats_keys] + [d_stats.get(k, 0.0) for k in delta_keys]
+        e_f = [bandwidth] + [stats.get(k, 0.0) for k in stats_keys]
         edge_attr_dense[i, j] = torch.tensor(e_f)
         edge_attr_dense[j, i] = torch.tensor(e_f)
     return x, adj, edge_attr_dense, node_list, num_nodes
@@ -519,8 +410,8 @@ def generate_embeddings(data_list):
         num_nodes_list.append(num_nodes)
     B = len(data_list)
     max_N = max(num_nodes_list)
-    in_dim = x_list[0].shape[1] if x_list else 12
-    edge_dim = edge_attr_list[0].shape[-1] if edge_attr_list else 17
+    in_dim = x_list[0].shape[1] if x_list else 7
+    edge_dim = edge_attr_list[0].shape[-1] if edge_attr_list else 8
     x_batched = torch.zeros(B, max_N, in_dim)
     adj_batched = torch.zeros(B, max_N, max_N)
     edge_attr_batched = torch.zeros(B, max_N, max_N, edge_dim)
@@ -574,11 +465,6 @@ def get_possible_links(G, switches, hosts):
             u, v = switches[i], switches[j]
             if not G.has_edge(u, v):
                 possible_links.append((u, v))
-    # Optional: Allow host-to-switch links if needed
-    # for switch in switches:
-    #     for host in hosts:
-    #         if not G.has_edge(switch, host):
-    #             possible_links.append((switch, host))
     logging.info(f"Possible links: {len(possible_links)}")
     return possible_links
 
@@ -649,24 +535,19 @@ def main(max_cycles=5, break_threshold=0.01):
             continue
         try:
             with open(extractor.output_file, 'r') as f:
-                data_list = json.load(f)
-            logging.info(f"Loaded {len(data_list)} entries from {extractor.output_file}")
+                network_features = json.load(f)
+            logging.info(f"Loaded network features from {extractor.output_file}")
         except Exception as e:
             logging.error(f"Error loading network features: {e}")
             print(f"Failed to load network features: {e}")
             continue
-        if not data_list:
-            logging.warning("No network features available, skipping cycle")
-            print("No network features available, skipping cycle")
-            continue
         try:
-            embeddings = generate_embeddings([data_list[-1]])
+            embeddings = generate_embeddings([network_features])
             logging.info("Generated embeddings successfully")
         except Exception as e:
             logging.error(f"Error generating embeddings: {e}")
             print(f"Failed to generate embeddings: {e}")
             continue
-        network_features = data_list[-1]
         if G is None:
             G, switches, hosts = build_graph(network_features)
             centralities = network_features['centralities']
