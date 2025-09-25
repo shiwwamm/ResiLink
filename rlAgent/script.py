@@ -12,6 +12,7 @@ from sklearn.preprocessing import StandardScaler
 import numpy as np
 import torch.optim as optim
 import logging
+import copy
 
 # Setup logging to both file and console
 logging.basicConfig(
@@ -490,6 +491,80 @@ def compute_reward(old_state, new_state):
     cost = -0.1
     return 0.5 * delta_close + 0.3 * delta_degree + 0.2 * delta_between + cost
 
+def add_suggested_link(network_features, suggested_link):
+    """
+    Add the suggested link to a copy of the network features, creating an updated topology.
+    Adds bidirectional link entries to switch_switch_links and recomputes centralities.
+    Node attributes remain unchanged, as adding a link doesn't affect them without simulation.
+    """
+    new_data = copy.deepcopy(network_features)
+    
+    src_dpid = int(suggested_link['src_dpid'])
+    dst_dpid = int(suggested_link['dst_dpid'])
+    src_port = int(suggested_link.get('src_port', 0)) if suggested_link.get('src_port') != 'unavailable' else 0
+    dst_port = int(suggested_link.get('dst_port', 0)) if suggested_link.get('dst_port') != 'unavailable' else 0
+    
+    forward_link = {
+        "src_dpid": src_dpid,
+        "dst_dpid": dst_dpid,
+        "src_port": src_port,
+        "dst_port": dst_port,
+        "bandwidth_mbps": 0.0,
+        "stats": {
+            "tx_packets": 0,
+            "tx_bytes": 0,
+            "tx_dropped": 0,
+            "rx_packets": 0,
+            "rx_bytes": 0,
+            "rx_dropped": 0,
+            "duration_sec": 0
+        }
+    }
+    
+    reverse_link = {
+        "src_dpid": dst_dpid,
+        "dst_dpid": src_dpid,
+        "src_port": dst_port,
+        "dst_port": src_port,
+        "bandwidth_mbps": 0.0,
+        "stats": {
+            "tx_packets": 0,
+            "tx_bytes": 0,
+            "tx_dropped": 0,
+            "rx_packets": 0,
+            "rx_bytes": 0,
+            "rx_dropped": 0,
+            "duration_sec": 0
+        }
+    }
+    
+    new_data['topology']['switch_switch_links'].append(forward_link)
+    new_data['topology']['switch_switch_links'].append(reverse_link)
+    
+    G = nx.Graph()
+    topology = new_data['topology']
+    for node in new_data['nodes']:
+        G.add_node(str(node['id']), **node['attributes'])
+    for link in topology['switch_switch_links']:
+        G.add_edge(str(link['src_dpid']), str(link['dst_dpid']), **link)
+    for link in topology['host_switch_links']:
+        G.add_edge(link['host_mac'], str(link['switch_dpid']), **link)
+    
+    if G.number_of_nodes() > 0:
+        new_data['centralities'] = {
+            "degree": {str(k): v for k, v in nx.degree_centrality(G).items()},
+            "betweenness": {str(k): v for k, v in nx.betweenness_centrality(G).items()},
+            "closeness": {str(k): v for k, v in nx.closeness_centrality(G).items()}
+        }
+    else:
+        new_data['centralities'] = {
+            "degree": {},
+            "betweenness": {},
+            "closeness": {}
+        }
+    
+    return new_data
+
 def train_rl(policy, optimizer, G, embeddings, centralities, action_to_link):
     num_episodes = 50
     total_reward = 0.0
@@ -524,6 +599,28 @@ def main(max_cycles=5, break_threshold=0.01):
     previous_reward = -np.inf
     G = None
     centralities = {}
+    all_suggested_links = []  # To store all suggested links across cycles
+
+    # Ensure network_features.json exists
+    if not os.path.exists(extractor.output_file):
+        try:
+            print(f"{extractor.output_file} does not exist. Generating initial network features...")
+            extractor.extract_features()
+            logging.info(f"Generated initial {extractor.output_file}")
+        except Exception as e:
+            logging.error(f"Failed to generate initial network features: {e}")
+            print(f"Failed to generate initial network features: {e}")
+            return
+
+    # Load original network features
+    try:
+        with open(extractor.output_file, 'r') as f:
+            original_network_features = json.load(f)
+        logging.info(f"Loaded original network features from {extractor.output_file}")
+    except Exception as e:
+        logging.error(f"Error loading original network features: {e}")
+        print(f"Failed to load original network features: {e}")
+        return
 
     for cycle in range(max_cycles):
         print(f"\n--- Cycle {cycle + 1} ---")
@@ -573,7 +670,6 @@ def main(max_cycles=5, break_threshold=0.01):
         probs = policy(state.unsqueeze(0))
         best_action = torch.argmax(probs).item()
         u, v = action_to_link[best_action]
-        # Fetch available ports
         src_ports = extractor.fetch_available_ports(int(u))
         dst_ports = extractor.fetch_available_ports(int(v))
         src_port = src_ports[0] if src_ports else None
@@ -587,6 +683,33 @@ def main(max_cycles=5, break_threshold=0.01):
             "dst_port": dst_port if dst_port else "unavailable"
         }
         print(f"Ryu-compatible link config: {link_config}")
+        
+        # Save suggested link to JSON
+        try:
+            with open(f"suggested_link_cycle_{cycle + 1}.json", "w") as f:
+                json.dump(link_config, f, indent=4)
+            logging.info(f"Saved suggested link to suggested_link_cycle_{cycle + 1}.json")
+        except IOError as e:
+            logging.error(f"Error saving suggested link: {e}")
+            print(f"Failed to save suggested link: {e}")
+            continue
+        
+        # Store the suggested link for final graph
+        all_suggested_links.append(link_config)
+        
+        # Create updated network features with the new link for this cycle
+        try:
+            updated_features = add_suggested_link(network_features, link_config)
+            output_file = f"updated_network_features_cycle_{cycle + 1}.json"
+            with open(output_file, "w") as f:
+                json.dump(updated_features, f, indent=4)
+            logging.info(f"Updated network features saved to {output_file}")
+            print(f"Updated network features saved to {output_file}")
+        except Exception as e:
+            logging.error(f"Error updating network features: {e}")
+            print(f"Failed to update network features: {e}")
+            continue
+        
         G.add_edge(u, v)
         centralities = update_centralities(G)
         if abs(current_reward - previous_reward) < break_threshold:
@@ -594,6 +717,19 @@ def main(max_cycles=5, break_threshold=0.01):
             break
         previous_reward = current_reward
         time.sleep(5)
+    
+    # After all cycles, create and save the final graph with all suggested links
+    try:
+        final_features = copy.deepcopy(original_network_features)
+        for link_config in all_suggested_links:
+            final_features = add_suggested_link(final_features, link_config)
+        with open("final_network_features.json", "w") as f:
+            json.dump(final_features, f, indent=4)
+        logging.info("Final network features with all suggested links saved to final_network_features.json")
+        print("Final network features with all suggested links saved to final_network_features.json")
+    except Exception as e:
+        logging.error(f"Error creating final network features: {e}")
+        print(f"Failed to create final network features: {e}")
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,7 @@
+{
+    "src_dpid": "1",
+    "dst_dpid": "3",
+    "host_mac": null,
+    "src_port": 1,
+    "dst_port": 1
+}
