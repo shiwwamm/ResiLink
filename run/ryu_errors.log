@@ -1,0 +1,569 @@
+2025-10-09 07:48:18,447 - INFO - Fetched switches: 48 switches
+2025-10-09 07:48:18,450 - INFO - Fetched links: 130 links
+2025-10-09 07:48:18,454 - INFO - Fetched hosts: 48 hosts
+2025-10-09 07:48:18,454 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 07:49:45,889 - INFO - Fetched switches: 48 switches
+2025-10-09 07:49:45,891 - INFO - Fetched links: 112 links
+2025-10-09 07:49:45,892 - INFO - Fetched hosts: 48 hosts
+2025-10-09 07:49:47,608 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000001a'
+2025-10-09 07:52:16,861 - INFO - Fetched switches: 48 switches
+2025-10-09 07:52:16,863 - INFO - Fetched links: 112 links
+2025-10-09 07:52:16,864 - INFO - Fetched hosts: 48 hosts
+2025-10-09 07:52:16,867 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 07:52:16,879 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 07:52:16,922 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 07:52:16,936 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 07:52:16,952 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 07:52:16,968 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 07:52:16,984 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 07:52:17,000 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 07:52:17,046 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 07:52:17,118 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 07:52:17,146 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 07:52:17,168 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 07:52:17,234 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 07:52:17,265 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 07:52:17,311 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 07:52:17,382 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 07:52:17,403 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 07:52:17,421 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 07:52:17,442 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 07:52:17,482 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 07:52:17,514 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 07:52:17,546 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 07:52:17,560 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 07:52:17,633 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 07:52:17,649 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 07:52:17,730 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 07:52:17,754 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 07:52:17,787 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 07:52:17,805 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 07:52:17,906 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 07:52:17,920 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 07:52:17,941 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 07:52:17,965 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 07:52:17,995 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 07:52:18,036 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 07:52:18,064 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 07:52:18,077 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 07:52:18,113 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 07:52:18,156 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 07:52:18,195 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 07:52:18,206 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 07:52:18,218 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 07:52:18,260 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 07:52:18,277 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 07:52:18,297 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 07:52:18,307 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 07:52:18,319 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 07:52:18,336 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 07:52:18,607 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000001a'
+2025-10-09 07:53:57,311 - INFO - Fetched switches: 48 switches
+2025-10-09 07:53:57,312 - INFO - Fetched links: 112 links
+2025-10-09 07:53:57,313 - INFO - Fetched hosts: 48 hosts
+2025-10-09 07:53:57,316 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 07:53:57,327 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 07:53:57,378 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 07:53:57,397 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 07:53:57,415 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 07:53:57,430 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 07:53:57,452 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 07:53:57,471 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 07:53:57,524 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 07:53:57,593 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 07:53:57,617 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 07:53:57,635 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 07:53:57,703 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 07:53:57,726 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 07:53:57,760 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 07:53:57,836 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 07:53:57,860 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 07:53:57,877 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 07:53:57,896 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 07:53:57,941 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 07:53:57,964 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 07:53:57,994 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 07:53:58,015 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 07:53:58,085 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 07:53:58,100 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 07:53:58,174 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 07:53:58,202 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 07:53:58,235 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 07:53:58,251 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 07:53:58,323 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 07:53:58,337 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 07:53:58,352 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 07:53:58,381 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 07:53:58,407 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 07:53:58,448 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 07:53:58,472 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 07:53:58,485 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 07:53:58,523 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 07:53:58,562 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 07:53:58,594 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 07:53:58,606 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 07:53:58,621 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 07:53:58,654 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 07:53:58,670 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 07:53:58,688 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 07:53:58,698 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 07:53:58,714 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 07:53:58,730 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 07:53:59,015 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 07:53:59,015 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000001a'
+2025-10-09 08:00:35,573 - INFO - Fetched switches: 48 switches
+2025-10-09 08:00:35,575 - INFO - Fetched links: 112 links
+2025-10-09 08:00:35,576 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:00:35,580 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 08:00:35,593 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 08:00:35,646 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 08:00:35,660 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 08:00:35,685 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 08:00:35,701 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 08:00:35,719 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 08:00:35,743 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 08:00:35,806 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 08:00:35,878 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 08:00:35,903 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 08:00:35,919 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 08:00:35,990 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 08:00:36,060 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 08:00:36,096 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 08:00:36,172 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 08:00:36,198 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 08:00:36,217 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 08:00:36,232 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 08:00:36,275 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 08:00:36,302 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 08:00:36,339 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 08:00:36,351 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 08:00:36,422 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 08:00:36,439 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 08:00:36,519 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 08:00:36,545 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 08:00:36,583 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 08:00:36,601 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 08:00:36,678 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 08:00:36,693 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 08:00:36,709 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 08:00:36,734 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 08:00:36,760 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 08:00:36,801 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 08:00:36,823 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 08:00:36,840 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 08:00:36,877 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 08:00:36,913 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 08:00:36,945 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 08:00:36,960 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 08:00:36,972 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 08:00:37,005 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 08:00:37,025 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 08:00:37,041 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 08:00:37,055 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 08:00:37,067 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 08:00:37,083 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 08:00:37,366 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:00:37,366 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000001a'
+2025-10-09 08:01:16,108 - INFO - Fetched switches: 48 switches
+2025-10-09 08:01:16,110 - INFO - Fetched links: 112 links
+2025-10-09 08:01:16,111 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:01:16,114 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 08:01:16,126 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 08:01:16,168 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 08:01:16,184 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 08:01:16,203 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 08:01:16,220 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 08:01:16,238 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 08:01:16,252 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 08:01:16,301 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 08:01:16,370 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 08:01:16,394 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 08:01:16,409 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 08:01:16,478 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 08:01:16,543 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 08:01:16,574 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 08:01:16,639 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 08:01:16,662 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 08:01:16,678 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 08:01:16,694 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 08:01:16,777 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 08:01:16,804 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 08:01:16,836 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 08:01:16,854 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 08:01:16,925 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 08:01:16,942 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 08:01:17,018 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 08:01:17,086 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 08:01:17,119 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 08:01:17,136 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 08:01:17,207 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 08:01:17,221 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 08:01:17,244 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 08:01:17,267 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 08:01:17,297 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 08:01:17,339 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 08:01:17,366 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 08:01:17,379 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 08:01:17,414 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 08:01:17,452 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 08:01:17,500 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 08:01:17,512 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 08:01:17,527 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 08:01:17,562 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 08:01:17,579 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 08:01:17,597 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 08:01:17,607 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 08:01:17,623 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 08:01:17,639 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 08:01:17,913 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:01:17,914 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:06:27,988 - INFO - Fetched switches: 48 switches
+2025-10-09 08:06:27,989 - INFO - Fetched links: 112 links
+2025-10-09 08:06:27,990 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:06:27,993 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 08:06:28,004 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 08:06:28,053 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 08:06:28,069 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 08:06:28,095 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 08:06:28,120 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 08:06:28,142 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 08:06:28,164 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 08:06:28,216 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 08:06:28,283 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 08:06:28,308 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 08:06:28,329 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 08:06:28,393 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 08:06:28,416 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 08:06:28,454 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 08:06:28,534 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 08:06:28,557 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 08:06:28,578 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 08:06:28,593 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 08:06:28,632 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 08:06:28,663 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 08:06:28,698 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 08:06:28,719 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 08:06:28,789 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 08:06:28,804 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 08:06:28,885 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 08:06:28,910 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 08:06:28,946 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 08:06:28,970 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 08:06:29,038 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 08:06:29,052 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 08:06:29,073 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 08:06:29,101 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 08:06:29,127 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 08:06:29,175 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 08:06:29,197 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 08:06:29,213 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 08:06:29,273 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 08:06:29,313 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 08:06:29,345 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 08:06:29,357 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 08:06:29,374 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 08:06:29,408 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 08:06:29,429 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 08:06:29,444 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 08:06:29,454 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 08:06:29,472 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 08:06:29,486 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 08:06:29,757 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:06:29,758 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:08:32,843 - INFO - Fetched switches: 48 switches
+2025-10-09 08:08:32,845 - INFO - Fetched links: 112 links
+2025-10-09 08:08:32,846 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:08:32,849 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 08:08:32,867 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 08:08:32,912 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 08:08:32,925 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 08:08:32,942 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 08:08:32,956 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 08:08:32,974 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 08:08:32,988 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 08:08:33,036 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 08:08:33,103 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 08:08:33,125 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 08:08:33,141 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 08:08:33,209 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 08:08:33,233 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 08:08:33,268 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 08:08:33,337 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 08:08:33,362 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 08:08:33,379 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 08:08:33,395 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 08:08:33,442 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 08:08:33,470 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 08:08:33,504 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 08:08:33,518 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 08:08:33,587 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 08:08:33,602 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 08:08:33,683 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 08:08:33,708 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 08:08:33,744 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 08:08:33,766 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 08:08:33,838 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 08:08:33,852 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 08:08:33,884 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 08:08:33,911 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 08:08:33,936 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 08:08:33,980 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 08:08:34,006 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 08:08:34,019 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 08:08:34,056 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 08:08:34,096 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 08:08:34,135 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 08:08:34,150 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 08:08:34,164 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 08:08:34,200 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 08:08:34,223 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 08:08:34,239 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 08:08:34,254 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 08:08:34,269 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 08:08:34,284 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 08:08:34,563 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:08:34,564 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:08:46,952 - INFO - Fetched switches: 48 switches
+2025-10-09 08:08:46,954 - INFO - Fetched links: 112 links
+2025-10-09 08:08:46,955 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:08:46,957 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 08:08:46,969 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 08:08:47,022 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 08:08:47,035 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 08:08:47,053 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 08:08:47,069 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 08:08:47,092 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 08:08:47,110 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 08:08:47,162 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 08:08:47,270 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 08:08:47,291 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 08:08:47,307 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 08:08:47,378 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 08:08:47,446 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 08:08:47,478 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 08:08:47,546 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 08:08:47,569 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 08:08:47,585 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 08:08:47,604 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 08:08:47,643 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 08:08:47,672 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 08:08:47,707 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 08:08:47,723 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 08:08:47,790 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 08:08:47,807 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 08:08:47,882 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 08:08:47,950 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 08:08:47,989 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 08:08:48,004 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 08:08:48,073 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 08:08:48,086 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 08:08:48,103 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 08:08:48,128 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 08:08:48,157 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 08:08:48,198 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 08:08:48,228 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 08:08:48,245 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 08:08:48,281 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 08:08:48,318 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 08:08:48,351 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 08:08:48,370 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 08:08:48,388 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 08:08:48,421 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 08:08:48,439 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 08:08:48,455 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 08:08:48,467 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 08:08:48,481 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 08:08:48,498 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 08:08:48,766 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:08:48,767 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:10:33,683 - INFO - Fetched switches: 48 switches
+2025-10-09 08:10:33,685 - INFO - Fetched links: 112 links
+2025-10-09 08:10:33,686 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:10:33,689 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 08:10:33,709 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 08:10:33,752 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 08:10:33,766 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 08:10:33,782 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 08:10:33,798 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 08:10:33,816 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 08:10:33,832 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 08:10:33,885 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 08:10:33,951 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 08:10:33,977 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 08:10:33,996 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 08:10:34,067 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 08:10:34,090 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 08:10:34,123 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 08:10:34,202 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 08:10:34,225 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 08:10:34,242 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 08:10:34,258 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 08:10:34,305 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 08:10:34,338 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 08:10:34,371 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 08:10:34,390 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 08:10:34,457 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 08:10:34,472 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 08:10:34,546 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 08:10:34,571 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 08:10:34,603 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 08:10:34,640 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 08:10:34,714 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 08:10:34,729 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 08:10:34,746 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 08:10:34,773 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 08:10:34,798 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 08:10:34,839 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 08:10:34,862 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 08:10:34,876 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 08:10:34,927 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 08:10:34,972 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 08:10:35,013 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 08:10:35,025 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 08:10:35,038 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 08:10:35,071 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 08:10:35,089 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 08:10:35,106 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 08:10:35,115 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 08:10:35,128 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 08:10:35,143 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 08:10:35,409 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:10:35,410 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:11:31,911 - INFO - Fetched switches: 48 switches
+2025-10-09 08:11:31,913 - INFO - Fetched links: 112 links
+2025-10-09 08:11:31,914 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:11:31,916 - WARNING - Failed to fetch port stats for switch 26, using defaults
+2025-10-09 08:11:31,927 - WARNING - Failed to fetch port stats for switch 31, using defaults
+2025-10-09 08:11:31,972 - WARNING - Failed to fetch port stats for switch 11, using defaults
+2025-10-09 08:11:31,986 - WARNING - Failed to fetch port stats for switch 20, using defaults
+2025-10-09 08:11:32,005 - WARNING - Failed to fetch port stats for switch 37, using defaults
+2025-10-09 08:11:32,022 - WARNING - Failed to fetch port stats for switch 36, using defaults
+2025-10-09 08:11:32,047 - WARNING - Failed to fetch port stats for switch 23, using defaults
+2025-10-09 08:11:32,062 - WARNING - Failed to fetch port stats for switch 2, using defaults
+2025-10-09 08:11:32,111 - WARNING - Failed to fetch port stats for switch 17, using defaults
+2025-10-09 08:11:32,178 - WARNING - Failed to fetch port stats for switch 1, using defaults
+2025-10-09 08:11:32,199 - WARNING - Failed to fetch port stats for switch 39, using defaults
+2025-10-09 08:11:32,215 - WARNING - Failed to fetch port stats for switch 18, using defaults
+2025-10-09 08:11:32,288 - WARNING - Failed to fetch port stats for switch 41, using defaults
+2025-10-09 08:11:32,361 - WARNING - Failed to fetch port stats for switch 12, using defaults
+2025-10-09 08:11:32,392 - WARNING - Failed to fetch port stats for switch 46, using defaults
+2025-10-09 08:11:32,462 - WARNING - Failed to fetch port stats for switch 4, using defaults
+2025-10-09 08:11:32,500 - WARNING - Failed to fetch port stats for switch 28, using defaults
+2025-10-09 08:11:32,515 - WARNING - Failed to fetch port stats for switch 38, using defaults
+2025-10-09 08:11:32,530 - WARNING - Failed to fetch port stats for switch 45, using defaults
+2025-10-09 08:11:32,568 - WARNING - Failed to fetch port stats for switch 27, using defaults
+2025-10-09 08:11:32,594 - WARNING - Failed to fetch port stats for switch 19, using defaults
+2025-10-09 08:11:32,625 - WARNING - Failed to fetch port stats for switch 5, using defaults
+2025-10-09 08:11:32,637 - WARNING - Failed to fetch port stats for switch 47, using defaults
+2025-10-09 08:11:32,704 - WARNING - Failed to fetch port stats for switch 24, using defaults
+2025-10-09 08:11:32,719 - WARNING - Failed to fetch port stats for switch 25, using defaults
+2025-10-09 08:11:32,794 - WARNING - Failed to fetch port stats for switch 43, using defaults
+2025-10-09 08:11:32,820 - WARNING - Failed to fetch port stats for switch 40, using defaults
+2025-10-09 08:11:32,851 - WARNING - Failed to fetch port stats for switch 15, using defaults
+2025-10-09 08:11:32,870 - WARNING - Failed to fetch port stats for switch 34, using defaults
+2025-10-09 08:11:32,950 - WARNING - Failed to fetch port stats for switch 6, using defaults
+2025-10-09 08:11:32,964 - WARNING - Failed to fetch port stats for switch 44, using defaults
+2025-10-09 08:11:32,989 - WARNING - Failed to fetch port stats for switch 30, using defaults
+2025-10-09 08:11:33,011 - WARNING - Failed to fetch port stats for switch 8, using defaults
+2025-10-09 08:11:33,040 - WARNING - Failed to fetch port stats for switch 21, using defaults
+2025-10-09 08:11:33,079 - WARNING - Failed to fetch port stats for switch 13, using defaults
+2025-10-09 08:11:33,109 - WARNING - Failed to fetch port stats for switch 32, using defaults
+2025-10-09 08:11:33,123 - WARNING - Failed to fetch port stats for switch 29, using defaults
+2025-10-09 08:11:33,158 - WARNING - Failed to fetch port stats for switch 33, using defaults
+2025-10-09 08:11:33,199 - WARNING - Failed to fetch port stats for switch 14, using defaults
+2025-10-09 08:11:33,235 - WARNING - Failed to fetch port stats for switch 7, using defaults
+2025-10-09 08:11:33,248 - WARNING - Failed to fetch port stats for switch 244866307128911, using defaults
+2025-10-09 08:11:33,260 - WARNING - Failed to fetch port stats for switch 35, using defaults
+2025-10-09 08:11:33,293 - WARNING - Failed to fetch port stats for switch 22, using defaults
+2025-10-09 08:11:33,310 - WARNING - Failed to fetch port stats for switch 42, using defaults
+2025-10-09 08:11:33,325 - WARNING - Failed to fetch port stats for switch 9, using defaults
+2025-10-09 08:11:33,335 - WARNING - Failed to fetch port stats for switch 3, using defaults
+2025-10-09 08:11:33,349 - WARNING - Failed to fetch port stats for switch 10, using defaults
+2025-10-09 08:11:33,364 - WARNING - Failed to fetch port stats for switch 16, using defaults
+2025-10-09 08:11:33,667 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:11:33,669 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:13:23,261 - INFO - Fetched switches: 48 switches
+2025-10-09 08:13:23,263 - INFO - Fetched links: 112 links
+2025-10-09 08:13:23,264 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:13:25,417 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:13:25,418 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:15:12,202 - INFO - Fetched switches: 48 switches
+2025-10-09 08:15:12,205 - INFO - Fetched links: 112 links
+2025-10-09 08:15:12,206 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:15:13,911 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:15:13,913 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:15:24,207 - INFO - Fetched switches: 48 switches
+2025-10-09 08:15:24,209 - INFO - Fetched links: 112 links
+2025-10-09 08:15:24,211 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:15:25,936 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:15:25,937 - ERROR - Failed to generate initial network features: invalid literal for int() with base 10: '000000000000002e'
+2025-10-09 08:27:18,718 - INFO - Fetched switches: 48 switches
+2025-10-09 08:27:18,720 - INFO - Fetched links: 112 links
+2025-10-09 08:27:18,721 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:27:20,414 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:27:20,444 - INFO - Network features written to network_features.json
+2025-10-09 08:27:20,445 - INFO - Generated initial network_features.json
+2025-10-09 08:27:20,447 - INFO - Loaded original network features from network_features.json
+2025-10-09 08:27:20,490 - INFO - Fetched switches: 48 switches
+2025-10-09 08:27:20,494 - INFO - Fetched links: 112 links
+2025-10-09 08:27:20,497 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:27:22,086 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:27:22,120 - INFO - Network features written to network_features.json
+2025-10-09 08:27:22,123 - INFO - Loaded network features from network_features.json
+2025-10-09 08:27:22,147 - INFO - Generated embeddings successfully
+2025-10-09 08:27:22,149 - INFO - Built graph with 48 switches, 48 hosts
+2025-10-09 08:27:22,150 - INFO - Possible links: 1064
+2025-10-09 08:27:22,151 - INFO - Updated policy network for 1064 actions
+2025-10-09 08:27:22,881 - INFO - RL training completed, average reward: -0.0947
+2025-10-09 08:27:22,883 - INFO - Fetched 4 ports for switch 28
+2025-10-09 08:27:22,930 - INFO - Fetched switches: 48 switches
+2025-10-09 08:27:22,932 - INFO - Fetched links: 112 links
+2025-10-09 08:27:22,933 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:27:22,933 - WARNING - Invalid port_no LOCAL for switch 28, skipping
+2025-10-09 08:27:22,933 - WARNING - Invalid port_no 1 for switch 28, skipping
+2025-10-09 08:27:22,933 - WARNING - Invalid port_no 2 for switch 28, skipping
+2025-10-09 08:27:22,933 - WARNING - Invalid port_no 3 for switch 28, skipping
+2025-10-09 08:27:22,933 - INFO - Available ports for switch 28: []
+2025-10-09 08:27:22,935 - INFO - Fetched 4 ports for switch 19
+2025-10-09 08:27:22,937 - INFO - Fetched switches: 48 switches
+2025-10-09 08:27:22,938 - INFO - Fetched links: 112 links
+2025-10-09 08:27:22,940 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:27:22,940 - WARNING - Invalid port_no LOCAL for switch 19, skipping
+2025-10-09 08:27:22,940 - WARNING - Invalid port_no 1 for switch 19, skipping
+2025-10-09 08:27:22,940 - WARNING - Invalid port_no 2 for switch 19, skipping
+2025-10-09 08:27:22,940 - WARNING - Invalid port_no 3 for switch 19, skipping
+2025-10-09 08:27:22,940 - INFO - Available ports for switch 19: []
+2025-10-09 08:27:22,940 - INFO - Saved suggested link to suggested_link_cycle_1.json
+2025-10-09 08:27:22,958 - INFO - Updated network features saved to updated_network_features_cycle_1.json
+2025-10-09 08:27:27,989 - INFO - Fetched switches: 48 switches
+2025-10-09 08:27:28,038 - INFO - Fetched links: 112 links
+2025-10-09 08:27:28,044 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:27:30,131 - INFO - Graph updated: 96 nodes, 112 edges
+2025-10-09 08:27:30,164 - INFO - Network features written to network_features.json
+2025-10-09 08:27:30,166 - INFO - Loaded network features from network_features.json
+2025-10-09 08:27:30,174 - INFO - Generated embeddings successfully
+2025-10-09 08:27:30,174 - INFO - Possible links: 1063
+2025-10-09 08:27:30,175 - INFO - Updated policy network for 1063 actions
+2025-10-09 08:27:30,874 - INFO - RL training completed, average reward: -0.0951
+2025-10-09 08:27:30,877 - INFO - Fetched 4 ports for switch 17
+2025-10-09 08:27:30,878 - INFO - Fetched switches: 48 switches
+2025-10-09 08:27:30,879 - INFO - Fetched links: 112 links
+2025-10-09 08:27:30,880 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:27:30,881 - WARNING - Invalid port_no LOCAL for switch 17, skipping
+2025-10-09 08:27:30,881 - WARNING - Invalid port_no 1 for switch 17, skipping
+2025-10-09 08:27:30,881 - WARNING - Invalid port_no 2 for switch 17, skipping
+2025-10-09 08:27:30,881 - WARNING - Invalid port_no 3 for switch 17, skipping
+2025-10-09 08:27:30,881 - INFO - Available ports for switch 17: []
+2025-10-09 08:27:30,882 - INFO - Fetched 5 ports for switch 34
+2025-10-09 08:27:30,884 - INFO - Fetched switches: 48 switches
+2025-10-09 08:27:30,885 - INFO - Fetched links: 112 links
+2025-10-09 08:27:30,886 - INFO - Fetched hosts: 48 hosts
+2025-10-09 08:27:30,886 - WARNING - Invalid port_no LOCAL for switch 34, skipping
+2025-10-09 08:27:30,886 - WARNING - Invalid port_no 1 for switch 34, skipping
+2025-10-09 08:27:30,886 - WARNING - Invalid port_no 4 for switch 34, skipping
+2025-10-09 08:27:30,886 - WARNING - Invalid port_no 2 for switch 34, skipping
+2025-10-09 08:27:30,886 - WARNING - Invalid port_no 3 for switch 34, skipping
+2025-10-09 08:27:30,886 - INFO - Available ports for switch 34: []
+2025-10-09 08:27:30,886 - INFO - Saved suggested link to suggested_link_cycle_2.json
+2025-10-09 08:27:30,903 - INFO - Updated network features saved to updated_network_features_cycle_2.json
+2025-10-09 08:27:30,953 - INFO - Final network features with all suggested links saved to final_network_features.json
