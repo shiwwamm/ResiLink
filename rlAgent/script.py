@@ -62,15 +62,15 @@ class NetworkFeatureExtractor:
 
     def fetch_switch_stats(self, switches, links, hosts):
         switch_stats = {}
-        port_map = {int(sw["dpid"]): set() for sw in switches}
+        port_map = {int(sw["dpid"], 16): set() for sw in switches}
         for link in links:
-            src_dpid = int(link["src"]["dpid"])
-            dst_dpid = int(link["dst"]["dpid"])
-            port_map[src_dpid].add(int(link["src"]["port_no"]))
-            port_map[dst_dpid].add(int(link["dst"]["port_no"]))
+            src_dpid = int(link["src"]["dpid"], 16)
+            dst_dpid = int(link["dst"]["dpid"], 16)
+            port_map[src_dpid].add(int(link["src"]["port_no"], 16))
+            port_map[dst_dpid].add(int(link["dst"]["port_no"], 16))
         for host in hosts:
-            switch_dpid = int(host["port"]["dpid"])
-            port_map[switch_dpid].add(int(host["port"]["port_no"]))
+            switch_dpid = int(host["port"]["dpid"], 16)
+            port_map[switch_dpid].add(int(host["port"]["port_no"], 16))
 
         for sw in switches:
             dpid_int = int(sw["dpid"], 16)
@@ -122,6 +122,8 @@ class NetworkFeatureExtractor:
                 "portdesc": portdesc,
                 "flows": flows
             }
+            
+        print("got stats")
 
         return switch_stats
 
@@ -144,7 +146,10 @@ class NetworkFeatureExtractor:
         return {"cpu_percent": controller_cpu, "memory_percent": controller_mem}
 
     def fetch_available_ports(self, dpid):
+        print("inside fetch_available ports")
+        print(dpid)
         try:
+            print(dpid)
             portdesc_resp = self.session.get(f"{self.ryu_api_url}/stats/portdesc/{dpid}")
             portdesc_resp.raise_for_status()
             ports = portdesc_resp.json().get(str(dpid), [])
@@ -153,15 +158,15 @@ class NetworkFeatureExtractor:
             used_ports = set()
             switches, links, _ = self.fetch_topology_data()
             for link in links:
-                if int(link["src"]["dpid"]) == dpid:
-                    used_ports.add(int(link["src"]["port_no"]))
-                if int(link["dst"]["dpid"]) == dpid:
-                    used_ports.add(int(link["dst"]["port_no"]))
+                if int(link["src"]["dpid"], 16) == dpid:
+                    used_ports.add(int(link["src"]["port_no"], 16))
+                if int(link["dst"]["dpid"], 16) == dpid:
+                    used_ports.add(int(link["dst"]["port_no"], 16))
             # Filter for ports that are up and not used
             available_ports = []
             for p in ports:
                 try:
-                    port_no = int(p["port_no"])  # Convert port_no to int (handles both string and int)
+                    port_no = int(p["port_no"], 16)  # Convert port_no to int (handles both string and int)
                     if port_no not in used_ports and p.get("curr_speed", 0) > 0:
                         available_ports.append(port_no)
                 except (ValueError, TypeError):
@@ -175,25 +180,26 @@ class NetworkFeatureExtractor:
     def update_graph(self, switches, links, hosts):
         self.topo_graph.clear()
         for switch in switches:
-            dpid = int(switch["dpid"])
+            dpid = int(switch["dpid"], 16)
             self.topo_graph.add_node(dpid, type="switch")
         for host in hosts:
             mac = host["mac"]
             self.topo_graph.add_node(mac, type="host")
         for link in links:
-            src_dpid = int(link["src"]["dpid"])
-            dst_dpid = int(link["dst"]["dpid"])
-            src_port = int(link["src"]["port_no"])
-            dst_port = int(link["dst"]["port_no"])
+            src_dpid = int(link["src"]["dpid"], 16)
+            dst_dpid = int(link["dst"]["dpid"], 16)
+            src_port = int(link["src"]["port_no"], 16)
+            dst_port = int(link["dst"]["port_no"], 16)
             self.topo_graph.add_edge(src_dpid, dst_dpid,
                                      src_port=src_port, dst_port=dst_port, type="switch-switch")
         for host in hosts:
             mac = host["mac"]
-            switch_dpid = int(host["port"]["dpid"])
-            port_no = int(host["port"]["port_no"])
+            switch_dpid = int(host["port"]["dpid"], 16)
+            port_no = int(host["port"]["port_no"], 16)
             self.topo_graph.add_edge(mac, switch_dpid,
                                      host_port="eth0", switch_port=port_no, type="host-switch")
         logging.info(f"Graph updated: {self.topo_graph.number_of_nodes()} nodes, {self.topo_graph.number_of_edges()} edges")
+        
 
     def extract_features(self):
         try:
@@ -202,10 +208,13 @@ class NetworkFeatureExtractor:
             logging.error(f"Failed to fetch topology data in extract_features: {e}")
             raise
         switch_stats = self.fetch_switch_stats(switches, links, hosts)
+        print("got switch stats")
         controller_load = self.fetch_controller_load()
         self.update_graph(switches, links, hosts)
+        print("updated graph")
 
-        switch_ids = [int(sw["dpid"]) for sw in switches]
+        switch_ids = [int(sw["dpid"], 16) for sw in switches]
+        print("got switch id")
         host_macs = [host["mac"] for host in hosts]
         nodes = []
         for sw_id in switch_ids:
@@ -224,6 +233,7 @@ class NetworkFeatureExtractor:
                 "avg_flow_duration": avg_duration
             }
             nodes.append({"id": sw_id, "attributes": attr})
+        print("nodes appended")
         for host in hosts:
             mac = host["mac"]
             ips = host.get("ipv4", []) + host.get("ipv6", [])
@@ -232,10 +242,10 @@ class NetworkFeatureExtractor:
 
         switch_switch_links = []
         for link in links:
-            src_dpid = int(link["src"]["dpid"])
-            dst_dpid = int(link["dst"]["dpid"])
-            src_port = int(link["src"]["port_no"])
-            dst_port = int(link["dst"]["port_no"])
+            src_dpid = int(link["src"]["dpid"], 16)
+            dst_dpid = int(link["dst"]["dpid"], 16)
+            src_port = int(link["src"]["port_no"], 16)
+            dst_port = int(link["dst"]["port_no"], 16)
             src_stats = switch_stats.get(src_dpid, {}).get("portstats", {}).get(src_port, {})
             dst_stats = switch_stats.get(dst_dpid, {}).get("portstats", {}).get(dst_port, {})
             src_desc = switch_stats.get(src_dpid, {}).get("portdesc", {}).get(src_port, {})
@@ -262,8 +272,8 @@ class NetworkFeatureExtractor:
         host_switch_links = []
         for host in hosts:
             mac = host["mac"]
-            switch_dpid = int(host["port"]["dpid"])
-            switch_port = int(host["port"]["port_no"])
+            switch_dpid = int(host["port"]["dpid"], 16)
+            switch_port = int(host["port"]["port_no"], 16)
             sw_stats = switch_stats.get(switch_dpid, {}).get("portstats", {}).get(switch_port, {})
             sw_desc = switch_stats.get(switch_dpid, {}).get("portdesc", {}).get(switch_port, {})
             bandwidth_mbps = sw_desc.get("curr_speed", 0) / 1000.0
