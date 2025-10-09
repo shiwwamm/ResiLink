@@ -123,7 +123,6 @@ class NetworkFeatureExtractor:
                 "flows": flows
             }
             
-        print("got stats")
 
         return switch_stats
 
@@ -146,10 +145,7 @@ class NetworkFeatureExtractor:
         return {"cpu_percent": controller_cpu, "memory_percent": controller_mem}
 
     def fetch_available_ports(self, dpid):
-        print("inside fetch_available ports")
-        print(dpid)
         try:
-            print(dpid)
             portdesc_resp = self.session.get(f"{self.ryu_api_url}/stats/portdesc/{dpid}")
             portdesc_resp.raise_for_status()
             ports = portdesc_resp.json().get(str(dpid), [])
@@ -214,7 +210,6 @@ class NetworkFeatureExtractor:
         print("updated graph")
 
         switch_ids = [int(sw["dpid"], 16) for sw in switches]
-        print("got switch id")
         host_macs = [host["mac"] for host in hosts]
         nodes = []
         for sw_id in switch_ids:
@@ -233,7 +228,6 @@ class NetworkFeatureExtractor:
                 "avg_flow_duration": avg_duration
             }
             nodes.append({"id": sw_id, "attributes": attr})
-        print("nodes appended")
         for host in hosts:
             mac = host["mac"]
             ips = host.get("ipv4", []) + host.get("ipv6", [])

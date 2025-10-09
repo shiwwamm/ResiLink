@@ -1,0 +1,67 @@
+2025-10-09 14:43:22,971 - INFO - Fetched switches: 51 switches
+2025-10-09 14:43:22,973 - INFO - Fetched links: 116 links
+2025-10-09 14:43:22,974 - INFO - Fetched hosts: 51 hosts
+2025-10-09 14:43:26,514 - INFO - Graph updated: 102 nodes, 117 edges
+2025-10-09 14:43:26,532 - INFO - Network features written to network_features.json
+2025-10-09 14:43:26,533 - INFO - Generated initial network_features.json
+2025-10-09 14:43:26,534 - INFO - Loaded original network features from network_features.json
+2025-10-09 14:43:26,538 - INFO - Fetched switches: 51 switches
+2025-10-09 14:43:26,540 - INFO - Fetched links: 116 links
+2025-10-09 14:43:26,541 - INFO - Fetched hosts: 51 hosts
+2025-10-09 14:43:29,194 - INFO - Graph updated: 102 nodes, 117 edges
+2025-10-09 14:43:29,224 - INFO - Network features written to network_features.json
+2025-10-09 14:43:29,226 - INFO - Loaded network features from network_features.json
+2025-10-09 14:43:29,286 - INFO - Generated embeddings successfully
+2025-10-09 14:43:29,286 - INFO - Built graph with 51 switches, 51 hosts
+2025-10-09 14:43:29,286 - INFO - Possible links: 1209
+2025-10-09 14:43:29,287 - INFO - Updated policy network for 1209 actions
+2025-10-09 14:43:30,067 - INFO - RL training completed, average reward: -0.0993
+2025-10-09 14:43:30,070 - INFO - Fetched 3 ports for switch 23
+2025-10-09 14:43:30,071 - INFO - Fetched switches: 51 switches
+2025-10-09 14:43:30,073 - INFO - Fetched links: 116 links
+2025-10-09 14:43:30,074 - INFO - Fetched hosts: 51 hosts
+2025-10-09 14:43:30,074 - WARNING - Invalid port_no LOCAL for switch 23, skipping
+2025-10-09 14:43:30,074 - WARNING - Invalid port_no 1 for switch 23, skipping
+2025-10-09 14:43:30,074 - WARNING - Invalid port_no 2 for switch 23, skipping
+2025-10-09 14:43:30,074 - INFO - Available ports for switch 23: []
+2025-10-09 14:43:30,076 - INFO - Fetched 4 ports for switch 42
+2025-10-09 14:43:30,077 - INFO - Fetched switches: 51 switches
+2025-10-09 14:43:30,079 - INFO - Fetched links: 116 links
+2025-10-09 14:43:30,080 - INFO - Fetched hosts: 51 hosts
+2025-10-09 14:43:30,080 - WARNING - Invalid port_no LOCAL for switch 42, skipping
+2025-10-09 14:43:30,080 - WARNING - Invalid port_no 1 for switch 42, skipping
+2025-10-09 14:43:30,080 - WARNING - Invalid port_no 2 for switch 42, skipping
+2025-10-09 14:43:30,080 - WARNING - Invalid port_no 3 for switch 42, skipping
+2025-10-09 14:43:30,080 - INFO - Available ports for switch 42: []
+2025-10-09 14:43:30,080 - INFO - Saved suggested link to suggested_link_cycle_1.json
+2025-10-09 14:43:30,099 - INFO - Updated network features saved to updated_network_features_cycle_1.json
+2025-10-09 14:43:35,125 - INFO - Fetched switches: 51 switches
+2025-10-09 14:43:35,170 - INFO - Fetched links: 116 links
+2025-10-09 14:43:35,173 - INFO - Fetched hosts: 51 hosts
+2025-10-09 14:43:37,493 - INFO - Graph updated: 102 nodes, 117 edges
+2025-10-09 14:43:37,526 - INFO - Network features written to network_features.json
+2025-10-09 14:43:37,528 - INFO - Loaded network features from network_features.json
+2025-10-09 14:43:37,535 - INFO - Generated embeddings successfully
+2025-10-09 14:43:37,536 - INFO - Possible links: 1208
+2025-10-09 14:43:37,537 - INFO - Updated policy network for 1208 actions
+2025-10-09 14:43:38,321 - INFO - RL training completed, average reward: -0.0992
+2025-10-09 14:43:38,324 - INFO - Fetched 3 ports for switch 18
+2025-10-09 14:43:38,325 - INFO - Fetched switches: 51 switches
+2025-10-09 14:43:38,327 - INFO - Fetched links: 116 links
+2025-10-09 14:43:38,328 - INFO - Fetched hosts: 51 hosts
+2025-10-09 14:43:38,328 - WARNING - Invalid port_no LOCAL for switch 18, skipping
+2025-10-09 14:43:38,328 - WARNING - Invalid port_no 1 for switch 18, skipping
+2025-10-09 14:43:38,328 - WARNING - Invalid port_no 2 for switch 18, skipping
+2025-10-09 14:43:38,328 - INFO - Available ports for switch 18: []
+2025-10-09 14:43:38,330 - INFO - Fetched 4 ports for switch 42
+2025-10-09 14:43:38,331 - INFO - Fetched switches: 51 switches
+2025-10-09 14:43:38,333 - INFO - Fetched links: 116 links
+2025-10-09 14:43:38,334 - INFO - Fetched hosts: 51 hosts
+2025-10-09 14:43:38,334 - WARNING - Invalid port_no LOCAL for switch 42, skipping
+2025-10-09 14:43:38,334 - WARNING - Invalid port_no 1 for switch 42, skipping
+2025-10-09 14:43:38,334 - WARNING - Invalid port_no 2 for switch 42, skipping
+2025-10-09 14:43:38,334 - WARNING - Invalid port_no 3 for switch 42, skipping
+2025-10-09 14:43:38,334 - INFO - Available ports for switch 42: []
+2025-10-09 14:43:38,334 - INFO - Saved suggested link to suggested_link_cycle_2.json
+2025-10-09 14:43:38,353 - INFO - Updated network features saved to updated_network_features_cycle_2.json
+2025-10-09 14:43:38,401 - INFO - Final network features with all suggested links saved to final_network_features.json

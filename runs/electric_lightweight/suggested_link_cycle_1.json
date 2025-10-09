@@ -1,0 +1,7 @@
+{
+    "src_dpid": "10",
+    "dst_dpid": "4",
+    "host_mac": null,
+    "src_port": "unavailable",
+    "dst_port": "unavailable"
+}

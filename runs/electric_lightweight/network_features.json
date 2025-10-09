@@ -1,0 +1,1691 @@
+{
+    "controller_data": {
+        "cpu_percent": 0.6,
+        "memory_percent": 44.3
+    },
+    "topology": {
+        "switches": [
+            15,
+            10,
+            14,
+            7,
+            8,
+            13,
+            18,
+            9,
+            271222497397056,
+            12,
+            11,
+            1,
+            3,
+            19,
+            16,
+            4,
+            5,
+            2,
+            6,
+            17
+        ],
+        "hosts": [
+            "52:63:82:0d:f5:43",
+            "aa:cc:f3:72:f3:95",
+            "ea:c9:df:44:8b:ab",
+            "82:db:a1:4c:b9:37",
+            "fa:36:d5:6b:d0:4d",
+            "46:0c:d9:a0:dc:ae",
+            "b6:fa:14:85:e6:ea",
+            "f2:ec:4e:56:bc:e9",
+            "ba:10:cb:92:f9:70",
+            "fa:4f:e4:5c:68:e5",
+            "46:2d:2f:28:da:07",
+            "7a:95:b5:9f:b6:e5",
+            "06:ae:86:50:55:7f",
+            "aa:c1:a1:a3:6e:d9",
+            "5e:29:01:9a:80:17",
+            "b6:66:66:2d:e7:11",
+            "ce:14:48:85:14:30",
+            "82:39:12:0e:31:a3",
+            "86:3f:0c:40:75:21",
+            "26:27:6e:a0:68:8d"
+        ],
+        "switch_switch_links": [
+            {
+                "src_dpid": 14,
+                "dst_dpid": 271222497397056,
+                "src_port": 1,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 961,
+                    "tx_bytes": 71203,
+                    "tx_dropped": 0,
+                    "rx_packets": 211,
+                    "rx_bytes": 17081,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 14,
+                "dst_dpid": 13,
+                "src_port": 4,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 907,
+                    "tx_bytes": 67015,
+                    "tx_dropped": 0,
+                    "rx_packets": 37,
+                    "rx_bytes": 3713,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 14,
+                "dst_dpid": 9,
+                "src_port": 3,
+                "dst_port": 5,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 791,
+                    "tx_bytes": 61597,
+                    "tx_dropped": 0,
+                    "rx_packets": 1142,
+                    "rx_bytes": 85293,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 10,
+                "dst_dpid": 11,
+                "src_port": 2,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 223,
+                    "tx_bytes": 18143,
+                    "tx_dropped": 0,
+                    "rx_packets": 999,
+                    "rx_bytes": 75687,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 14,
+                "dst_dpid": 16,
+                "src_port": 5,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1100,
+                    "tx_bytes": 81885,
+                    "tx_dropped": 0,
+                    "rx_packets": 546,
+                    "rx_bytes": 42555,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 1,
+                "dst_dpid": 271222497397056,
+                "src_port": 1,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 911,
+                    "tx_bytes": 69677,
+                    "tx_dropped": 0,
+                    "rx_packets": 39,
+                    "rx_bytes": 3833,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 18,
+                "dst_dpid": 19,
+                "src_port": 2,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 880,
+                    "tx_bytes": 64325,
+                    "tx_dropped": 0,
+                    "rx_packets": 37,
+                    "rx_bytes": 3713,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 18,
+                "dst_dpid": 17,
+                "src_port": 1,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 232,
+                    "tx_bytes": 18485,
+                    "tx_dropped": 0,
+                    "rx_packets": 956,
+                    "rx_bytes": 70785,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 9,
+                "dst_dpid": 7,
+                "src_port": 1,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1089,
+                    "tx_bytes": 84849,
+                    "tx_dropped": 0,
+                    "rx_packets": 1087,
+                    "rx_bytes": 83377,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 6,
+                "dst_dpid": 7,
+                "src_port": 4,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 389,
+                    "tx_bytes": 30679,
+                    "tx_dropped": 0,
+                    "rx_packets": 768,
+                    "rx_bytes": 55029,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 15,
+                "dst_dpid": 16,
+                "src_port": 2,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 893,
+                    "tx_bytes": 65823,
+                    "tx_dropped": 0,
+                    "rx_packets": 43,
+                    "rx_bytes": 4073,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 17,
+                "dst_dpid": 16,
+                "src_port": 1,
+                "dst_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 399,
+                    "tx_bytes": 31229,
+                    "tx_dropped": 0,
+                    "rx_packets": 1034,
+                    "rx_bytes": 76837,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 15,
+                "dst_dpid": 9,
+                "src_port": 1,
+                "dst_port": 6,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 212,
+                    "tx_bytes": 17609,
+                    "tx_dropped": 0,
+                    "rx_packets": 998,
+                    "rx_bytes": 74131,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 8,
+                "dst_dpid": 9,
+                "src_port": 3,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 219,
+                    "tx_bytes": 17883,
+                    "tx_dropped": 0,
+                    "rx_packets": 1006,
+                    "rx_bytes": 74765,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 13,
+                "dst_dpid": 9,
+                "src_port": 1,
+                "dst_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 232,
+                    "tx_bytes": 18485,
+                    "tx_dropped": 0,
+                    "rx_packets": 1009,
+                    "rx_bytes": 74685,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 12,
+                "dst_dpid": 9,
+                "src_port": 1,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 232,
+                    "tx_bytes": 18485,
+                    "tx_dropped": 0,
+                    "rx_packets": 1017,
+                    "rx_bytes": 75357,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 11,
+                "dst_dpid": 2,
+                "src_port": 1,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 369,
+                    "tx_bytes": 29933,
+                    "tx_dropped": 0,
+                    "rx_packets": 1052,
+                    "rx_bytes": 80059,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 19,
+                "dst_dpid": 2,
+                "src_port": 1,
+                "dst_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 236,
+                    "tx_bytes": 18725,
+                    "tx_dropped": 0,
+                    "rx_packets": 1026,
+                    "rx_bytes": 77995,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 3,
+                "dst_dpid": 2,
+                "src_port": 3,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1097,
+                    "tx_bytes": 84429,
+                    "tx_dropped": 0,
+                    "rx_packets": 659,
+                    "rx_bytes": 51869,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 16,
+                "dst_dpid": 2,
+                "src_port": 1,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 896,
+                    "tx_bytes": 65965,
+                    "tx_dropped": 0,
+                    "rx_packets": 42,
+                    "rx_bytes": 4013,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 12,
+                "dst_dpid": 13,
+                "src_port": 2,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 894,
+                    "tx_bytes": 65715,
+                    "tx_dropped": 0,
+                    "rx_packets": 38,
+                    "rx_bytes": 3773,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 9,
+                "dst_dpid": 13,
+                "src_port": 4,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1009,
+                    "tx_bytes": 74685,
+                    "tx_dropped": 0,
+                    "rx_packets": 232,
+                    "rx_bytes": 18485,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 3,
+                "dst_dpid": 1,
+                "src_port": 2,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 766,
+                    "tx_bytes": 60453,
+                    "tx_dropped": 0,
+                    "rx_packets": 1093,
+                    "rx_bytes": 84041,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 4,
+                "dst_dpid": 1,
+                "src_port": 1,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1068,
+                    "tx_bytes": 82131,
+                    "tx_dropped": 0,
+                    "rx_packets": 877,
+                    "rx_bytes": 68775,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 3,
+                "dst_dpid": 271222497397056,
+                "src_port": 1,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 936,
+                    "tx_bytes": 70429,
+                    "tx_dropped": 0,
+                    "rx_packets": 40,
+                    "rx_bytes": 3893,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 16,
+                "dst_dpid": 17,
+                "src_port": 4,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1034,
+                    "tx_bytes": 76837,
+                    "tx_dropped": 0,
+                    "rx_packets": 399,
+                    "rx_bytes": 31229,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 7,
+                "dst_dpid": 9,
+                "src_port": 3,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1087,
+                    "tx_bytes": 83377,
+                    "tx_dropped": 0,
+                    "rx_packets": 1089,
+                    "rx_bytes": 84849,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 4,
+                "dst_dpid": 7,
+                "src_port": 2,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 956,
+                    "tx_bytes": 75119,
+                    "tx_dropped": 0,
+                    "rx_packets": 1062,
+                    "rx_bytes": 81281,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 9,
+                "dst_dpid": 15,
+                "src_port": 6,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 998,
+                    "tx_bytes": 74131,
+                    "tx_dropped": 0,
+                    "rx_packets": 212,
+                    "rx_bytes": 17609,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 1,
+                "dst_dpid": 4,
+                "src_port": 3,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 877,
+                    "tx_bytes": 68775,
+                    "tx_dropped": 0,
+                    "rx_packets": 1068,
+                    "rx_bytes": 82131,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 7,
+                "dst_dpid": 4,
+                "src_port": 1,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1062,
+                    "tx_bytes": 81281,
+                    "tx_dropped": 0,
+                    "rx_packets": 956,
+                    "rx_bytes": 75119,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 9,
+                "dst_dpid": 12,
+                "src_port": 3,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1017,
+                    "tx_bytes": 75357,
+                    "tx_dropped": 0,
+                    "rx_packets": 232,
+                    "rx_bytes": 18485,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 5,
+                "dst_dpid": 6,
+                "src_port": 2,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 228,
+                    "tx_bytes": 18261,
+                    "tx_dropped": 0,
+                    "rx_packets": 747,
+                    "rx_bytes": 53081,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 7,
+                "dst_dpid": 6,
+                "src_port": 2,
+                "dst_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 768,
+                    "tx_bytes": 55029,
+                    "tx_dropped": 0,
+                    "rx_packets": 389,
+                    "rx_bytes": 30679,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 9,
+                "dst_dpid": 14,
+                "src_port": 5,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1142,
+                    "tx_bytes": 85293,
+                    "tx_dropped": 0,
+                    "rx_packets": 791,
+                    "rx_bytes": 61597,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 6,
+                "dst_dpid": 14,
+                "src_port": 3,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 704,
+                    "tx_bytes": 49465,
+                    "tx_dropped": 0,
+                    "rx_packets": 38,
+                    "rx_bytes": 3773,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 271222497397056,
+                "dst_dpid": 14,
+                "src_port": 3,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 211,
+                    "tx_bytes": 17081,
+                    "tx_dropped": 0,
+                    "rx_packets": 962,
+                    "rx_bytes": 71273,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 16,
+                "dst_dpid": 14,
+                "src_port": 2,
+                "dst_port": 5,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 546,
+                    "tx_bytes": 42555,
+                    "tx_dropped": 0,
+                    "rx_packets": 1100,
+                    "rx_bytes": 81885,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 11,
+                "dst_dpid": 10,
+                "src_port": 2,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 999,
+                    "tx_bytes": 75687,
+                    "tx_dropped": 0,
+                    "rx_packets": 223,
+                    "rx_bytes": 18143,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 19,
+                "dst_dpid": 10,
+                "src_port": 2,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 949,
+                    "tx_bytes": 71179,
+                    "tx_dropped": 0,
+                    "rx_packets": 36,
+                    "rx_bytes": 3653,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 17,
+                "dst_dpid": 18,
+                "src_port": 2,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 956,
+                    "tx_bytes": 70785,
+                    "tx_dropped": 0,
+                    "rx_packets": 232,
+                    "rx_bytes": 18485,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 1,
+                "dst_dpid": 3,
+                "src_port": 2,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1093,
+                    "tx_bytes": 84041,
+                    "tx_dropped": 0,
+                    "rx_packets": 766,
+                    "rx_bytes": 60453,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 2,
+                "dst_dpid": 3,
+                "src_port": 2,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 659,
+                    "tx_bytes": 51869,
+                    "tx_dropped": 0,
+                    "rx_packets": 1097,
+                    "rx_bytes": 84429,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 2,
+                "dst_dpid": 11,
+                "src_port": 3,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1052,
+                    "tx_bytes": 80059,
+                    "tx_dropped": 0,
+                    "rx_packets": 369,
+                    "rx_bytes": 29933,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 9,
+                "dst_dpid": 8,
+                "src_port": 2,
+                "dst_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1006,
+                    "tx_bytes": 74765,
+                    "tx_dropped": 0,
+                    "rx_packets": 219,
+                    "rx_bytes": 17883,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "src_dpid": 6,
+                "dst_dpid": 8,
+                "src_port": 2,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 705,
+                    "tx_bytes": 49525,
+                    "tx_dropped": 0,
+                    "rx_packets": 38,
+                    "rx_bytes": 3773,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 5,
+                "dst_dpid": 8,
+                "src_port": 1,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 701,
+                    "tx_bytes": 49339,
+                    "tx_dropped": 0,
+                    "rx_packets": 37,
+                    "rx_bytes": 3713,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 2,
+                "dst_dpid": 19,
+                "src_port": 4,
+                "dst_port": 1,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1026,
+                    "tx_bytes": 77995,
+                    "tx_dropped": 0,
+                    "rx_packets": 236,
+                    "rx_bytes": 18725,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "src_dpid": 6,
+                "dst_dpid": 5,
+                "src_port": 1,
+                "dst_port": 2,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 747,
+                    "tx_bytes": 53081,
+                    "tx_dropped": 0,
+                    "rx_packets": 228,
+                    "rx_bytes": 18261,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            }
+        ],
+        "host_switch_links": [
+            {
+                "host_mac": "52:63:82:0d:f5:43",
+                "switch_dpid": 1,
+                "host_port": "eth0",
+                "switch_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 952,
+                    "tx_bytes": 73153,
+                    "tx_dropped": 0,
+                    "rx_packets": 190,
+                    "rx_bytes": 14684,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "aa:cc:f3:72:f3:95",
+                "switch_dpid": 271222497397056,
+                "host_port": "eth0",
+                "switch_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 944,
+                    "tx_bytes": 70315,
+                    "tx_dropped": 0,
+                    "rx_packets": 201,
+                    "rx_bytes": 14698,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "ea:c9:df:44:8b:ab",
+                "switch_dpid": 10,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 999,
+                    "tx_bytes": 75649,
+                    "tx_dropped": 0,
+                    "rx_packets": 183,
+                    "rx_bytes": 14446,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "82:db:a1:4c:b9:37",
+                "switch_dpid": 11,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 992,
+                    "tx_bytes": 74945,
+                    "tx_dropped": 0,
+                    "rx_packets": 175,
+                    "rx_bytes": 14082,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "fa:36:d5:6b:d0:4d",
+                "switch_dpid": 12,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 991,
+                    "tx_bytes": 73673,
+                    "tx_dropped": 0,
+                    "rx_packets": 194,
+                    "rx_bytes": 14908,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "46:0c:d9:a0:dc:ae",
+                "switch_dpid": 13,
+                "host_port": "eth0",
+                "switch_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 989,
+                    "tx_bytes": 73513,
+                    "tx_dropped": 0,
+                    "rx_packets": 194,
+                    "rx_bytes": 14908,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "b6:fa:14:85:e6:ea",
+                "switch_dpid": 14,
+                "host_port": "eth0",
+                "switch_port": 6,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 999,
+                    "tx_bytes": 74153,
+                    "tx_dropped": 0,
+                    "rx_packets": 194,
+                    "rx_bytes": 14908,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "f2:ec:4e:56:bc:e9",
+                "switch_dpid": 15,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 977,
+                    "tx_bytes": 72747,
+                    "tx_dropped": 0,
+                    "rx_packets": 176,
+                    "rx_bytes": 14152,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "ba:10:cb:92:f9:70",
+                "switch_dpid": 16,
+                "host_port": "eth0",
+                "switch_port": 5,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 982,
+                    "tx_bytes": 72863,
+                    "tx_dropped": 0,
+                    "rx_packets": 194,
+                    "rx_bytes": 14908,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "fa:4f:e4:5c:68:e5",
+                "switch_dpid": 17,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 967,
+                    "tx_bytes": 71265,
+                    "tx_dropped": 0,
+                    "rx_packets": 194,
+                    "rx_bytes": 14908,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "host_mac": "46:2d:2f:28:da:07",
+                "switch_dpid": 18,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 958,
+                    "tx_bytes": 70905,
+                    "tx_dropped": 0,
+                    "rx_packets": 194,
+                    "rx_bytes": 14908,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "7a:95:b5:9f:b6:e5",
+                "switch_dpid": 19,
+                "host_port": "eth0",
+                "switch_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 1022,
+                    "tx_bytes": 77753,
+                    "tx_dropped": 0,
+                    "rx_packets": 194,
+                    "rx_bytes": 14908,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "host_mac": "06:ae:86:50:55:7f",
+                "switch_dpid": 2,
+                "host_port": "eth0",
+                "switch_port": 5,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 986,
+                    "tx_bytes": 74561,
+                    "tx_dropped": 0,
+                    "rx_packets": 190,
+                    "rx_bytes": 14684,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "host_mac": "aa:c1:a1:a3:6e:d9",
+                "switch_dpid": 3,
+                "host_port": "eth0",
+                "switch_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 987,
+                    "tx_bytes": 74623,
+                    "tx_dropped": 0,
+                    "rx_packets": 172,
+                    "rx_bytes": 13928,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "5e:29:01:9a:80:17",
+                "switch_dpid": 4,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 970,
+                    "tx_bytes": 74247,
+                    "tx_dropped": 0,
+                    "rx_packets": 172,
+                    "rx_bytes": 13928,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "host_mac": "b6:66:66:2d:e7:11",
+                "switch_dpid": 5,
+                "host_port": "eth0",
+                "switch_port": 3,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 741,
+                    "tx_bytes": 52737,
+                    "tx_dropped": 0,
+                    "rx_packets": 190,
+                    "rx_bytes": 14684,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "host_mac": "ce:14:48:85:14:30",
+                "switch_dpid": 6,
+                "host_port": "eth0",
+                "switch_port": 5,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 747,
+                    "tx_bytes": 53063,
+                    "tx_dropped": 0,
+                    "rx_packets": 190,
+                    "rx_bytes": 14684,
+                    "rx_dropped": 0,
+                    "duration_sec": 72
+                }
+            },
+            {
+                "host_mac": "82:39:12:0e:31:a3",
+                "switch_dpid": 7,
+                "host_port": "eth0",
+                "switch_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 636,
+                    "tx_bytes": 45137,
+                    "tx_dropped": 0,
+                    "rx_packets": 172,
+                    "rx_bytes": 13928,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "86:3f:0c:40:75:21",
+                "switch_dpid": 9,
+                "host_port": "eth0",
+                "switch_port": 7,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 998,
+                    "tx_bytes": 74357,
+                    "tx_dropped": 0,
+                    "rx_packets": 172,
+                    "rx_bytes": 13928,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            },
+            {
+                "host_mac": "26:27:6e:a0:68:8d",
+                "switch_dpid": 8,
+                "host_port": "eth0",
+                "switch_port": 4,
+                "bandwidth_mbps": 0.0,
+                "stats": {
+                    "tx_packets": 979,
+                    "tx_bytes": 73093,
+                    "tx_dropped": 0,
+                    "rx_packets": 181,
+                    "rx_bytes": 14306,
+                    "rx_dropped": 0,
+                    "duration_sec": 71
+                }
+            }
+        ]
+    },
+    "nodes": [
+        {
+            "id": 15,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 12,
+                "total_packets": 965,
+                "total_bytes": 68642,
+                "avg_flow_duration": 19.979666666666663
+            }
+        },
+        {
+            "id": 10,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 8,
+                "total_packets": 1941,
+                "total_bytes": 143101,
+                "avg_flow_duration": 33.616
+            }
+        },
+        {
+            "id": 14,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 30,
+                "total_packets": 1920,
+                "total_bytes": 131163,
+                "avg_flow_duration": 11.339866666666667
+            }
+        },
+        {
+            "id": 7,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 80,
+                "total_packets": 2096,
+                "total_bytes": 159462,
+                "avg_flow_duration": 29.589662499999992
+            }
+        },
+        {
+            "id": 8,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 11,
+                "total_packets": 2422,
+                "total_bytes": 169068,
+                "avg_flow_duration": 28.810727272727274
+            }
+        },
+        {
+            "id": 13,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 12,
+                "total_packets": 2793,
+                "total_bytes": 202352,
+                "avg_flow_duration": 26.609333333333336
+            }
+        },
+        {
+            "id": 18,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 11,
+                "total_packets": 930,
+                "total_bytes": 65958,
+                "avg_flow_duration": 21.63263636363637
+            }
+        },
+        {
+            "id": 9,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 60,
+                "total_packets": 1474,
+                "total_bytes": 96200,
+                "avg_flow_duration": 6.601783333333333
+            }
+        },
+        {
+            "id": 271222497397056,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 9,
+                "total_packets": 2822,
+                "total_bytes": 209450,
+                "avg_flow_duration": 34.93911111111111
+            }
+        },
+        {
+            "id": 12,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 11,
+                "total_packets": 987,
+                "total_bytes": 69260,
+                "avg_flow_duration": 21.893727272727276
+            }
+        },
+        {
+            "id": 11,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 21,
+                "total_packets": 1047,
+                "total_bytes": 74728,
+                "avg_flow_duration": 12.951428571428572
+            }
+        },
+        {
+            "id": 1,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 23,
+                "total_packets": 1117,
+                "total_bytes": 78746,
+                "avg_flow_duration": 12.573913043478258
+            }
+        },
+        {
+            "id": 3,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 19,
+                "total_packets": 1094,
+                "total_bytes": 77636,
+                "avg_flow_duration": 14.19489473684211
+            }
+        },
+        {
+            "id": 19,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 8,
+                "total_packets": 1961,
+                "total_bytes": 140657,
+                "avg_flow_duration": 33.84025
+            }
+        },
+        {
+            "id": 16,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 20,
+                "total_packets": 2118,
+                "total_bytes": 147517,
+                "avg_flow_duration": 15.3517
+            }
+        },
+        {
+            "id": 4,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 24,
+                "total_packets": 1144,
+                "total_bytes": 80192,
+                "avg_flow_duration": 12.414083333333332
+            }
+        },
+        {
+            "id": 5,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 5,
+                "total_packets": 741,
+                "total_bytes": 50214,
+                "avg_flow_duration": 44.6846
+            }
+        },
+        {
+            "id": 2,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 21,
+                "total_packets": 2103,
+                "total_bytes": 149665,
+                "avg_flow_duration": 14.878714285714285
+            }
+        },
+        {
+            "id": 6,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 7,
+                "total_packets": 826,
+                "total_bytes": 55604,
+                "avg_flow_duration": 33.03171428571428
+            }
+        },
+        {
+            "id": 17,
+            "attributes": {
+                "type": "switch",
+                "num_flows": 19,
+                "total_packets": 1033,
+                "total_bytes": 70962,
+                "avg_flow_duration": 13.969578947368419
+            }
+        },
+        {
+            "id": "52:63:82:0d:f5:43",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.2",
+                    "::",
+                    "fe80::5063:82ff:fe0d:f543"
+                ]
+            }
+        },
+        {
+            "id": "aa:cc:f3:72:f3:95",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.1",
+                    "fe80::a8cc:f3ff:fe72:f395"
+                ]
+            }
+        },
+        {
+            "id": "ea:c9:df:44:8b:ab",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.11",
+                    "fe80::e8c9:dfff:fe44:8bab"
+                ]
+            }
+        },
+        {
+            "id": "82:db:a1:4c:b9:37",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.12",
+                    "fe80::80db:a1ff:fe4c:b937"
+                ]
+            }
+        },
+        {
+            "id": "fa:36:d5:6b:d0:4d",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.13",
+                    "fe80::f836:d5ff:fe6b:d04d"
+                ]
+            }
+        },
+        {
+            "id": "46:0c:d9:a0:dc:ae",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.14",
+                    "fe80::440c:d9ff:fea0:dcae"
+                ]
+            }
+        },
+        {
+            "id": "b6:fa:14:85:e6:ea",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.15",
+                    "fe80::b4fa:14ff:fe85:e6ea"
+                ]
+            }
+        },
+        {
+            "id": "f2:ec:4e:56:bc:e9",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.16",
+                    "fe80::f0ec:4eff:fe56:bce9"
+                ]
+            }
+        },
+        {
+            "id": "ba:10:cb:92:f9:70",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.17",
+                    "fe80::b810:cbff:fe92:f970"
+                ]
+            }
+        },
+        {
+            "id": "fa:4f:e4:5c:68:e5",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.18",
+                    "fe80::f84f:e4ff:fe5c:68e5"
+                ]
+            }
+        },
+        {
+            "id": "46:2d:2f:28:da:07",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.19",
+                    "fe80::442d:2fff:fe28:da07"
+                ]
+            }
+        },
+        {
+            "id": "7a:95:b5:9f:b6:e5",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.20",
+                    "fe80::7895:b5ff:fe9f:b6e5"
+                ]
+            }
+        },
+        {
+            "id": "06:ae:86:50:55:7f",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.3",
+                    "fe80::4ae:86ff:fe50:557f"
+                ]
+            }
+        },
+        {
+            "id": "aa:c1:a1:a3:6e:d9",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.4",
+                    "fe80::a8c1:a1ff:fea3:6ed9"
+                ]
+            }
+        },
+        {
+            "id": "5e:29:01:9a:80:17",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.5",
+                    "fe80::5c29:1ff:fe9a:8017"
+                ]
+            }
+        },
+        {
+            "id": "b6:66:66:2d:e7:11",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.6",
+                    "fe80::b466:66ff:fe2d:e711"
+                ]
+            }
+        },
+        {
+            "id": "ce:14:48:85:14:30",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.7",
+                    "fe80::cc14:48ff:fe85:1430"
+                ]
+            }
+        },
+        {
+            "id": "82:39:12:0e:31:a3",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.8",
+                    "fe80::8039:12ff:fe0e:31a3"
+                ]
+            }
+        },
+        {
+            "id": "86:3f:0c:40:75:21",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.10",
+                    "fe80::843f:cff:fe40:7521"
+                ]
+            }
+        },
+        {
+            "id": "26:27:6e:a0:68:8d",
+            "attributes": {
+                "type": "host",
+                "ips": [
+                    "10.0.0.9",
+                    "fe80::2427:6eff:fea0:688d"
+                ]
+            }
+        }
+    ],
+    "centralities": {
+        "degree": {
+            "15": 0.07692307692307693,
+            "10": 0.07692307692307693,
+            "14": 0.15384615384615385,
+            "7": 0.10256410256410256,
+            "8": 0.10256410256410256,
+            "13": 0.10256410256410256,
+            "18": 0.07692307692307693,
+            "9": 0.1794871794871795,
+            "271222497397056": 0.10256410256410256,
+            "12": 0.07692307692307693,
+            "11": 0.07692307692307693,
+            "1": 0.10256410256410256,
+            "3": 0.10256410256410256,
+            "19": 0.10256410256410256,
+            "16": 0.1282051282051282,
+            "4": 0.07692307692307693,
+            "5": 0.07692307692307693,
+            "2": 0.1282051282051282,
+            "6": 0.1282051282051282,
+            "17": 0.07692307692307693,
+            "52:63:82:0d:f5:43": 0.02564102564102564,
+            "aa:cc:f3:72:f3:95": 0.02564102564102564,
+            "ea:c9:df:44:8b:ab": 0.02564102564102564,
+            "82:db:a1:4c:b9:37": 0.02564102564102564,
+            "fa:36:d5:6b:d0:4d": 0.02564102564102564,
+            "46:0c:d9:a0:dc:ae": 0.02564102564102564,
+            "b6:fa:14:85:e6:ea": 0.02564102564102564,
+            "f2:ec:4e:56:bc:e9": 0.02564102564102564,
+            "ba:10:cb:92:f9:70": 0.02564102564102564,
+            "fa:4f:e4:5c:68:e5": 0.02564102564102564,
+            "46:2d:2f:28:da:07": 0.02564102564102564,
+            "7a:95:b5:9f:b6:e5": 0.02564102564102564,
+            "06:ae:86:50:55:7f": 0.02564102564102564,
+            "aa:c1:a1:a3:6e:d9": 0.02564102564102564,
+            "5e:29:01:9a:80:17": 0.02564102564102564,
+            "b6:66:66:2d:e7:11": 0.02564102564102564,
+            "ce:14:48:85:14:30": 0.02564102564102564,
+            "82:39:12:0e:31:a3": 0.02564102564102564,
+            "86:3f:0c:40:75:21": 0.02564102564102564,
+            "26:27:6e:a0:68:8d": 0.02564102564102564
+        },
+        "betweenness": {
+            "15": 0.1083220872694557,
+            "10": 0.05668016194331984,
+            "14": 0.39244264507422394,
+            "7": 0.11758884390463338,
+            "8": 0.07467386414754835,
+            "13": 0.07512370670265409,
+            "18": 0.06207827260458839,
+            "9": 0.25083220872694556,
+            "271222497397056": 0.1263157894736842,
+            "12": 0.05128205128205128,
+            "11": 0.09176788124156544,
+            "1": 0.10778227620332882,
+            "3": 0.14385964912280705,
+            "19": 0.13225371120107962,
+            "16": 0.3873144399460189,
+            "4": 0.0832208726945569,
+            "5": 0.05128205128205128,
+            "2": 0.33279352226720643,
+            "6": 0.1721997300944669,
+            "17": 0.10796221322537111,
+            "52:63:82:0d:f5:43": 0.0,
+            "aa:cc:f3:72:f3:95": 0.0,
+            "ea:c9:df:44:8b:ab": 0.0,
+            "82:db:a1:4c:b9:37": 0.0,
+            "fa:36:d5:6b:d0:4d": 0.0,
+            "46:0c:d9:a0:dc:ae": 0.0,
+            "b6:fa:14:85:e6:ea": 0.0,
+            "f2:ec:4e:56:bc:e9": 0.0,
+            "ba:10:cb:92:f9:70": 0.0,
+            "fa:4f:e4:5c:68:e5": 0.0,
+            "46:2d:2f:28:da:07": 0.0,
+            "7a:95:b5:9f:b6:e5": 0.0,
+            "06:ae:86:50:55:7f": 0.0,
+            "aa:c1:a1:a3:6e:d9": 0.0,
+            "5e:29:01:9a:80:17": 0.0,
+            "b6:66:66:2d:e7:11": 0.0,
+            "ce:14:48:85:14:30": 0.0,
+            "82:39:12:0e:31:a3": 0.0,
+            "86:3f:0c:40:75:21": 0.0,
+            "26:27:6e:a0:68:8d": 0.0
+        },
+        "closeness": {
+            "15": 0.33620689655172414,
+            "10": 0.22941176470588234,
+            "14": 0.3979591836734694,
+            "7": 0.3,
+            "8": 0.2826086956521739,
+            "13": 0.325,
+            "18": 0.26,
+            "9": 0.35454545454545455,
+            "271222497397056": 0.34210526315789475,
+            "12": 0.2708333333333333,
+            "11": 0.2708333333333333,
+            "1": 0.3,
+            "3": 0.3305084745762712,
+            "19": 0.2826086956521739,
+            "16": 0.375,
+            "4": 0.2867647058823529,
+            "5": 0.2671232876712329,
+            "2": 0.3482142857142857,
+            "6": 0.3305084745762712,
+            "17": 0.29545454545454547,
+            "52:63:82:0d:f5:43": 0.23214285714285715,
+            "aa:cc:f3:72:f3:95": 0.2565789473684211,
+            "ea:c9:df:44:8b:ab": 0.1875,
+            "82:db:a1:4c:b9:37": 0.21428571428571427,
+            "fa:36:d5:6b:d0:4d": 0.21428571428571427,
+            "46:0c:d9:a0:dc:ae": 0.2468354430379747,
+            "b6:fa:14:85:e6:ea": 0.2867647058823529,
+            "f2:ec:4e:56:bc:e9": 0.2532467532467532,
+            "ba:10:cb:92:f9:70": 0.2746478873239437,
+            "fa:4f:e4:5c:68:e5": 0.22941176470588234,
+            "46:2d:2f:28:da:07": 0.2074468085106383,
+            "7a:95:b5:9f:b6:e5": 0.2215909090909091,
+            "06:ae:86:50:55:7f": 0.26,
+            "aa:c1:a1:a3:6e:d9": 0.25,
+            "5e:29:01:9a:80:17": 0.22413793103448276,
+            "b6:66:66:2d:e7:11": 0.21195652173913043,
+            "ce:14:48:85:14:30": 0.25,
+            "82:39:12:0e:31:a3": 0.23214285714285715,
+            "86:3f:0c:40:75:21": 0.2635135135135135,
+            "26:27:6e:a0:68:8d": 0.2215909090909091
+        }
+    }
+}
