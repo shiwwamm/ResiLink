@@ -1210,3 +1210,104 @@ class EnhancedAcademicAPI(ControllerBase):
             error_response = {'error': str(e), 'timestamp': time.time()}
             body = json.dumps(error_response, indent=2)
             return Response(content_type='application/json', body=body, status=500)
+    
+    # Standard Ryu topology API endpoints for compatibility
+    @route('topology', '/v1.0/topology/switches', methods=['GET'])
+    def get_switches(self, req, **kwargs):
+        """Get all switches (standard Ryu API)."""
+        try:
+            switches = []
+            for dpid in self.controller.topology_data['switches'].keys():
+                switches.append({
+                    'dpid': hex(dpid),
+                    'ports': []
+                })
+            
+            body = json.dumps(switches, indent=2)
+            return Response(content_type='application/json', body=body)
+        except Exception as e:
+            error_response = {'error': str(e)}
+            body = json.dumps(error_response, indent=2)
+            return Response(content_type='application/json', body=body, status=500)
+    
+    @route('topology', '/v1.0/topology/links', methods=['GET'])
+    def get_links(self, req, **kwargs):
+        """Get all links (standard Ryu API)."""
+        try:
+            links = []
+            for link_id, link_data in self.controller.topology_data['links'].items():
+                links.append({
+                    'src': {
+                        'dpid': hex(link_data['src_dpid']),
+                        'port_no': hex(link_data['src_port'])
+                    },
+                    'dst': {
+                        'dpid': hex(link_data['dst_dpid']),
+                        'port_no': hex(link_data['dst_port'])
+                    }
+                })
+            
+            body = json.dumps(links, indent=2)
+            return Response(content_type='application/json', body=body)
+        except Exception as e:
+            error_response = {'error': str(e)}
+            body = json.dumps(error_response, indent=2)
+            return Response(content_type='application/json', body=body, status=500)
+    
+    @route('topology', '/v1.0/topology/hosts', methods=['GET'])
+    def get_hosts(self, req, **kwargs):
+        """Get all hosts (standard Ryu API)."""
+        try:
+            hosts = []
+            for mac, host_data in self.controller.topology_data['hosts'].items():
+                hosts.append({
+                    'mac': mac,
+                    'ipv4': host_data.get('ipv4', []),
+                    'ipv6': host_data.get('ipv6', []),
+                    'port': {
+                        'dpid': hex(host_data['port']['dpid']),
+                        'port_no': hex(host_data['port']['port_no'])
+                    }
+                })
+            
+            body = json.dumps(hosts, indent=2)
+            return Response(content_type='application/json', body=body)
+        except Exception as e:
+            error_response = {'error': str(e)}
+            body = json.dumps(error_response, indent=2)
+            return Response(content_type='application/json', body=body, status=500)
+    
+    @route('stats', '/stats/flow/{dpid}', methods=['GET'])
+    def get_flow_stats(self, req, **kwargs):
+        """Get flow statistics for a switch."""
+        try:
+            dpid = int(kwargs['dpid'])
+            flows = self.controller.topology_data.get('flows', {}).get(dpid, [])
+            
+            response = {str(dpid): flows}
+            body = json.dumps(response, indent=2, default=str)
+            return Response(content_type='application/json', body=body)
+        except Exception as e:
+            error_response = {'error': str(e)}
+            body = json.dumps(error_response, indent=2)
+            return Response(content_type='application/json', body=body, status=500)
+    
+    @route('stats', '/stats/port/{dpid}', methods=['GET'])
+    def get_port_stats(self, req, **kwargs):
+        """Get port statistics for a switch."""
+        try:
+            dpid = int(kwargs['dpid'])
+            ports = self.controller.topology_data.get('ports', {}).get(dpid, {})
+            
+            # Convert to list format
+            port_list = []
+            for port_no, port_data in ports.items():
+                port_list.append(port_data)
+            
+            response = {str(dpid): port_list}
+            body = json.dumps(response, indent=2, default=str)
+            return Response(content_type='application/json', body=body)
+        except Exception as e:
+            error_response = {'error': str(e)}
+            body = json.dumps(error_response, indent=2)
+            return Response(content_type='application/json', body=body, status=500)
