@@ -177,6 +177,236 @@ class AcademicFatTreeTopo(Topo):
                 self.addLink(host, edge_switch,
                            bw=100, delay='0.1ms', loss=0)
 
+class AcademicStarTopo(Topo):
+    """
+    Star topology for hub vulnerability testing.
+    
+    Academic justification: Tests single point of failure scenarios
+    and hub vulnerability (Albert et al. 2000).
+    """
+    
+    def __init__(self, n_spokes=4, **opts):
+        super(AcademicStarTopo, self).__init__(**opts)
+        
+        # Central hub switch
+        hub = self.addSwitch('s1')
+        
+        # Add spoke switches
+        spokes = []
+        for i in range(n_spokes):
+            spoke = self.addSwitch(f's{i+2}')
+            spokes.append(spoke)
+            # Connect to hub
+            self.addLink(hub, spoke, bw=1000, delay='1ms', loss=0)
+            
+            # Add hosts to each spoke
+            for j in range(2):
+                host = self.addHost(f'h{i+1}{j+1}', ip=f'10.0.{i+1}.{j+1}/24')
+                self.addLink(host, spoke, bw=100, delay='0.1ms', loss=0)
+
+class AcademicRingTopo(Topo):
+    """
+    Ring topology for path diversity testing.
+    
+    Academic justification: Tests moderate resilience with dual paths
+    and small-world optimization (Watts & Strogatz 1998).
+    """
+    
+    def __init__(self, n_switches=6, **opts):
+        super(AcademicRingTopo, self).__init__(**opts)
+        
+        # Add switches in ring
+        switches = []
+        for i in range(n_switches):
+            switch = self.addSwitch(f's{i+1}')
+            switches.append(switch)
+        
+        # Create ring connections
+        for i in range(n_switches):
+            next_switch = (i + 1) % n_switches
+            self.addLink(switches[i], switches[next_switch], 
+                        bw=1000, delay='1ms', loss=0)
+        
+        # Add hosts (every other switch)
+        for i in range(0, n_switches, 2):
+            for j in range(2):
+                host = self.addHost(f'h{i+1}{j+1}', ip=f'10.0.{i+1}.{j+1}/24')
+                self.addLink(host, switches[i], bw=100, delay='0.1ms', loss=0)
+
+class AcademicGridTopo(Topo):
+    """
+    2D Grid topology for mesh resilience testing.
+    
+    Academic justification: Tests 2D mesh networks common in
+    parallel computing and data centers (Dally & Towles 2004).
+    """
+    
+    def __init__(self, rows=3, cols=3, **opts):
+        super(AcademicGridTopo, self).__init__(**opts)
+        
+        self.rows = rows
+        self.cols = cols
+        
+        # Add switches in grid
+        switches = {}
+        for i in range(rows):
+            for j in range(cols):
+                switch_name = f's{i*cols + j + 1}'
+                switch = self.addSwitch(switch_name)
+                switches[(i, j)] = switch
+        
+        # Add horizontal links
+        for i in range(rows):
+            for j in range(cols - 1):
+                self.addLink(switches[(i, j)], switches[(i, j+1)],
+                           bw=1000, delay='1ms', loss=0)
+        
+        # Add vertical links
+        for i in range(rows - 1):
+            for j in range(cols):
+                self.addLink(switches[(i, j)], switches[(i+1, j)],
+                           bw=1000, delay='1ms', loss=0)
+        
+        # Add hosts to corner and center switches
+        host_positions = [(0, 0), (0, cols-1), (rows-1, 0), (rows-1, cols-1)]
+        if rows % 2 == 1 and cols % 2 == 1:  # Add center if odd dimensions
+            host_positions.append((rows//2, cols//2))
+        
+        host_counter = 1
+        for pos in host_positions:
+            if pos in switches:
+                for k in range(2):
+                    host = self.addHost(f'h{host_counter}', 
+                                      ip=f'10.0.0.{host_counter}/24')
+                    self.addLink(host, switches[pos], 
+                               bw=100, delay='0.1ms', loss=0)
+                    host_counter += 1
+
+class AcademicDisconnectedTopo(Topo):
+    """
+    Disconnected components topology for connectivity testing.
+    
+    Academic justification: Tests fundamental connectivity algorithms
+    and component bridging capabilities.
+    """
+    
+    def __init__(self, n_components=3, switches_per_component=2, **opts):
+        super(AcademicDisconnectedTopo, self).__init__(**opts)
+        
+        switch_counter = 1
+        host_counter = 1
+        
+        for comp in range(n_components):
+            # Create switches for this component
+            comp_switches = []
+            for i in range(switches_per_component):
+                switch = self.addSwitch(f's{switch_counter}')
+                comp_switches.append(switch)
+                switch_counter += 1
+            
+            # Connect switches within component (linear)
+            for i in range(len(comp_switches) - 1):
+                self.addLink(comp_switches[i], comp_switches[i+1],
+                           bw=1000, delay='1ms', loss=0)
+            
+            # Add hosts to first and last switch of component
+            for switch in [comp_switches[0], comp_switches[-1]]:
+                host = self.addHost(f'h{host_counter}', 
+                                  ip=f'10.0.{comp+1}.{host_counter}/24')
+                self.addLink(host, switch, bw=100, delay='0.1ms', loss=0)
+                host_counter += 1
+
+class AcademicBridgeTopo(Topo):
+    """
+    Bridge topology for critical link testing.
+    
+    Academic justification: Tests bridge identification and bypass
+    creation (Tarjan 1972 bridge-finding algorithm).
+    """
+    
+    def __init__(self, **opts):
+        super(AcademicBridgeTopo, self).__init__(**opts)
+        
+        # Left cluster
+        s1 = self.addSwitch('s1')
+        s2 = self.addSwitch('s2')
+        s3 = self.addSwitch('s3')
+        
+        # Bridge switch
+        s4 = self.addSwitch('s4')
+        
+        # Right cluster
+        s5 = self.addSwitch('s5')
+        s6 = self.addSwitch('s6')
+        s7 = self.addSwitch('s7')
+        
+        # Left cluster connections (triangle)
+        self.addLink(s1, s2, bw=1000, delay='1ms', loss=0)
+        self.addLink(s2, s3, bw=1000, delay='1ms', loss=0)
+        self.addLink(s3, s1, bw=1000, delay='1ms', loss=0)
+        
+        # Bridge connections (critical links)
+        self.addLink(s2, s4, bw=1000, delay='1ms', loss=0)  # Critical bridge
+        self.addLink(s4, s5, bw=1000, delay='1ms', loss=0)  # Critical bridge
+        
+        # Right cluster connections (triangle)
+        self.addLink(s5, s6, bw=1000, delay='1ms', loss=0)
+        self.addLink(s6, s7, bw=1000, delay='1ms', loss=0)
+        self.addLink(s7, s5, bw=1000, delay='1ms', loss=0)
+        
+        # Add hosts
+        hosts_switches = [s1, s3, s6, s7]
+        for i, switch in enumerate(hosts_switches):
+            host = self.addHost(f'h{i+1}', ip=f'10.0.0.{i+1}/24')
+            self.addLink(host, switch, bw=100, delay='0.1ms', loss=0)
+
+class RealWorldTopo(Topo):
+    """
+    Real-world topology loader for Internet Topology Zoo data.
+    
+    Academic justification: Testing on real network topologies
+    provides essential validation for practical deployment.
+    """
+    
+    def __init__(self, topology_file=None, **opts):
+        super(RealWorldTopo, self).__init__(**opts)
+        
+        if topology_file is None:
+            raise ValueError("topology_file parameter required for real-world topologies")
+        
+        # Load topology from JSON file
+        import json
+        with open(topology_file, 'r') as f:
+            topo_data = json.load(f)
+        
+        # Add switches
+        switches = {}
+        for node in topo_data['nodes']:
+            switches[node] = self.addSwitch(node)
+        
+        # Add links
+        for src, dst in topo_data['edges']:
+            self.addLink(switches[src], switches[dst], 
+                        bw=1000, delay='1ms', loss=0)
+        
+        # Add hosts to high-degree nodes
+        if 'centrality_analysis' in topo_data:
+            degree_centrality = topo_data['centrality_analysis']['degree_centrality']
+            high_degree_nodes = sorted(degree_centrality.keys(), 
+                                     key=lambda x: degree_centrality[x], reverse=True)
+            
+            # Add hosts to top 25% of nodes by degree
+            num_host_nodes = max(2, len(high_degree_nodes) // 4)
+            host_counter = 1
+            
+            for i, node in enumerate(high_degree_nodes[:num_host_nodes]):
+                for j in range(2):  # 2 hosts per selected switch
+                    host = self.addHost(f'h{host_counter}', 
+                                      ip=f'10.0.{i+1}.{j+1}/24')
+                    self.addLink(host, switches[node], 
+                               bw=100, delay='0.1ms', loss=0)
+                    host_counter += 1
+
 class AcademicCustomTopo(Topo):
     """
     Custom topology for specific resilience testing scenarios.
@@ -256,6 +486,18 @@ class MininetAcademicDemo:
             topo = AcademicTreeTopo(**topo_params)
         elif topology_type == 'fat_tree':
             topo = AcademicFatTreeTopo(**topo_params)
+        elif topology_type == 'star':
+            topo = AcademicStarTopo(**topo_params)
+        elif topology_type == 'ring':
+            topo = AcademicRingTopo(**topo_params)
+        elif topology_type == 'grid':
+            topo = AcademicGridTopo(**topo_params)
+        elif topology_type == 'disconnected':
+            topo = AcademicDisconnectedTopo(**topo_params)
+        elif topology_type == 'bridge':
+            topo = AcademicBridgeTopo(**topo_params)
+        elif topology_type == 'real_world':
+            topo = RealWorldTopo(**topo_params)
         elif topology_type == 'custom':
             topo = AcademicCustomTopo(**topo_params)
         else:
@@ -510,7 +752,7 @@ def main():
     """Main function with command-line interface."""
     parser = argparse.ArgumentParser(description='Enhanced ResiLink Mininet Topology Demo')
     
-    parser.add_argument('--topology', choices=['linear', 'tree', 'fat_tree', 'custom'],
+    parser.add_argument('--topology', choices=['linear', 'tree', 'fat_tree', 'star', 'ring', 'grid', 'disconnected', 'bridge', 'custom', 'real_world'],
                        default='linear', help='Topology type (default: linear)')
     parser.add_argument('--controller-ip', default='127.0.0.1',
                        help='Controller IP address (default: 127.0.0.1)')
@@ -532,6 +774,20 @@ def main():
                        help='Fanout for tree topology (default: 2)')
     parser.add_argument('--k', type=int, default=4,
                        help='K parameter for fat-tree topology (default: 4)')
+    
+    # New topology parameters
+    parser.add_argument('--spokes', type=int, default=4,
+                       help='Number of spokes for star topology (default: 4)')
+    parser.add_argument('--ring-size', type=int, default=6,
+                       help='Number of switches in ring topology (default: 6)')
+    parser.add_argument('--rows', type=int, default=3,
+                       help='Number of rows for grid topology (default: 3)')
+    parser.add_argument('--cols', type=int, default=3,
+                       help='Number of columns for grid topology (default: 3)')
+    parser.add_argument('--components', type=int, default=3,
+                       help='Number of disconnected components (default: 3)')
+    parser.add_argument('--real-world-file', 
+                       help='JSON file with real-world topology data')
     
     args = parser.parse_args()
     
@@ -564,6 +820,20 @@ def main():
             }
         elif args.topology == 'fat_tree':
             topo_params = {'k': args.k}
+        elif args.topology == 'star':
+            topo_params = {'n_spokes': args.spokes}
+        elif args.topology == 'ring':
+            topo_params = {'n_switches': args.ring_size}
+        elif args.topology == 'grid':
+            topo_params = {'rows': args.rows, 'cols': args.cols}
+        elif args.topology == 'disconnected':
+            topo_params = {'n_components': args.components, 'switches_per_component': 2}
+        elif args.topology == 'bridge':
+            topo_params = {}  # Bridge topology has fixed structure
+        elif args.topology == 'real_world':
+            if not args.real_world_file:
+                raise ValueError("--real-world-file required for real_world topology")
+            topo_params = {'topology_file': args.real_world_file}
         
         # Create and start network
         demo.create_network(args.topology, **topo_params)
