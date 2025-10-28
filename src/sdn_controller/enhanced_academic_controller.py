@@ -150,6 +150,20 @@ class EnhancedAcademicController(simple_switch_13.SimpleSwitch13):
         
         logging.info("Enhanced Academic Controller initialized for ResiLink integration")
     
+    def add_flow(self, datapath, priority, match, actions, buffer_id=None):
+        """Add a flow entry to the switch."""
+        ofproto = datapath.ofproto
+        parser = datapath.ofproto_parser
+
+        inst = [parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS, actions)]
+        if buffer_id:
+            mod = parser.OFPFlowMod(datapath=datapath, buffer_id=buffer_id,
+                                    priority=priority, match=match, instructions=inst)
+        else:
+            mod = parser.OFPFlowMod(datapath=datapath, priority=priority,
+                                    match=match, instructions=inst)
+        datapath.send_msg(mod)
+    
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
         """Handle switch connection with comprehensive monitoring."""
@@ -330,8 +344,48 @@ class EnhancedAcademicController(simple_switch_13.SimpleSwitch13):
         """Enhanced packet handling with academic performance monitoring."""
         start_time = time.time()
         
-        # Call parent handler for basic switching
-        super().packet_in_handler(ev)
+        # Handle packet processing (basic switching logic)
+        msg = ev.msg
+        datapath = msg.datapath
+        ofproto = datapath.ofproto
+        parser = datapath.ofproto_parser
+        in_port = msg.match['in_port']
+
+        pkt = packet.Packet(msg.data)
+        eth = pkt.get_protocols(ethernet.ethernet)[0]
+
+        if eth.ethertype == ether_types.ETH_TYPE_LLDP:
+            # ignore lldp packet
+            return
+        
+        dst = eth.dst
+        src = eth.src
+        dpid = datapath.id
+
+        # Learn MAC address to avoid FLOOD next time
+        self.mac_to_port = getattr(self, 'mac_to_port', {})
+        self.mac_to_port.setdefault(dpid, {})
+        self.mac_to_port[dpid][src] = in_port
+
+        if dst in self.mac_to_port[dpid]:
+            out_port = self.mac_to_port[dpid][dst]
+        else:
+            out_port = ofproto.OFPP_FLOOD
+
+        actions = [parser.OFPActionOutput(out_port)]
+
+        # Install a flow to avoid packet_in next time
+        if out_port != ofproto.OFPP_FLOOD:
+            match = parser.OFPMatch(in_port=in_port, eth_dst=dst, eth_src=src)
+            self.add_flow(datapath, 1, match, actions)
+
+        data = None
+        if msg.buffer_id == ofproto.OFP_NO_BUFFER:
+            data = msg.data
+
+        out = parser.OFPPacketOut(datapath=datapath, buffer_id=msg.buffer_id,
+                                  in_port=in_port, actions=actions, data=data)
+        datapath.send_msg(out)
         
         # Academic performance monitoring
         msg = ev.msg
