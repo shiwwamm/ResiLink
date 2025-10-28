@@ -1121,7 +1121,7 @@ class EnhancedAcademicAPI(ControllerBase):
         try:
             metrics = self.controller.get_enhanced_academic_metrics()
             body = json.dumps(metrics, indent=2, default=str)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e), 'timestamp': time.time()}
             body = json.dumps(error_response, indent=2)
@@ -1148,7 +1148,7 @@ class EnhancedAcademicAPI(ControllerBase):
             }
             
             body = json.dumps(topology, indent=2, default=str)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e), 'timestamp': time.time()}
             body = json.dumps(error_response, indent=2)
@@ -1174,7 +1174,7 @@ class EnhancedAcademicAPI(ControllerBase):
             }
             
             body = json.dumps(analysis, indent=2, default=str)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e), 'timestamp': time.time()}
             body = json.dumps(error_response, indent=2)
@@ -1205,7 +1205,7 @@ class EnhancedAcademicAPI(ControllerBase):
             }
             
             body = json.dumps(features, indent=2, default=str)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e), 'timestamp': time.time()}
             body = json.dumps(error_response, indent=2)
@@ -1224,7 +1224,7 @@ class EnhancedAcademicAPI(ControllerBase):
                 })
             
             body = json.dumps(switches, indent=2)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e)}
             body = json.dumps(error_response, indent=2)
@@ -1248,7 +1248,7 @@ class EnhancedAcademicAPI(ControllerBase):
                 })
             
             body = json.dumps(links, indent=2)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e)}
             body = json.dumps(error_response, indent=2)
@@ -1271,7 +1271,7 @@ class EnhancedAcademicAPI(ControllerBase):
                 })
             
             body = json.dumps(hosts, indent=2)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e)}
             body = json.dumps(error_response, indent=2)
@@ -1286,7 +1286,7 @@ class EnhancedAcademicAPI(ControllerBase):
             
             response = {str(dpid): flows}
             body = json.dumps(response, indent=2, default=str)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e)}
             body = json.dumps(error_response, indent=2)
@@ -1306,7 +1306,7 @@ class EnhancedAcademicAPI(ControllerBase):
             
             response = {str(dpid): port_list}
             body = json.dumps(response, indent=2, default=str)
-            return Response(content_type='application/json', body=body)
+            return Response(content_type='application/json', body=body.encode('utf-8'))
         except Exception as e:
             error_response = {'error': str(e)}
             body = json.dumps(error_response, indent=2)
