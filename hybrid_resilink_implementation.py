@@ -606,7 +606,7 @@ class HybridResiLinkImplementation:
     - Ensemble: Principled combination (Breiman 2001)
     """
     
-    def __init__(self, ryu_api_url="http://localhost:8080"):
+    def __init__(self, ryu_api_url="http://localhost:8080", reward_threshold=0.95):
         self.ryu_api_url = ryu_api_url
         self.feature_extractor = NetworkFeatureExtractor(ryu_api_url)
         
@@ -618,10 +618,15 @@ class HybridResiLinkImplementation:
         self.gnn_weight = 0.6    # Pattern learning importance
         self.rl_weight = 0.4     # Adaptive optimization importance
         
+        # Optimization control
+        self.reward_threshold = reward_threshold  # Stop when network quality reaches this
+        self.suggested_links = set()  # Track already suggested links
+        self.network_quality_history = []  # Track network improvement
+        
         # Results storage
         self.optimization_history = []
         
-        logging.info("Hybrid ResiLink Implementation initialized")
+        logging.info(f"Hybrid ResiLink Implementation initialized (reward threshold: {reward_threshold})")
     
     def run_optimization_cycle(self, training_mode=True):
         """Run single optimization cycle."""
@@ -698,7 +703,7 @@ class HybridResiLinkImplementation:
         return G
     
     def _get_candidate_switch_pairs(self, network_data):
-        """Get candidate switch pairs for new links."""
+        """Get candidate switch pairs for new links, excluding already suggested ones."""
         switches = network_data['topology']['switches']
         existing_links = set()
         
@@ -707,14 +712,20 @@ class HybridResiLinkImplementation:
             existing_links.add((min(link['src_dpid'], link['dst_dpid']), 
                               max(link['src_dpid'], link['dst_dpid'])))
         
+        # Add already suggested links to exclusion set
+        for suggested_link in self.suggested_links:
+            existing_links.add(suggested_link)
+        
         # Generate candidate pairs
         candidates = []
         for i in range(len(switches)):
             for j in range(i + 1, len(switches)):
                 src, dst = switches[i], switches[j]
-                if (min(src, dst), max(src, dst)) not in existing_links:
+                normalized_pair = (min(src, dst), max(src, dst))
+                if normalized_pair not in existing_links:
                     candidates.append((src, dst))
         
+        logging.info(f"Found {len(candidates)} candidate links (excluding {len(self.suggested_links)} already suggested)")
         return candidates
     
     def _get_gnn_predictions(self, network_data, candidate_edges):
@@ -859,8 +870,214 @@ class HybridResiLinkImplementation:
         best_idx = np.argmax(combined_scores)
         return candidate_edges[best_idx]
     
+    def _calculate_network_quality(self, network_data):
+        """
+        Calculate overall network quality score.
+        
+        Based on academic metrics:
+        - Connectivity: Is network fully connected?
+        - Density: How close to complete graph?
+        - Resilience: Algebraic connectivity, robustness
+        - Efficiency: Average path length, global efficiency
+        """
+        try:
+            G = self._build_networkx_graph(network_data)
+            
+            if G.number_of_nodes() < 2:
+                return 0.0
+            
+            # Connectivity score (30%)
+            connectivity_score = 1.0 if nx.is_connected(G) else 0.0
+            
+            # Density score (25%) - how close to complete graph
+            current_density = nx.density(G)
+            density_score = current_density
+            
+            # Resilience score (25%)
+            resilience_score = 0.0
+            if nx.is_connected(G):
+                try:
+                    # Algebraic connectivity (Fiedler 1973)
+                    algebraic_conn = nx.algebraic_connectivity(G)
+                    # Normalize by number of nodes
+                    resilience_score = min(algebraic_conn / G.number_of_nodes(), 1.0)
+                except:
+                    resilience_score = 0.5 if nx.is_connected(G) else 0.0
+            
+            # Efficiency score (20%)
+            efficiency_score = nx.global_efficiency(G)
+            
+            # Weighted combination
+            quality = (0.30 * connectivity_score + 
+                      0.25 * density_score + 
+                      0.25 * resilience_score + 
+                      0.20 * efficiency_score)
+            
+            return quality
+            
+        except Exception as e:
+            logging.error(f"Error calculating network quality: {e}")
+            return 0.0
+    
+    def _analyze_link_strategic_value(self, src_dpid, dst_dpid, network_data, candidate_edges, combined_scores):
+        """
+        Provide comprehensive academic justification for link selection.
+        
+        Based on network theory and vulnerability analysis:
+        - Centrality analysis (Freeman 1977, Brandes 2001)
+        - Vulnerability assessment (Albert et al. 2000, Holme et al. 2002)
+        - Load balancing theory (Kleinrock 1976)
+        - Resilience optimization (Fiedler 1973)
+        """
+        try:
+            G = self._build_networkx_graph(network_data)
+            centralities = network_data.get('centralities', {})
+            
+            # Get centrality scores for both nodes
+            src_degree = centralities.get('degree', {}).get(str(src_dpid), 0.0)
+            dst_degree = centralities.get('degree', {}).get(str(dst_dpid), 0.0)
+            src_betweenness = centralities.get('betweenness', {}).get(str(src_dpid), 0.0)
+            dst_betweenness = centralities.get('betweenness', {}).get(str(dst_dpid), 0.0)
+            src_closeness = centralities.get('closeness', {}).get(str(src_dpid), 0.0)
+            dst_closeness = centralities.get('closeness', {}).get(str(dst_dpid), 0.0)
+            
+            # Calculate strategic reasons
+            strategic_analysis = []
+            priority_score = 0.0
+            
+            # 1. Bottleneck Relief (Kleinrock 1976 - Queueing Theory)
+            if src_betweenness > 0.3 or dst_betweenness > 0.3:
+                strategic_analysis.append({
+                    'reason': 'Bottleneck Relief',
+                    'academic_basis': 'Kleinrock (1976) - Queueing Theory in Computer Networks',
+                    'explanation': f'Node {src_dpid if src_betweenness > dst_betweenness else dst_dpid} has high betweenness centrality ({max(src_betweenness, dst_betweenness):.3f}), indicating traffic bottleneck. Adding bypass link reduces congestion.',
+                    'impact': 'Reduces average path length and distributes traffic load'
+                })
+                priority_score += 0.3
+            
+            # 2. Vulnerability Reduction (Albert et al. 2000)
+            if src_degree > np.mean([centralities.get('degree', {}).get(str(n), 0.0) for n in network_data['topology']['switches']]) * 1.5:
+                strategic_analysis.append({
+                    'reason': 'Vulnerability Mitigation',
+                    'academic_basis': 'Albert et al. (2000) - Error and Attack Tolerance of Complex Networks',
+                    'explanation': f'Node {src_dpid} has high degree centrality ({src_degree:.3f}), making it vulnerable to targeted attacks. Adding redundant paths reduces single-point-of-failure risk.',
+                    'impact': 'Improves network robustness against node failures'
+                })
+                priority_score += 0.25
+            
+            # 3. Path Diversity Enhancement (Holme et al. 2002)
+            try:
+                current_paths = len(list(nx.all_simple_paths(G, src_dpid, dst_dpid, cutoff=4)))
+                if current_paths <= 1:
+                    strategic_analysis.append({
+                        'reason': 'Path Diversity Enhancement',
+                        'academic_basis': 'Holme et al. (2002) - Attack Vulnerability of Complex Networks',
+                        'explanation': f'Nodes {src_dpid} and {dst_dpid} have limited path diversity ({current_paths} paths). Direct connection creates alternative routes.',
+                        'impact': 'Increases fault tolerance and load distribution options'
+                    })
+                    priority_score += 0.2
+            except:
+                # Nodes not connected - high priority
+                strategic_analysis.append({
+                    'reason': 'Network Connectivity',
+                    'academic_basis': 'Fiedler (1973) - Algebraic Connectivity of Graphs',
+                    'explanation': f'Nodes {src_dpid} and {dst_dpid} are in different connected components. Link bridges network partitions.',
+                    'impact': 'Fundamental connectivity improvement - highest priority'
+                })
+                priority_score += 0.5
+            
+            # 4. Load Balancing Optimization (Freeman 1977)
+            degree_imbalance = abs(src_degree - dst_degree)
+            if degree_imbalance > 0.2:
+                strategic_analysis.append({
+                    'reason': 'Load Balancing',
+                    'academic_basis': 'Freeman (1977) - Centrality in Social Networks',
+                    'explanation': f'Degree imbalance between nodes ({src_degree:.3f} vs {dst_degree:.3f}). Link helps balance network load distribution.',
+                    'impact': 'Improves traffic distribution and reduces hotspots'
+                })
+                priority_score += 0.15
+            
+            # 5. Algebraic Connectivity Improvement (Fiedler 1973)
+            if nx.is_connected(G):
+                try:
+                    current_algebraic = nx.algebraic_connectivity(G)
+                    if current_algebraic < 0.5:
+                        strategic_analysis.append({
+                            'reason': 'Algebraic Connectivity Enhancement',
+                            'academic_basis': 'Fiedler (1973) - Algebraic Connectivity of Graphs',
+                            'explanation': f'Current algebraic connectivity ({current_algebraic:.3f}) is low. Link improves network synchronizability and robustness.',
+                            'impact': 'Enhances network stability and convergence properties'
+                        })
+                        priority_score += 0.1
+                except:
+                    pass
+            
+            # 6. Efficiency Optimization (Latora & Marchiori 2001)
+            current_efficiency = nx.global_efficiency(G)
+            if current_efficiency < 0.8:
+                strategic_analysis.append({
+                    'reason': 'Global Efficiency Improvement',
+                    'academic_basis': 'Latora & Marchiori (2001) - Efficient Behavior of Small-World Networks',
+                    'explanation': f'Current global efficiency ({current_efficiency:.3f}) indicates suboptimal routing. Link reduces average path lengths.',
+                    'impact': 'Improves communication efficiency and reduces latency'
+                })
+                priority_score += 0.1
+            
+            # Determine primary strategic reason
+            if not strategic_analysis:
+                strategic_analysis.append({
+                    'reason': 'Network Densification',
+                    'academic_basis': 'Barabási & Albert (1999) - Scale-Free Networks',
+                    'explanation': 'Adding link increases network density and provides additional routing options.',
+                    'impact': 'General network improvement'
+                })
+                priority_score = 0.05
+            
+            return {
+                'strategic_analysis': strategic_analysis,
+                'priority_score': priority_score,
+                'primary_reason': strategic_analysis[0]['reason'] if strategic_analysis else 'Network Improvement',
+                'node_characteristics': {
+                    'src_node': {
+                        'dpid': src_dpid,
+                        'degree_centrality': src_degree,
+                        'betweenness_centrality': src_betweenness,
+                        'closeness_centrality': src_closeness,
+                        'role': self._classify_node_role(src_degree, src_betweenness, src_closeness)
+                    },
+                    'dst_node': {
+                        'dpid': dst_dpid,
+                        'degree_centrality': dst_degree,
+                        'betweenness_centrality': dst_betweenness,
+                        'closeness_centrality': dst_closeness,
+                        'role': self._classify_node_role(dst_degree, dst_betweenness, dst_closeness)
+                    }
+                }
+            }
+            
+        except Exception as e:
+            logging.error(f"Error in strategic analysis: {e}")
+            return {
+                'strategic_analysis': [{'reason': 'Analysis Error', 'explanation': str(e)}],
+                'priority_score': 0.0,
+                'primary_reason': 'Unknown'
+            }
+    
+    def _classify_node_role(self, degree, betweenness, closeness):
+        """Classify node role based on centrality measures."""
+        if betweenness > 0.3:
+            return "Critical Hub (High Traffic Load)"
+        elif degree > 0.6:
+            return "Highly Connected Node"
+        elif closeness > 0.6:
+            return "Central Coordinator"
+        elif betweenness > 0.1:
+            return "Traffic Bridge"
+        else:
+            return "Peripheral Node"
+    
     def _create_link_suggestion(self, best_link, combined_scores, network_data):
-        """Create detailed link suggestion with implementation details."""
+        """Create detailed link suggestion with comprehensive academic justification."""
         src_dpid, dst_dpid = best_link
         
         # Get available ports
@@ -877,20 +1094,40 @@ class HybridResiLinkImplementation:
         
         score = combined_scores[best_idx] if best_idx is not None else 0.0
         
+        # Calculate network quality improvement
+        current_quality = self._calculate_network_quality(network_data)
+        
+        # Get comprehensive strategic analysis
+        strategic_analysis = self._analyze_link_strategic_value(src_dpid, dst_dpid, network_data, candidate_edges, combined_scores)
+        
+        # Add this link to suggested links for future exclusion
+        normalized_link = (min(src_dpid, dst_dpid), max(src_dpid, dst_dpid))
+        self.suggested_links.add(normalized_link)
+        
         return {
             'src_dpid': src_dpid,
             'dst_dpid': dst_dpid,
             'src_port': src_ports[0] if src_ports else 'unavailable',
             'dst_port': dst_ports[0] if dst_ports else 'unavailable',
             'score': float(score),
+            'network_quality': float(current_quality),
             'implementation_feasible': len(src_ports) > 0 and len(dst_ports) > 0,
             'available_src_ports': src_ports[:5],  # First 5 available
             'available_dst_ports': dst_ports[:5],
+            'strategic_justification': strategic_analysis,
+            'optimization_progress': {
+                'suggested_links_count': len(self.suggested_links),
+                'quality_threshold': self.reward_threshold,
+                'should_continue': current_quality < self.reward_threshold
+            },
             'academic_justification': {
+                'primary_reason': strategic_analysis.get('primary_reason', 'Network Improvement'),
                 'gnn_component': f'Graph pattern learning (Veličković et al. 2018) - weight: {self.gnn_weight}',
                 'rl_component': f'Adaptive optimization (Mnih et al. 2015) - weight: {self.rl_weight}',
                 'ensemble_method': 'Breiman (2001) - Random Forests ensemble theory',
-                'network_analysis': 'Freeman (1977) centrality measures, Holme et al. (2002) vulnerability analysis'
+                'network_theory': 'Freeman (1977), Albert et al. (2000), Holme et al. (2002), Fiedler (1973)',
+                'quality_metrics': f'Connectivity + Density + Resilience + Efficiency = {current_quality:.4f}',
+                'strategic_priority': f'{strategic_analysis.get("priority_score", 0.0):.3f}/1.0'
             },
             'ryu_implementation': {
                 'add_link_command': f'curl -X POST {self.ryu_api_url}/stats/flowentry/add -d \'{{"dpid": {src_dpid}, "match": {{}}, "actions": [{{"type": "OUTPUT", "port": {src_ports[0] if src_ports else 1}}}]}}\'',
@@ -899,11 +1136,12 @@ class HybridResiLinkImplementation:
         }
     
     def run_continuous_optimization(self, max_cycles=10, cycle_interval=60, training_mode=True):
-        """Run continuous optimization cycles."""
+        """Run continuous optimization cycles with intelligent stopping."""
         print(f"🚀 Starting Hybrid ResiLink Implementation")
-        print(f"🔄 Running {max_cycles} optimization cycles")
+        print(f"🔄 Running up to {max_cycles} optimization cycles")
         print(f"⏱️  Cycle interval: {cycle_interval} seconds")
         print(f"🤖 Training mode: {training_mode}")
+        print(f"🎯 Quality threshold: {self.reward_threshold}")
         print("=" * 60)
         
         successful_cycles = 0
@@ -917,9 +1155,33 @@ class HybridResiLinkImplementation:
                 
                 if result:
                     successful_cycles += 1
+                    quality = result.get('network_quality', 0.0)
+                    progress = result.get('optimization_progress', {})
+                    strategic = result.get('strategic_justification', {})
+                    
                     print(f"✅ Suggested Link: {result['src_dpid']} -> {result['dst_dpid']}")
                     print(f"📊 Score: {result['score']:.4f}")
+                    print(f"🌐 Network Quality: {quality:.4f} (threshold: {self.reward_threshold})")
+                    print(f"🎯 Primary Reason: {strategic.get('primary_reason', 'Network Improvement')}")
+                    print(f"⭐ Strategic Priority: {strategic.get('priority_score', 0.0):.3f}/1.0")
+                    
+                    # Show detailed strategic analysis
+                    strategic_analysis = strategic.get('strategic_analysis', [])
+                    if strategic_analysis:
+                        print(f"🧠 Academic Justification:")
+                        for analysis in strategic_analysis[:2]:  # Show top 2 reasons
+                            print(f"   • {analysis['reason']}: {analysis['explanation']}")
+                            print(f"     📚 Basis: {analysis['academic_basis']}")
+                    
+                    # Show node roles
+                    node_chars = strategic.get('node_characteristics', {})
+                    if node_chars:
+                        src_role = node_chars.get('src_node', {}).get('role', 'Unknown')
+                        dst_role = node_chars.get('dst_node', {}).get('role', 'Unknown')
+                        print(f"🏷️  Node Roles: {result['src_dpid']} ({src_role}) ↔ {result['dst_dpid']} ({dst_role})")
+                    
                     print(f"🔧 Implementation: {'Feasible' if result['implementation_feasible'] else 'Not feasible'}")
+                    print(f"📈 Progress: {len(self.suggested_links)} links suggested so far")
                     
                     if result['implementation_feasible']:
                         print(f"🔌 Ports: {result['src_port']} -> {result['dst_port']}")
@@ -929,14 +1191,29 @@ class HybridResiLinkImplementation:
                     with open(f'link_suggestion_cycle_{cycle + 1}.json', 'w') as f:
                         json.dump(result, f, indent=2, default=str)
                     
+                    # Check if we should stop (quality threshold reached)
+                    if quality >= self.reward_threshold:
+                        print(f"\n🎉 OPTIMIZATION COMPLETE!")
+                        print(f"🏆 Network quality ({quality:.4f}) reached threshold ({self.reward_threshold})")
+                        print(f"🔗 Total links suggested: {len(self.suggested_links)}")
+                        break
+                    
+                    # Check if no more candidates available
+                    if not progress.get('should_continue', True):
+                        print(f"\n🏁 NO MORE CANDIDATES!")
+                        print(f"🔗 All beneficial links have been suggested: {len(self.suggested_links)}")
+                        break
+                    
                 else:
                     print(f"❌ No link suggestion generated")
+                    print(f"🏁 Optimization stopping - no more beneficial links found")
+                    break
                 
             except Exception as e:
                 print(f"💥 Cycle {cycle + 1} failed: {e}")
                 logging.error(f"Cycle {cycle + 1} failed: {e}")
             
-            # Wait before next cycle (except last one)
+            # Wait before next cycle (except last one or if stopping)
             if cycle < max_cycles - 1:
                 print(f"⏳ Waiting {cycle_interval} seconds...")
                 time.sleep(cycle_interval)
@@ -945,8 +1222,11 @@ class HybridResiLinkImplementation:
         print(f"\n" + "=" * 60)
         print(f"🏁 Optimization Complete")
         print(f"✅ Successful cycles: {successful_cycles}/{max_cycles}")
+        print(f"🔗 Total links suggested: {len(self.suggested_links)}")
         
         if successful_cycles > 0:
+            final_quality = self.network_quality_history[-1] if self.network_quality_history else 0.0
+            print(f"🌐 Final network quality: {final_quality:.4f}")
             print(f"📁 Results saved to individual JSON files")
             
             # Save complete history
@@ -954,6 +1234,20 @@ class HybridResiLinkImplementation:
                 json.dump(self.optimization_history, f, indent=2, default=str)
             
             print(f"📊 Complete history saved to 'hybrid_optimization_history.json'")
+            
+            # Save suggested links summary
+            summary = {
+                'total_links_suggested': len(self.suggested_links),
+                'suggested_links': list(self.suggested_links),
+                'final_quality': final_quality,
+                'quality_threshold': self.reward_threshold,
+                'optimization_complete': final_quality >= self.reward_threshold
+            }
+            
+            with open('optimization_summary.json', 'w') as f:
+                json.dump(summary, f, indent=2, default=str)
+            
+            print(f"📋 Summary saved to 'optimization_summary.json'")
         
         return successful_cycles
 
@@ -963,19 +1257,21 @@ def main():
     parser = argparse.ArgumentParser(description='Hybrid ResiLink Implementation')
     parser.add_argument('--ryu-url', default='http://localhost:8080',
                        help='Ryu controller API URL')
-    parser.add_argument('--max-cycles', type=int, default=5,
+    parser.add_argument('--max-cycles', type=int, default=10,
                        help='Maximum optimization cycles')
-    parser.add_argument('--cycle-interval', type=int, default=60,
+    parser.add_argument('--cycle-interval', type=int, default=30,
                        help='Interval between cycles (seconds)')
     parser.add_argument('--training-mode', action='store_true',
                        help='Enable RL training mode')
     parser.add_argument('--single-cycle', action='store_true',
                        help='Run single optimization cycle')
+    parser.add_argument('--reward-threshold', type=float, default=0.95,
+                       help='Network quality threshold to stop optimization (default: 0.95)')
     
     args = parser.parse_args()
     
     # Initialize implementation
-    implementation = HybridResiLinkImplementation(args.ryu_url)
+    implementation = HybridResiLinkImplementation(args.ryu_url, args.reward_threshold)
     
     try:
         if args.single_cycle:
