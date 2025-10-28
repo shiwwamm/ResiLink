@@ -45,8 +45,12 @@ class RealWorldTopologyImporter:
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(exist_ok=True)
         
-        # Internet Topology Zoo base URL
-        self.zoo_base_url = "http://www.topology-zoo.org/files/"
+        # Internet Topology Zoo URLs (updated working links)
+        self.zoo_base_url = "https://topology-zoo.org/files/"
+        self.zoo_archive_urls = [
+            "https://topology-zoo.org/files/archive.zip",  # Primary source
+            "https://topology-zoo.org/dataset.html"        # Fallback info page
+        ]
         
         # Curated list of interesting topologies
         self.recommended_topologies = {
@@ -162,11 +166,13 @@ class RealWorldTopologyImporter:
         """Download Internet Topology Zoo dataset."""
         print("📥 Downloading Internet Topology Zoo dataset...")
         
-        zoo_url = "http://www.topology-zoo.org/files/archive.zip"
+        # Try primary URL first
+        zoo_url = self.zoo_archive_urls[0]
         
         try:
+            print(f"🔗 Attempting download from: {zoo_url}")
             # Download the archive
-            response = requests.get(zoo_url, stream=True)
+            response = requests.get(zoo_url, stream=True, timeout=30)
             response.raise_for_status()
             
             # Save to temporary file
@@ -189,7 +195,13 @@ class RealWorldTopologyImporter:
             
         except Exception as e:
             print(f"❌ Failed to download Topology Zoo: {e}")
-            print("💡 You can manually download from: http://www.topology-zoo.org/")
+            print("💡 Alternative options:")
+            print("   1. Manual download from: https://topology-zoo.org/dataset.html")
+            print("   2. Use built-in sample topologies with --create-samples")
+            print("   3. Check network connectivity and try again")
+            
+            # Offer to create sample topologies instead
+            self._create_sample_topologies()
     
     def list_available_topologies(self):
         """List available topologies with academic information."""
@@ -446,6 +458,115 @@ topos = {{'{info['name'].lower().replace(' ', '_')}': {class_name}}}
         print(f"🎯 {len(test_suite['topologies'])} topologies in {suite_type} suite")
         
         return test_suite
+    
+    def _create_sample_topologies(self):
+        """Create sample real-world-like topologies as fallback."""
+        print("\n📝 Creating sample real-world-like topologies...")
+        
+        sample_topologies = {
+            "sample_research_network": {
+                "name": "Sample Research Network",
+                "nodes": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8"],
+                "edges": [
+                    ["s1", "s2"], ["s2", "s3"], ["s3", "s4"], ["s4", "s5"],
+                    ["s5", "s6"], ["s6", "s7"], ["s7", "s8"], ["s8", "s1"],
+                    ["s2", "s6"], ["s3", "s7"], ["s1", "s5"]  # Cross connections
+                ],
+                "type": "research",
+                "academic_value": "Sample - research network pattern",
+                "expected_improvement": 0.15
+            },
+            "sample_isp_backbone": {
+                "name": "Sample ISP Backbone",
+                "nodes": ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10"],
+                "edges": [
+                    ["s1", "s2"], ["s2", "s3"], ["s3", "s4"], ["s4", "s5"],
+                    ["s5", "s6"], ["s6", "s7"], ["s7", "s8"], ["s8", "s9"], ["s9", "s10"],
+                    ["s1", "s6"], ["s2", "s7"], ["s3", "s8"], ["s4", "s9"], ["s5", "s10"],
+                    ["s1", "s3"], ["s2", "s4"], ["s6", "s8"], ["s7", "s9"]  # Backbone redundancy
+                ],
+                "type": "isp",
+                "academic_value": "Sample - ISP backbone pattern",
+                "expected_improvement": 0.08
+            },
+            "sample_regional_network": {
+                "name": "Sample Regional Network",
+                "nodes": ["s1", "s2", "s3", "s4", "s5"],
+                "edges": [
+                    ["s1", "s2"], ["s2", "s3"], ["s3", "s4"], ["s4", "s5"],
+                    ["s1", "s3"], ["s2", "s4"]  # Limited redundancy
+                ],
+                "type": "regional",
+                "academic_value": "Sample - regional network pattern",
+                "expected_improvement": 0.25
+            }
+        }
+        
+        # Create sample topology files
+        for topo_id, topo_data in sample_topologies.items():
+            # Create NetworkX graph
+            G = nx.Graph()
+            G.add_nodes_from(topo_data["nodes"])
+            G.add_edges_from(topo_data["edges"])
+            
+            # Create JSON file
+            json_data = {
+                "name": topo_data["name"],
+                "source": "Sample topology for testing",
+                "academic_info": {
+                    "type": topo_data["type"],
+                    "academic_value": topo_data["academic_value"],
+                    "expected_improvement": topo_data["expected_improvement"],
+                    "test_focus": f"Sample {topo_data['type']} network testing"
+                },
+                "graph_properties": {
+                    "nodes": G.number_of_nodes(),
+                    "edges": G.number_of_edges(),
+                    "density": nx.density(G),
+                    "is_connected": nx.is_connected(G),
+                    "components": nx.number_connected_components(G)
+                },
+                "nodes": list(G.nodes()),
+                "edges": [[src, dst] for src, dst in G.edges()],
+                "centrality_analysis": {
+                    "degree_centrality": dict(nx.degree_centrality(G)),
+                    "betweenness_centrality": dict(nx.betweenness_centrality(G)),
+                    "closeness_centrality": dict(nx.closeness_centrality(G))
+                }
+            }
+            
+            # Save sample topology
+            sample_file = self.data_dir / f"{topo_id}.json"
+            with open(sample_file, 'w') as f:
+                json.dump(json_data, f, indent=2, default=str)
+            
+            print(f"   ✅ Created {topo_data['name']}: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges")
+        
+        print(f"\n💾 Sample topologies saved to {self.data_dir}/")
+        print("💡 Use these for testing while working on Internet Topology Zoo access")
+    
+    def test_sample_topology(self, sample_name):
+        """Test a sample topology."""
+        sample_file = self.data_dir / f"{sample_name}.json"
+        
+        if not sample_file.exists():
+            print(f"❌ Sample topology not found: {sample_name}")
+            print("💡 Available samples: sample_research_network, sample_isp_backbone, sample_regional_network")
+            return None
+        
+        print(f"🧪 Testing sample topology: {sample_name}")
+        
+        # Load sample data
+        with open(sample_file, 'r') as f:
+            topo_data = json.load(f)
+        
+        print(f"📊 Sample Network: {topo_data['name']}")
+        print(f"   Nodes: {topo_data['graph_properties']['nodes']}")
+        print(f"   Edges: {topo_data['graph_properties']['edges']}")
+        print(f"   Type: {topo_data['academic_info']['type'].title()}")
+        print(f"   Expected Improvement: {topo_data['academic_info']['expected_improvement']:.1%}")
+        
+        return topo_data
 
 def main():
     """Main function for real-world topology testing."""
@@ -462,6 +583,9 @@ def main():
                        help='Generate test suite for topology type')
     parser.add_argument('--data-dir', default='real_world_topologies',
                        help='Directory for topology data')
+    parser.add_argument('--create-samples', action='store_true',
+                       help='Create sample real-world-like topologies')
+    parser.add_argument('--test-sample', help='Test a sample topology')
     
     args = parser.parse_args()
     
@@ -490,6 +614,15 @@ def main():
         elif args.generate_suite:
             suite = importer.generate_test_suite(args.generate_suite)
             print(f"✅ Generated {args.generate_suite} test suite")
+        
+        elif args.create_samples:
+            importer._create_sample_topologies()
+            print("✅ Sample topologies created")
+        
+        elif args.test_sample:
+            result = importer.test_sample_topology(args.test_sample)
+            if result:
+                print(f"✅ Sample topology loaded: {args.test_sample}")
         
         else:
             print("🌐 Enhanced ResiLink Real-World Topology Importer")

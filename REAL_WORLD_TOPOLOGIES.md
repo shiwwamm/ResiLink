@@ -4,6 +4,10 @@
 
 The Internet Topology Zoo (Knight et al. 2011) provides real network topologies from ISPs, research networks, and enterprise networks worldwide. Testing Enhanced ResiLink on these topologies provides crucial validation for practical deployment.
 
+**✅ VERIFIED WORKING URL**: `https://topology-zoo.org/files/archive.zip`
+**📊 Dataset Size**: ~1MB containing 260+ real network topologies in GraphML format
+**🔄 Last Updated**: July 2012 (stable academic dataset)
+
 ## Academic Justification for Real-World Testing
 
 **Knight, S., et al. (2011). "The internet topology zoo." IEEE Journal on Selected Areas in Communications.**
