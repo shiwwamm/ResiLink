@@ -21,6 +21,17 @@ Authors: Research Team
 License: MIT
 """
 
-from .academic_controller import AcademicResilientController
+# Import controllers with optional dependencies
+try:
+    from .enhanced_academic_controller import EnhancedAcademicController
+    __all__ = ["EnhancedAcademicController"]
+except ImportError as e:
+    print(f"Warning: Could not import EnhancedAcademicController: {e}")
+    __all__ = []
 
-__all__ = ["AcademicResilientController"]
+try:
+    from .academic_controller import AcademicResilientController
+    __all__.append("AcademicResilientController")
+except ImportError as e:
+    print(f"Warning: Could not import AcademicResilientController (Flask required): {e}")
+    pass

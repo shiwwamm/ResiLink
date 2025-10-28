@@ -27,7 +27,7 @@ from ryu.controller.handler import CONFIG_DISPATCHER, MAIN_DISPATCHER
 from ryu.controller.handler import set_ev_cls
 from ryu.ofproto import ofproto_v1_3
 from ryu.lib.packet import packet, ethernet, ether_types
-from ryu.app.wsgi import ControllerWSGI, WSGIApplication, route
+from ryu.app.wsgi import ControllerBase, WSGIApplication, route
 from ryu.app import simple_switch_13
 from ryu.topology import event, switches
 from ryu.topology.api import get_switch, get_link, get_host
@@ -113,7 +113,7 @@ class EnhancedAcademicController(simple_switch_13.SimpleSwitch13):
     """
     
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
-    _CONTEXTS = {'wsgi': ControllerWSGI}
+    _CONTEXTS = {'wsgi': WSGIApplication}
     
     def __init__(self, *args, **kwargs):
         super(EnhancedAcademicController, self).__init__(*args, **kwargs)
@@ -1049,7 +1049,7 @@ class EnhancedAcademicController(simple_switch_13.SimpleSwitch13):
         return (total_usage / total_capacity) if total_capacity > 0 else 0.0
 
 
-class EnhancedAcademicAPI(object):
+class EnhancedAcademicAPI(ControllerBase):
     """Enhanced REST API for academic metrics with complete documentation."""
     
     def __init__(self, req, link, data, **config):
