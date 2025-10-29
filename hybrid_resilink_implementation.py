@@ -8,7 +8,7 @@ This script connects to your Mininet topology via Ryu controller and
 implements real link suggestions with academic justification.
 
 Usage:
-    python hybrid_resilink_implementation.py --max-cycles 5 --training-mode
+    python3 hybrid_resilink_implementation.py --max-cycles 5 --training-mode
 
 Academic Foundation:
 - GNN: Veličković et al. (2018) - Graph Attention Networks

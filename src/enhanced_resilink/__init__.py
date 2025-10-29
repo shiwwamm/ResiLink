@@ -12,7 +12,7 @@ This package provides hybrid optimization combining:
 
 Usage:
     # Use the main implementation script
-    python hybrid_resilink_implementation.py --training-mode
+    python3 hybrid_resilink_implementation.py --training-mode
     
     # Or import for custom usage
     from enhanced_resilink import HybridResiLinkImplementation

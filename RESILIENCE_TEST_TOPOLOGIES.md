@@ -19,7 +19,7 @@ H1-S1-S2-S3-S4-H2
 
 **Mininet Command:**
 ```bash
-sudo python examples/mininet_topology_demo.py --topology linear --switches 4 --hosts-per-switch 2
+sudo python3 examples/mininet_topology_demo.py --topology linear --switches 4 --hosts-per-switch 2
 ```
 
 ### **1.2 Star Topology**
@@ -54,7 +54,7 @@ H3-S1-S3-H2
 
 **Mininet Command:**
 ```bash
-sudo python examples/mininet_topology_demo.py --topology tree --depth 3 --fanout 2
+sudo python3 examples/mininet_topology_demo.py --topology tree --depth 3 --fanout 2
 ```
 
 ## 2. Moderately Resilient Topologies
@@ -111,7 +111,7 @@ Data center topology with multiple levels of redundancy
 
 **Mininet Command:**
 ```bash
-sudo python examples/mininet_topology_demo.py --topology fat_tree --k 4
+sudo python3 examples/mininet_topology_demo.py --topology fat_tree --k 4
 ```
 
 ### **3.2 Small-World Network**
@@ -254,16 +254,16 @@ For each topology, measure:
 
 ```bash
 # Basic vulnerability tests
-sudo python examples/mininet_topology_demo.py --topology linear --switches 4
-sudo python examples/mininet_topology_demo.py --topology tree --depth 3 --fanout 2
+sudo python3 examples/mininet_topology_demo.py --topology linear --switches 4
+sudo python3 examples/mininet_topology_demo.py --topology tree --depth 3 --fanout 2
 
 # Intermediate resilience tests  
-sudo python examples/mininet_topology_demo.py --topology custom --config ring_6.json
-sudo python examples/mininet_topology_demo.py --topology custom --config grid_3x3.json
+sudo python3 examples/mininet_topology_demo.py --topology custom --config ring_6.json
+sudo python3 examples/mininet_topology_demo.py --topology custom --config grid_3x3.json
 
 # Advanced resilience tests
-sudo python examples/mininet_topology_demo.py --topology fat_tree --k 4
-sudo python examples/mininet_topology_demo.py --topology custom --config scale_free.json
+sudo python3 examples/mininet_topology_demo.py --topology fat_tree --k 4
+sudo python3 examples/mininet_topology_demo.py --topology custom --config scale_free.json
 ```
 
 ## 10. Success Criteria

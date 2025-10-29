@@ -7,9 +7,9 @@ This script runs Enhanced ResiLink on multiple test topologies to validate
 resilience improvements with complete academic justification.
 
 Usage:
-    sudo python test_resilience_topologies.py --test-suite basic
-    sudo python test_resilience_topologies.py --test-suite advanced
-    sudo python test_resilience_topologies.py --topology star --analyze
+    sudo python3 test_resilience_topologies.py --test-suite basic
+    sudo python3 test_resilience_topologies.py --test-suite advanced
+    sudo python3 test_resilience_topologies.py --topology star --analyze
 """
 
 import subprocess
@@ -232,7 +232,7 @@ class ResilienceTestSuite:
         
     def _start_mininet_topology(self, topology, params):
         """Start Mininet with specified topology."""
-        cmd = ['python', 'examples/mininet_topology_demo.py', '--topology', topology]
+        cmd = ['python3', 'examples/mininet_topology_demo.py', '--topology', topology]
         
         # Add parameters
         for key, value in params.items():
@@ -251,7 +251,7 @@ class ResilienceTestSuite:
     def _run_optimization(self):
         """Run the hybrid optimization."""
         cmd = [
-            'python', 'hybrid_resilink_implementation.py',
+            'python3', 'hybrid_resilink_implementation.py',
             '--max-cycles', '5',
             '--cycle-interval', '10',
             '--training-mode',
@@ -411,7 +411,7 @@ def main():
     # Check if running as root
     if os.geteuid() != 0:
         print("❌ This script must be run as root (use sudo)")
-        print("   sudo python test_resilience_topologies.py")
+        print("   sudo python3 test_resilience_topologies.py")
         sys.exit(1)
     
     test_suite = ResilienceTestSuite()

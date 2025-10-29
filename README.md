@@ -47,14 +47,14 @@ ryu-manager src/sdn_controller/enhanced_academic_controller.py \
 #### 2. Create Network Topology
 ```bash
 # Terminal 2: Mininet topology (requires sudo)
-sudo python examples/mininet_topology_demo.py \
+sudo python3 examples/mininet_topology_demo.py \
     --topology linear --switches 4 --hosts-per-switch 2
 ```
 
 #### 3. Run Hybrid Optimization
 ```bash
 # Terminal 3: Hybrid implementation
-python hybrid_resilink_implementation.py --max-cycles 5 --training-mode
+python3 hybrid_resilink_implementation.py --max-cycles 5 --training-mode
 ```
 
 ## 📊 Academic Foundation
@@ -97,16 +97,16 @@ enhanced-resilink/
 ### Basic Usage
 ```bash
 # Run with default settings
-python hybrid_resilink_implementation.py
+python3 hybrid_resilink_implementation.py
 
 # Custom configuration
-python hybrid_resilink_implementation.py \
+python3 hybrid_resilink_implementation.py \
     --max-cycles 10 \
     --cycle-interval 30 \
     --training-mode
 
 # Single optimization cycle
-python hybrid_resilink_implementation.py --single-cycle
+python3 hybrid_resilink_implementation.py --single-cycle
 ```
 
 ### Command Line Options
@@ -144,22 +144,22 @@ python hybrid_resilink_implementation.py --single-cycle
 ### Network Topologies
 ```bash
 # Linear topology (basic testing)
-sudo python examples/mininet_topology_demo.py --topology linear --switches 5
+sudo python3 examples/mininet_topology_demo.py --topology linear --switches 5
 
 # Tree topology (hierarchical networks)  
-sudo python examples/mininet_topology_demo.py --topology tree --depth 3 --fanout 3
+sudo python3 examples/mininet_topology_demo.py --topology tree --depth 3 --fanout 3
 
 # Fat-tree topology (data center networks)
-sudo python examples/mininet_topology_demo.py --topology fat_tree --k 4
+sudo python3 examples/mininet_topology_demo.py --topology fat_tree --k 4
 ```
 
 ### Training Options
 ```bash
 # Enable RL training for adaptation
-python hybrid_resilink_implementation.py --training-mode
+python3 hybrid_resilink_implementation.py --training-mode
 
 # Continuous optimization with training
-python hybrid_resilink_implementation.py --max-cycles 20 --training-mode
+python3 hybrid_resilink_implementation.py --max-cycles 20 --training-mode
 ```
 
 ## 🎯 Academic Validation

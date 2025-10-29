@@ -205,9 +205,9 @@ def main():
     if passed == total:
         print("\n🎉 All tests passed! Enhanced ResiLink is ready to use!")
         print("\n🎯 Next steps:")
-        print("   1. Run: python examples/basic_usage.py")
+        print("   1. Run: python3 examples/basic_usage.py")
         print("   2. Review: docs/thesis_defense/defense_summary.md")
-        print("   3. Practice: python examples/hybrid_comparison.py (if hybrid available)")
+        print("   3. Practice: python3 examples/hybrid_comparison.py (if hybrid available)")
     else:
         print(f"\n⚠️  {total - passed} test(s) failed. Check the error messages above.")
         print("\n💡 Common solutions:")

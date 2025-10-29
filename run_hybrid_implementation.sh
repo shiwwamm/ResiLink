@@ -112,7 +112,7 @@ if [ "$MININET_AVAILABLE" = true ]; then
     echo "🏗️  Creating linear topology with 4 switches..."
     
     # Create topology in background
-    python examples/mininet_topology_demo.py \
+    python3 examples/mininet_topology_demo.py \
         --topology linear \
         --switches 4 \
         --hosts-per-switch 2 \
@@ -194,7 +194,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Run the implementation
-python hybrid_resilink_implementation.py \
+python3 hybrid_resilink_implementation.py \
     --ryu-url "http://localhost:8080" \
     --max-cycles $CYCLES \
     --cycle-interval $INTERVAL \

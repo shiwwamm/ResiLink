@@ -7,9 +7,9 @@ Comprehensive testing suite for real-world network topologies
 from Internet Topology Zoo with complete academic validation.
 
 Usage:
-    sudo python test_real_world_resilience.py --setup
-    sudo python test_real_world_resilience.py --test geant
-    sudo python test_real_world_resilience.py --test-suite research
+    sudo python3 test_real_world_resilience.py --setup
+    sudo python3 test_real_world_resilience.py --test geant
+    sudo python3 test_real_world_resilience.py --test-suite research
 """
 
 import subprocess
@@ -97,7 +97,7 @@ class RealWorldResilienceTest:
             # Start Mininet with real-world topology
             print(f"🌐 Starting Mininet with {info['name']}...")
             mininet_cmd = [
-                'python', 'examples/mininet_topology_demo.py',
+                'python3', 'examples/mininet_topology_demo.py',
                 '--topology', 'real_world',
                 '--real-world-file', str(json_file),
                 '--duration', '300'  # 5 minute timeout
@@ -195,7 +195,7 @@ class RealWorldResilienceTest:
     def _run_resilink_optimization(self, topology_id, info):
         """Run Enhanced ResiLink optimization."""
         cmd = [
-            'python', 'hybrid_resilink_implementation.py',
+            'python3', 'hybrid_resilink_implementation.py',
             '--max-cycles', '8',  # Reasonable for real networks
             '--cycle-interval', '15',  # Longer for stability
             '--training-mode',
@@ -411,7 +411,7 @@ def main():
     # Check if running as root
     if os.geteuid() != 0:
         print("❌ This script must be run as root (use sudo)")
-        print("   sudo python test_real_world_resilience.py --setup")
+        print("   sudo python3 test_real_world_resilience.py --setup")
         sys.exit(1)
     
     tester = RealWorldResilienceTest()
@@ -438,7 +438,7 @@ def main():
             print("🌐 Enhanced ResiLink Real-World Resilience Testing")
             print("Use --help for available options")
             print("\nQuick start:")
-            print("  sudo python test_real_world_resilience.py --setup")
+            print("  sudo python3 test_real_world_resilience.py --setup")
             print("  sudo python test_real_world_resilience.py --test geant")
             print("  sudo python test_real_world_resilience.py --test-suite research")
     

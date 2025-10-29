@@ -12,9 +12,9 @@ Academic Justification:
 - Practical deployment readiness testing
 
 Usage:
-    python real_world_topology_importer.py --download-zoo
-    python real_world_topology_importer.py --topology geant --test
-    python real_world_topology_importer.py --list-available
+    python3 real_world_topology_importer.py --download-zoo
+    python3 real_world_topology_importer.py --topology geant --test
+    python3 real_world_topology_importer.py --list-available
 """
 
 import requests
@@ -407,7 +407,7 @@ topos = {{'{info['name'].lower().replace(' ', '_')}': {class_name}}}
         
         print(f"✅ Real-world topology test setup complete for {info['name']}")
         print(f"💡 Use the generated Mininet file: {mininet_file}")
-        print(f"💡 Run: sudo python {mininet_file} to start the topology")
+        print(f"💡 Run: sudo python3 {mininet_file} to start the topology")
         
         return test_results
     
@@ -628,9 +628,9 @@ def main():
             print("🌐 Enhanced ResiLink Real-World Topology Importer")
             print("Use --help for available options")
             print("\nQuick start:")
-            print("  python real_world_topology_importer.py --download-zoo")
-            print("  python real_world_topology_importer.py --list-available")
-            print("  python real_world_topology_importer.py --topology geant --test")
+            print("  python3 real_world_topology_importer.py --download-zoo")
+            print("  python3 real_world_topology_importer.py --list-available")
+            print("  python3 real_world_topology_importer.py --topology geant --test")
     
     except Exception as e:
         print(f"❌ Error: {e}")

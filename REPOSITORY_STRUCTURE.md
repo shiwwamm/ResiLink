@@ -68,10 +68,10 @@ sudo ./run_hybrid_implementation.sh --cycles 5 --training
 ryu-manager src/sdn_controller/enhanced_academic_controller.py --observe-links
 
 # Terminal 2: Topology (requires sudo)
-sudo python examples/mininet_topology_demo.py --topology linear --switches 4
+sudo python3 examples/mininet_topology_demo.py --topology linear --switches 4
 
 # Terminal 3: Implementation
-python hybrid_resilink_implementation.py --max-cycles 5 --training-mode
+python3 hybrid_resilink_implementation.py --max-cycles 5 --training-mode
 ```
 
 ## 🎓 Academic Foundation

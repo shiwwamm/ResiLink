@@ -122,11 +122,11 @@ if __name__ == "__main__":
         
         if full_test:
             print("\n🎉 All tests passed! Internet Topology Zoo is accessible.")
-            print("💡 You can now use: python real_world_topology_importer.py --download-zoo")
+            print("💡 You can now use: python3 real_world_topology_importer.py --download-zoo")
         else:
             print("\n⚠️  Basic test passed but full download failed.")
             print("💡 Try the download again or check your internet connection.")
     else:
         print("\n❌ Basic connectivity test failed.")
         print("💡 Internet Topology Zoo may be temporarily unavailable.")
-        print("💡 Use sample topologies instead: python real_world_topology_importer.py --create-samples")
+        print("💡 Use sample topologies instead: python3 real_world_topology_importer.py --create-samples")

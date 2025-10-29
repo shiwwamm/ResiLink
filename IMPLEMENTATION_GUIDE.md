@@ -22,13 +22,13 @@ ryu-manager src/sdn_controller/enhanced_academic_controller.py --observe-links -
 ### Step 2: Create Mininet Topology
 ```bash
 # Terminal 2: Create topology (requires sudo)
-sudo python examples/mininet_topology_demo.py --topology linear --switches 4 --hosts-per-switch 2
+sudo python3 examples/mininet_topology_demo.py --topology linear --switches 4 --hosts-per-switch 2
 ```
 
 ### Step 3: Run Hybrid Implementation
 ```bash
 # Terminal 3: Run the hybrid optimization
-python hybrid_resilink_implementation.py --max-cycles 5 --training-mode
+python3 hybrid_resilink_implementation.py --max-cycles 5 --training-mode
 ```
 
 ## 🚀 Implementation Script Features
@@ -59,20 +59,20 @@ The `hybrid_resilink_implementation.py` script provides:
 ### Basic Usage
 ```bash
 # Run 5 cycles with 60-second intervals
-python hybrid_resilink_implementation.py
+python3 hybrid_resilink_implementation.py
 ```
 
 ### Advanced Usage
 ```bash
 # Custom configuration
-python hybrid_resilink_implementation.py \
+python3 hybrid_resilink_implementation.py \
     --ryu-url http://localhost:8080 \
     --max-cycles 10 \
     --cycle-interval 30 \
     --training-mode
 
 # Single optimization cycle
-python hybrid_resilink_implementation.py --single-cycle --training-mode
+python3 hybrid_resilink_implementation.py --single-cycle --training-mode
 ```
 
 ### Command Line Options

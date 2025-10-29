@@ -844,7 +844,7 @@ def main():
         
         print("\n🎯 Network is ready for Enhanced ResiLink optimization!")
         print("💡 Access controller metrics at: http://localhost:8080/enhanced/metrics")
-        print("💡 Run optimization with: python examples/complete_sdn_integration_demo.py")
+        print("💡 Run optimization with: python3 examples/complete_sdn_integration_demo.py")
         
         # Run demo
         if args.interactive:
@@ -864,7 +864,7 @@ if __name__ == '__main__':
     # Check if running as root (required for Mininet)
     if os.geteuid() != 0:
         print("❌ This script must be run as root (use sudo)")
-        print("   sudo python examples/mininet_topology_demo.py")
+        print("   sudo python3 examples/mininet_topology_demo.py")
         sys.exit(1)
     
     main()
