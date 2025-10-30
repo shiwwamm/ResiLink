@@ -1948,14 +1948,17 @@ class HybridResiLinkImplementation:
     
     def _create_simulated_final_network(self, initial_state):
         """Create a simulated final network state with suggested links added."""
-        # Start with the initial network structure
-        simulated_state = initial_state.copy()
+        # Start with the initial network structure (deep copy)
+        import copy
+        simulated_state = copy.deepcopy(initial_state)
         
         # Add suggested links to the simulation
         if self.suggested_links:
             # Update basic properties
             original_edges = initial_state['basic_properties']['edges']
             simulated_edges = original_edges + len(self.suggested_links)
+            
+            print(f"🔧 Simulation: {original_edges} + {len(self.suggested_links)} = {simulated_edges} edges")
             
             simulated_state['basic_properties']['edges'] = simulated_edges
             simulated_state['basic_properties']['density'] = (2 * simulated_edges) / (initial_state['basic_properties']['nodes'] * (initial_state['basic_properties']['nodes'] - 1))
@@ -2001,8 +2004,9 @@ class HybridResiLinkImplementation:
         
         # Create simulated final state with suggested links
         if len(self.suggested_links) > 0:
-            final_state = self._create_simulated_final_network(initial_state)
             print(f"📊 Simulating network with {len(self.suggested_links)} suggested links added")
+            print(f"� Suggeasted links: {list(self.suggested_links)}")
+            final_state = self._create_simulated_final_network(initial_state)
         else:
             final_state = self.network_evolution[-1] if len(self.network_evolution) > 1 else initial_state
         
