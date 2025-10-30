@@ -464,6 +464,28 @@ class NetworkFeatureExtractor:
             'graph_properties': graph_properties,
             'network_graph': network_graph
         }
+    
+    def _calculate_graph_properties(self, G):
+        """Calculate basic graph properties for simulation network."""
+        try:
+            return {
+                'num_nodes': G.number_of_nodes(),
+                'num_edges': G.number_of_edges(),
+                'density': nx.density(G),
+                'is_connected': nx.is_connected(G),
+                'components': nx.number_connected_components(G),
+                'average_degree': sum(dict(G.degree()).values()) / G.number_of_nodes() if G.number_of_nodes() > 0 else 0
+            }
+        except Exception as e:
+            logger.warning(f"Error calculating graph properties: {e}")
+            return {
+                'num_nodes': 0,
+                'num_edges': 0,
+                'density': 0.0,
+                'is_connected': False,
+                'components': 0,
+                'average_degree': 0.0
+            }
 
 
 class HybridGNN(nn.Module):
