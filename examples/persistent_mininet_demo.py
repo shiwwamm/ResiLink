@@ -39,7 +39,7 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 from mininet.net import Mininet
-from mininet.node import Controller, RemoteController, OVSSwitch
+from mininet.node import Controller, RemoteController, OVSSwitch, OVSController
 from mininet.link import TCLink
 from mininet.cli import CLI
 from mininet.log import setLogLevel
@@ -102,12 +102,24 @@ class PersistentMininetDemo:
         except Exception as e:
             raise ValueError(f"Failed to load topology file: {e}")
         
-        # Create Mininet network with remote controller
-        controller = RemoteController(
-            'c0',
-            ip=self.controller_ip,
-            port=self.controller_port
-        )
+        # Try remote controller first, fallback to local
+        try:
+            # Test if remote controller is available
+            import socket
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(2)
+            result = sock.connect_ex((self.controller_ip, self.controller_port))
+            sock.close()
+            
+            if result == 0:
+                logger.info(f"Using remote controller at {self.controller_ip}:{self.controller_port}")
+                controller = RemoteController('c0', ip=self.controller_ip, port=self.controller_port)
+            else:
+                raise ConnectionError("Remote controller not available")
+                
+        except Exception as e:
+            logger.warning(f"Remote controller not available ({e}), using local OVS controller")
+            controller = OVSController('c0')
         
         self.net = Mininet(
             controller=controller,
@@ -198,10 +210,20 @@ class PersistentMininetDemo:
         logger.info("Waiting for controller connection...")
         time.sleep(5)
         
-        # Test connectivity
+        # Install basic flow rules for connectivity
+        self._install_basic_flows()
+        
+        # Test connectivity with retry
         logger.info("Testing initial connectivity...")
-        result = self.net.pingAll()
-        logger.info(f"Initial ping test: {result}% packet loss")
+        for attempt in range(3):
+            result = self.net.pingAll()
+            logger.info(f"Ping test attempt {attempt + 1}: {result}% packet loss")
+            
+            if result < 50:  # If less than 50% packet loss, consider it working
+                break
+            elif attempt < 2:
+                logger.info("Retrying connectivity test in 5 seconds...")
+                time.sleep(5)
         
         # Dump connections for debugging
         logger.info("Network connections:")
@@ -209,6 +231,26 @@ class PersistentMininetDemo:
         dumpNodeConnections(self.net.switches)
         
         logger.info("✅ Network started successfully")
+    
+    def _install_basic_flows(self):
+        """Install basic flow rules for connectivity."""
+        logger.info("Installing basic flow rules...")
+        
+        try:
+            # Install learning switch behavior on all switches
+            for switch in self.net.switches:
+                # Install table-miss flow entry (send to controller)
+                switch.cmd('ovs-ofctl add-flow {} "priority=0,actions=CONTROLLER:65535"'.format(switch.name))
+                
+                # Install ARP handling
+                switch.cmd('ovs-ofctl add-flow {} "priority=1000,arp,actions=CONTROLLER:65535"'.format(switch.name))
+                
+                logger.debug(f"Installed basic flows on {switch.name}")
+            
+            logger.info("✅ Basic flow rules installed")
+            
+        except Exception as e:
+            logger.warning(f"Failed to install flow rules: {e}")
     
     def start_continuous_traffic(self):
         """Start continuous background traffic generation."""
