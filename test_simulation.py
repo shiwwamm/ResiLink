@@ -25,11 +25,10 @@ def test_simulation_mode():
         print("\n🚀 Running 2 optimization cycles...")
         
         # Run a few cycles
-        successful_cycles = impl.run_optimization_cycles(
+        successful_cycles = impl.run_continuous_optimization(
             max_cycles=2,
             cycle_interval=2,
-            training_mode=True,
-            reward_threshold=0.85
+            training_mode=True
         )
         
         print(f"✅ Completed {successful_cycles} optimization cycles")
