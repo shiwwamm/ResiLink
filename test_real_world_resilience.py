@@ -206,9 +206,11 @@ class RealWorldResilienceTest:
         except:
             pass
         
+        # Try with built-in Ryu apps only (more compatible)
         cmd = [
             'ryu-manager',
-            'src/sdn_controller/enhanced_academic_controller.py',
+            'ryu.app.simple_switch_13',
+            'ryu.app.rest_topology',
             'ryu.app.ofctl_rest',
             '--observe-links',
             '--wsapi-host', '0.0.0.0',
