@@ -38,10 +38,13 @@ import networkx as nx
 import numpy as np
 import psutil
 import os
+import eventlet
 from webob import Response
 from collections import defaultdict, deque
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass, asdict
+
+eventlet.monkey_patch()
 
 # Configure academic-grade logging
 logging.basicConfig(

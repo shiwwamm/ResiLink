@@ -209,6 +209,7 @@ class RealWorldResilienceTest:
         cmd = [
             'ryu-manager',
             'src/sdn_controller/enhanced_academic_controller.py',
+            'ryu.app.ofctl_rest',
             '--observe-links',
             '--wsapi-host', '0.0.0.0',
             '--wsapi-port', '8080'
