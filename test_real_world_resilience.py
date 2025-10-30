@@ -92,7 +92,12 @@ class RealWorldResilienceTest:
             # Start controller
             print(f"\n🎮 Starting Enhanced Academic Controller...")
             self._start_controller()
-            time.sleep(5)
+            
+            # Wait for controller to be ready
+            print(f"⏳ Waiting for controller to be ready...")
+            if not self._wait_for_controller_ready():
+                print(f"❌ Controller failed to start properly")
+                return None
             
             # Start Mininet with real-world topology
             print(f"🌐 Starting Mininet with {info['name']}...")
@@ -110,7 +115,16 @@ class RealWorldResilienceTest:
                 preexec_fn=os.setsid
             )
             
-            time.sleep(10)  # Wait for network to stabilize
+            # Wait for network to stabilize
+            print(f"⏳ Waiting for network to stabilize...")
+            time.sleep(15)  # Longer wait for large networks
+            
+            # Verify network is discovered
+            print(f"🔍 Verifying network discovery...")
+            if not self._verify_network_ready():
+                print(f"⚠️  Network not fully discovered, but continuing...")
+            else:
+                print(f"✅ Network ready for optimization")
             
             # Run Enhanced ResiLink optimization
             print(f"🤖 Running Enhanced ResiLink optimization...")
@@ -192,6 +206,48 @@ class RealWorldResilienceTest:
             preexec_fn=os.setsid
         )
     
+    def _wait_for_controller_ready(self, timeout=30):
+        """Wait for controller to be ready and accessible."""
+        import requests
+        
+        for i in range(timeout):
+            try:
+                response = requests.get('http://localhost:8080/v1.0/topology/switches', timeout=2)
+                if response.status_code == 200:
+                    print(f"✅ Controller ready after {i+1} seconds")
+                    return True
+            except:
+                pass
+            
+            time.sleep(1)
+            if i % 5 == 4:  # Print progress every 5 seconds
+                print(f"   Still waiting... ({i+1}/{timeout}s)")
+        
+        print(f"❌ Controller not ready after {timeout} seconds")
+        return False
+    
+    def _verify_network_ready(self):
+        """Verify that the network topology is discovered by the controller."""
+        import requests
+        
+        try:
+            # Check switches
+            switches_response = requests.get('http://localhost:8080/v1.0/topology/switches', timeout=5)
+            switches = switches_response.json() if switches_response.status_code == 200 else []
+            
+            # Check links  
+            links_response = requests.get('http://localhost:8080/v1.0/topology/links', timeout=5)
+            links = links_response.json() if links_response.status_code == 200 else []
+            
+            print(f"   Discovered: {len(switches)} switches, {len(links)} links")
+            
+            # For GÉANT, we expect 40 switches
+            return len(switches) >= 10  # At least some switches discovered
+            
+        except Exception as e:
+            print(f"   Network verification failed: {e}")
+            return False
+    
     def _run_resilink_optimization(self, topology_id, info):
         """Run Enhanced ResiLink optimization."""
         # Adjust parameters based on network size
@@ -225,18 +281,27 @@ class RealWorldResilienceTest:
             optimization_result = {
                 'success': result.returncode == 0,
                 'stdout': result.stdout,
-                'stderr': result.stderr
+                'stderr': result.stderr,
+                'return_code': result.returncode
             }
             
             # Try to parse results
             if result.returncode == 0:
                 optimization_result.update(self._parse_optimization_results())
+            else:
+                # Log the actual error for debugging
+                print(f"🔍 Optimization failed with return code: {result.returncode}")
+                if result.stderr:
+                    print(f"🔍 Error output (last 1000 chars): ...{result.stderr[-1000:]}")
+                if result.stdout:
+                    print(f"🔍 Standard output (last 1000 chars): ...{result.stdout[-1000:]}")
             
             return optimization_result
             
         except subprocess.TimeoutExpired:
             return {'success': False, 'error': f'Optimization timeout ({timeout//60} minutes)'}
         except Exception as e:
+            print(f"🔍 Exception during optimization: {e}")
             return {'success': False, 'error': str(e)}
     
     def _parse_optimization_results(self):
