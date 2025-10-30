@@ -2194,9 +2194,19 @@ class HybridResiLinkImplementation:
         - Statistical plots: Cleveland (1985) - Elements of graphing data
         - Comparison charts: Few (2009) - Now you see it: data visualization principles
         """
-        if len(self.network_evolution) < 2:
+        if len(self.network_evolution) < 1:
             print("❌ Insufficient data for visualization")
             return None
+        
+        # Use the same logic as comparison - create simulated final state
+        initial_state = self.network_evolution[0]
+        if len(self.suggested_links) > 0:
+            final_state = self._create_simulated_final_network(initial_state)
+            # Store the simulated final state for visualization functions
+            self._visualization_final_state = final_state
+        else:
+            final_state = self.network_evolution[-1] if len(self.network_evolution) > 1 else initial_state
+            self._visualization_final_state = final_state
         
         # Set academic style
         plt.style.use('seaborn-v0_8-whitegrid')
@@ -2279,11 +2289,11 @@ class HybridResiLinkImplementation:
     
     def _plot_metrics_radar(self, ax):
         """Create radar chart comparing initial vs final network metrics."""
-        if len(self.network_evolution) < 2:
+        if len(self.network_evolution) < 1:
             return
         
         initial = self.network_evolution[0]
-        final = self.network_evolution[-1]
+        final = getattr(self, '_visualization_final_state', self.network_evolution[-1])
         
         # Metrics for radar chart
         metrics = [
@@ -2339,11 +2349,11 @@ class HybridResiLinkImplementation:
     
     def _plot_topology_comparison(self, ax):
         """Plot network topology before and after optimization."""
-        if len(self.network_evolution) < 2:
+        if len(self.network_evolution) < 1:
             return
         
         initial = self.network_evolution[0]
-        final = self.network_evolution[-1]
+        final = getattr(self, '_visualization_final_state', self.network_evolution[-1])
         
         # Create bar comparison
         metrics = ['Nodes', 'Edges', 'Components', 'Diameter']
@@ -2385,11 +2395,11 @@ class HybridResiLinkImplementation:
     
     def _plot_centrality_distribution(self, ax):
         """Plot centrality distribution comparison."""
-        if len(self.network_evolution) < 2:
+        if len(self.network_evolution) < 1:
             return
         
         initial = self.network_evolution[0]
-        final = self.network_evolution[-1]
+        final = getattr(self, '_visualization_final_state', self.network_evolution[-1])
         
         # Centrality metrics
         centrality_types = ['degree', 'betweenness', 'closeness']
@@ -2418,11 +2428,11 @@ class HybridResiLinkImplementation:
     
     def _plot_robustness_analysis(self, ax):
         """Plot network robustness comparison."""
-        if len(self.network_evolution) < 2:
+        if len(self.network_evolution) < 1:
             return
         
         initial = self.network_evolution[0]
-        final = self.network_evolution[-1]
+        final = getattr(self, '_visualization_final_state', self.network_evolution[-1])
         
         # Robustness metrics
         metrics = ['Random Failure\nTolerance', 'Targeted Attack\nTolerance', 'Resilience\nScore']
@@ -2518,11 +2528,11 @@ class HybridResiLinkImplementation:
         """Create academic summary with key findings."""
         ax.axis('off')
         
-        if len(self.network_evolution) < 2:
+        if len(self.network_evolution) < 1:
             return
         
         initial = self.network_evolution[0]
-        final = self.network_evolution[-1]
+        final = getattr(self, '_visualization_final_state', self.network_evolution[-1])
         
         # Calculate key improvements
         quality_improvement = final['overall_quality'] - initial['overall_quality']
@@ -2585,11 +2595,11 @@ ACADEMIC SUMMARY OF NETWORK OPTIMIZATION RESULTS
         plt.show()
         
         # 2. Centrality Heatmap
-        if len(self.network_evolution) >= 2:
+        if len(self.network_evolution) >= 1:
             fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
             
             initial = self.network_evolution[0]
-            final = self.network_evolution[-1]
+            final = getattr(self, '_visualization_final_state', self.network_evolution[-1])
             
             # Create centrality comparison heatmap
             centrality_data = {
