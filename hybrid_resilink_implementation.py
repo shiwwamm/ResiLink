@@ -336,10 +336,6 @@ class NetworkFeatureExtractor:
         try:
             # Get port descriptions
             port_resp = self.session.get(f"{self.ryu_api_url}/stats/portdesc/{dpid}")
-            if port_resp.status_code != 200:
-                return list(range(1, 11))  # Fallback
-            
-            ports_data = port_resp.json().get(str(dpid), [])
             
             # Get used ports from topology
             links_resp = self.session.get(f"{self.ryu_api_url}/v1.0/topology/links")
@@ -347,26 +343,43 @@ class NetworkFeatureExtractor:
             
             used_ports = set()
             for link in links:
-                if int(link["src"]["dpid"], 16) == dpid:
-                    used_ports.add(int(link["src"]["port_no"], 16))
-                if int(link["dst"]["dpid"], 16) == dpid:
-                    used_ports.add(int(link["dst"]["port_no"], 16))
+                try:
+                    if int(link["src"]["dpid"], 16) == dpid:
+                        used_ports.add(int(link["src"]["port_no"], 16))
+                    if int(link["dst"]["dpid"], 16) == dpid:
+                        used_ports.add(int(link["dst"]["port_no"], 16))
+                except (ValueError, KeyError):
+                    continue
             
             # Find available ports
             available_ports = []
-            for port in ports_data:
-                try:
-                    port_no = int(port["port_no"])
-                    if port_no not in used_ports and port_no != 0xfffffffe:  # Exclude controller port
+            
+            if port_resp.status_code == 200:
+                ports_data = port_resp.json().get(str(dpid), [])
+                for port in ports_data:
+                    try:
+                        port_no = int(port["port_no"])
+                        if port_no not in used_ports and port_no != 0xfffffffe:  # Exclude controller port
+                            available_ports.append(port_no)
+                    except (ValueError, TypeError, KeyError):
+                        continue
+            
+            # If no ports found from API, generate reasonable defaults
+            if not available_ports:
+                # Generate ports that aren't used
+                for port_no in range(1, 21):  # Check ports 1-20
+                    if port_no not in used_ports:
                         available_ports.append(port_no)
-                except (ValueError, TypeError):
-                    continue
+                        if len(available_ports) >= 10:  # Limit to 10 ports
+                            break
             
             return available_ports[:10]  # Return first 10 available
             
         except Exception as e:
             logging.error(f"Failed to get available ports for switch {dpid}: {e}")
-            return list(range(1, 11))  # Fallback
+            # Fallback: return ports that aren't obviously used
+            fallback_ports = [p for p in range(1, 11) if p not in used_ports]
+            return fallback_ports if fallback_ports else list(range(10, 20))
 
     def _generate_simulation_network(self):
         """Generate a synthetic network for simulation mode."""
@@ -1052,19 +1065,22 @@ class HybridResiLinkImplementation:
                 # Try to extract geographic info from switch data
                 nodes_with_coords = {}
                 for switch in network_data['topology']['switches']:
-                    dpid = switch.get('dpid', '')
-                    # Check if switch has geographic metadata
-                    if 'latitude' in switch and 'longitude' in switch:
-                        from core.enhanced_topology_parser import NodeMetadata
-                        nodes_with_coords[dpid] = NodeMetadata(
-                            id=dpid,
-                            label=switch.get('label', dpid),
-                            country=switch.get('country', 'Unknown'),
-                            latitude=float(switch.get('latitude', 0)),
-                            longitude=float(switch.get('longitude', 0)),
-                            internal=True,
-                            node_type='Switch'
-                        )
+                    # Handle both dict and non-dict switch data
+                    if isinstance(switch, dict):
+                        dpid = switch.get('dpid', '')
+                        # Check if switch has geographic metadata
+                        if 'latitude' in switch and 'longitude' in switch:
+                            from core.enhanced_topology_parser import NodeMetadata
+                            nodes_with_coords[dpid] = NodeMetadata(
+                                id=dpid,
+                                label=switch.get('label', str(dpid)),
+                                country=switch.get('country', 'Unknown'),
+                                latitude=float(switch.get('latitude', 0)),
+                                longitude=float(switch.get('longitude', 0)),
+                                internal=True,
+                                node_type='Switch'
+                            )
+                    # Skip non-dict switch data (no geographic info available)
                 
                 if nodes_with_coords:
                     # Calculate geographic analysis
