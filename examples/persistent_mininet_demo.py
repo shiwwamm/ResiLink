@@ -125,7 +125,12 @@ class PersistentMininetDemo:
         nodes = topo_data.get('nodes', [])
         
         for i, node in enumerate(nodes):
-            node_id = node.get('id', f'node_{i}')
+            # Handle both string nodes and object nodes
+            if isinstance(node, str):
+                node_id = node
+            else:
+                node_id = node.get('id', f'node_{i}')
+            
             switch_name = f's{i+1}'
             switch = self.net.addSwitch(switch_name, dpid=f'{i+1:016x}')
             switches[node_id] = switch
@@ -142,10 +147,15 @@ class PersistentMininetDemo:
                 logger.debug(f"Added host {host_name} to switch {switch.name}")
         
         # Add links from topology data
-        links = topo_data.get('links', [])
-        for link in links:
-            src_id = link.get('source')
-            dst_id = link.get('target')
+        edges = topo_data.get('edges', [])
+        for edge in edges:
+            # Handle edge format [[src, dst], ...]
+            if isinstance(edge, list) and len(edge) >= 2:
+                src_id, dst_id = edge[0], edge[1]
+            else:
+                # Fallback for object format
+                src_id = edge.get('source')
+                dst_id = edge.get('target')
             
             if src_id in switches and dst_id in switches:
                 src_switch = switches[src_id]
@@ -166,7 +176,7 @@ class PersistentMininetDemo:
             'name': topo_data.get('name', 'Unknown'),
             'nodes': len(switches),
             'hosts': len(hosts),
-            'links': len(links),
+            'links': len(edges),
             'switches': switches,
             'hosts': hosts
         }
