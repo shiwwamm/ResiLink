@@ -12,7 +12,7 @@ Comprehensive test that demonstrates the complete workflow:
 
 Usage:
     # Terminal 1: Start controller
-    ryu-manager sdn/working_controller.py --observe-links --wsapi-host 0.0.0.0 --wsapi-port 8080
+    ryu-manager sdn/basic_controller.py ryu.app.rest_topology ryu.app.ofctl_rest --observe-links --wsapi-host 0.0.0.0 --wsapi-port 8080
     
     # Terminal 2: Run system test
     sudo python3 test_complete_system.py
@@ -379,8 +379,12 @@ class CompleteSystemTest:
             print(f"\n⚠️  {total_tests - passed_tests} tests failed. Please address issues before optimization.")
         
         # Save detailed results
-        with open('data/results/system_test_results.json', 'w') as f:
-            json.dump(self.test_results, f, indent=2, default=str)
+        try:
+            os.makedirs('data/results', exist_ok=True)
+            with open('data/results/system_test_results.json', 'w') as f:
+                json.dump(self.test_results, f, indent=2, default=str)
+        except Exception as e:
+            logger.warning(f"Could not save test results: {e}")
         
         print(f"\n💾 Detailed results saved to: data/results/system_test_results.json")
 

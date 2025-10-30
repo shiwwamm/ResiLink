@@ -41,26 +41,44 @@ from matplotlib.gridspec import GridSpec
 import seaborn as sns
 from matplotlib.patches import FancyBboxPatch
 
-# Setup logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('hybrid_resilink.log'),
-        logging.StreamHandler()
-    ]
-)
+# Setup logging with fallback for permission issues
+import os
+import tempfile
+
+def setup_logging():
+    handlers = [logging.StreamHandler()]  # Always have console output
+    
+    # Try to create log file, fallback to temp directory if permission denied
+    try:
+        handlers.append(logging.FileHandler('hybrid_resilink.log'))
+    except PermissionError:
+        # Fallback to temp directory
+        temp_log = os.path.join(tempfile.gettempdir(), 'hybrid_resilink.log')
+        handlers.append(logging.FileHandler(temp_log))
+        print(f"⚠️  Using temporary log file: {temp_log}")
+    
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=handlers
+    )
+
+setup_logging()
 
 class NetworkFeatureExtractor:
     """Extract network features from Ryu controller with academic justification."""
     
-    def __init__(self, ryu_api_url="http://localhost:8080"):
+    def __init__(self, ryu_api_url="http://localhost:8080", simulation_mode=False):
         self.ryu_api_url = ryu_api_url
+        self.simulation_mode = simulation_mode
         self.session = requests.Session()
         self.session.timeout = 10
         
     def extract_network_features(self):
-        """Extract comprehensive network features from SDN controller."""
+        """Extract comprehensive network features from SDN controller or simulation."""
+        if self.simulation_mode:
+            return self._generate_simulation_network()
+        
         try:
             # Get topology data
             switches_resp = self.session.get(f"{self.ryu_api_url}/v1.0/topology/switches")
@@ -347,6 +365,103 @@ class NetworkFeatureExtractor:
             logging.error(f"Failed to get available ports for switch {dpid}: {e}")
             return list(range(1, 11))  # Fallback
 
+    def _generate_simulation_network(self):
+        """Generate a synthetic network for simulation mode."""
+        import networkx as nx
+        import random
+        
+        # Create a realistic network topology (Barabási-Albert model)
+        n_nodes = 40  # Similar to your test output
+        m_edges = 2   # Edges to attach from new node
+        
+        # Generate base topology
+        G = nx.barabasi_albert_graph(n_nodes, m_edges, seed=42)
+        
+        # Add some additional random edges for realism
+        for _ in range(20):
+            u, v = random.sample(list(G.nodes()), 2)
+            if not G.has_edge(u, v):
+                G.add_edge(u, v)
+        
+        # Create synthetic switches and hosts data
+        switches = []
+        hosts = []
+        links = []
+        
+        # Generate switches (first 25 nodes are switches)
+        for i in range(25):
+            switches.append({
+                'dpid': f'{i+1:016x}',
+                'ports': [{'port_no': f'{j+1:08x}'} for j in range(8)]
+            })
+        
+        # Generate hosts (remaining nodes + some extras)
+        for i in range(25, n_nodes + 100):  # More hosts than switches
+            hosts.append({
+                'mac': f'00:00:00:00:{i:02x}:01',
+                'ipv4': [f'10.0.{i//256}.{i%256}'],
+                'port': {'dpid': f'{(i%25)+1:016x}', 'port_no': f'{(i%8)+1:08x}'}
+            })
+        
+        # Generate links from graph edges
+        for u, v in G.edges():
+            if u < 25 and v < 25:  # Both are switches
+                links.append({
+                    'src': {'dpid': f'{u+1:016x}', 'port_no': f'{random.randint(1,8):08x}'},
+                    'dst': {'dpid': f'{v+1:016x}', 'port_no': f'{random.randint(1,8):08x}'}
+                })
+        
+        # Build network graph for analysis
+        network_graph = self._build_network_graph(switches, links, hosts)
+        
+        # Calculate centralities
+        centralities = self._calculate_centralities(network_graph)
+        
+        # Generate synthetic statistics
+        switch_stats = {}
+        for switch in switches:
+            dpid = switch['dpid']
+            switch_stats[dpid] = {
+                'flow_count': random.randint(10, 100),
+                'packet_count': random.randint(1000, 10000),
+                'byte_count': random.randint(100000, 1000000),
+                'duration_sec': random.randint(60, 3600),
+                'ports': [
+                    {
+                        'port_no': port['port_no'],
+                        'rx_packets': random.randint(100, 1000),
+                        'tx_packets': random.randint(100, 1000),
+                        'rx_bytes': random.randint(10000, 100000),
+                        'tx_bytes': random.randint(10000, 100000),
+                        'rx_dropped': random.randint(0, 10),
+                        'tx_dropped': random.randint(0, 10),
+                        'rx_errors': random.randint(0, 5),
+                        'tx_errors': random.randint(0, 5)
+                    } for port in switch['ports']
+                ]
+            }
+        
+        # Calculate graph properties
+        graph_properties = self._calculate_graph_properties(network_graph)
+        
+        logging.info(f"Generated simulation network: {len(switches)} switches, {len(hosts)} hosts, {len(links)} links")
+        
+        return {
+            'topology': {
+                'switches': switches,
+                'links': links,
+                'hosts': hosts,
+                'switch_host_links': [
+                    {'switch_dpid': host['port']['dpid'], 'host_mac': host['mac']}
+                    for host in hosts
+                ]
+            },
+            'switch_stats': switch_stats,
+            'centralities': centralities,
+            'graph_properties': graph_properties,
+            'network_graph': network_graph
+        }
+
 
 class HybridGNN(nn.Module):
     """
@@ -611,9 +726,21 @@ class HybridResiLinkImplementation:
     - Ensemble: Principled combination (Breiman 2001)
     """
     
-    def __init__(self, ryu_api_url="http://localhost:8080", reward_threshold=0.95):
+    def __init__(self, ryu_api_url="http://localhost:8080", reward_threshold=0.95, simulation_mode=False):
         self.ryu_api_url = ryu_api_url
-        self.feature_extractor = NetworkFeatureExtractor(ryu_api_url)
+        self.simulation_mode = simulation_mode
+        self.feature_extractor = NetworkFeatureExtractor(ryu_api_url, simulation_mode)
+        
+        # Import enhanced topology parser for rich metrics
+        try:
+            from core.enhanced_topology_parser import EnhancedTopologyParser
+            self.enhanced_parser = EnhancedTopologyParser()
+            self.use_enhanced_metrics = True
+            logger.info("Enhanced topology parser available - using comprehensive metrics")
+        except ImportError:
+            self.enhanced_parser = None
+            self.use_enhanced_metrics = False
+            logger.info("Enhanced topology parser not available - using basic metrics")
         
         # Initialize ML components
         self.gnn = HybridGNN()
@@ -647,6 +774,9 @@ class HybridResiLinkImplementation:
         try:
             # 1. Extract network features
             network_data = self.feature_extractor.extract_network_features()
+            
+            # 1.5. Enhance with comprehensive academic metrics
+            network_data = self._enhance_network_data_with_comprehensive_metrics(network_data)
             
             # 2. Calculate comprehensive network metrics for comparison
             current_metrics = self._calculate_comprehensive_network_metrics(
@@ -873,6 +1003,74 @@ class HybridResiLinkImplementation:
         cost = -0.1
         
         return centrality_reward + connectivity_reward + cost
+    
+    def _enhance_network_data_with_comprehensive_metrics(self, network_data):
+        """Enhance network data with comprehensive academic metrics if available."""
+        if not self.use_enhanced_metrics or not self.enhanced_parser:
+            return network_data
+        
+        try:
+            # Build NetworkX graph from network data
+            G = self._build_networkx_graph(network_data)
+            
+            # Calculate comprehensive metrics using enhanced parser methods
+            comprehensive_metrics = self.enhanced_parser._calculate_academic_metrics(G)
+            
+            # Merge with existing network data
+            if 'academic_metrics' not in network_data:
+                network_data['academic_metrics'] = {}
+            
+            network_data['academic_metrics'].update(comprehensive_metrics)
+            
+            # Add geographic analysis if nodes have coordinates
+            if 'topology' in network_data and 'switches' in network_data['topology']:
+                # Try to extract geographic info from switch data
+                nodes_with_coords = {}
+                for switch in network_data['topology']['switches']:
+                    dpid = switch.get('dpid', '')
+                    # Check if switch has geographic metadata
+                    if 'latitude' in switch and 'longitude' in switch:
+                        from core.enhanced_topology_parser import NodeMetadata
+                        nodes_with_coords[dpid] = NodeMetadata(
+                            id=dpid,
+                            label=switch.get('label', dpid),
+                            country=switch.get('country', 'Unknown'),
+                            latitude=float(switch.get('latitude', 0)),
+                            longitude=float(switch.get('longitude', 0)),
+                            internal=True,
+                            node_type='Switch'
+                        )
+                
+                if nodes_with_coords:
+                    # Calculate geographic analysis
+                    edges_with_coords = {}
+                    for link in network_data['topology'].get('links', []):
+                        src_dpid = link['src']['dpid']
+                        dst_dpid = link['dst']['dpid']
+                        if src_dpid in nodes_with_coords and dst_dpid in nodes_with_coords:
+                            from core.enhanced_topology_parser import EdgeMetadata
+                            distance = self.enhanced_parser._calculate_geographic_distance(
+                                nodes_with_coords[src_dpid],
+                                nodes_with_coords[dst_dpid]
+                            )
+                            edges_with_coords[(src_dpid, dst_dpid)] = EdgeMetadata(
+                                source=src_dpid,
+                                target=dst_dpid,
+                                geographic_distance=distance
+                            )
+                    
+                    if edges_with_coords:
+                        geographic_analysis = self.enhanced_parser._perform_geographic_analysis(
+                            nodes_with_coords, edges_with_coords
+                        )
+                        network_data['geographic_analysis'] = geographic_analysis
+            
+            logger.info("Enhanced network data with comprehensive academic metrics")
+            
+        except Exception as e:
+            logger.warning(f"Failed to enhance network data with comprehensive metrics: {e}")
+        
+        return network_data
     
     def _combine_predictions(self, gnn_scores, rl_scores):
         """Combine GNN and RL predictions using ensemble method."""
@@ -2463,12 +2661,14 @@ def main():
                        help='Compare network evolution from previous optimization run')
     parser.add_argument('--create-visualizations', action='store_true',
                        help='Create academic visualizations from optimization history')
+    parser.add_argument('--simulation-mode', action='store_true',
+                       help='Run in simulation mode without SDN controller (uses synthetic topology)')
     
     args = parser.parse_args()
     
     # Show academic justification if requested
     if args.show_academic_justification:
-        implementation = HybridResiLinkImplementation(args.ryu_url, args.reward_threshold)
+        implementation = HybridResiLinkImplementation(args.ryu_url, args.reward_threshold, args.simulation_mode)
         justification = implementation.get_academic_justification_summary()
         
         print("=" * 80)
@@ -2563,7 +2763,7 @@ def main():
                 return 1
             
             # Reconstruct network evolution from history
-            implementation = HybridResiLinkImplementation(args.ryu_url, args.reward_threshold)
+            implementation = HybridResiLinkImplementation(args.ryu_url, args.reward_threshold, args.simulation_mode)
             
             print("📊 Creating academic visualizations from optimization history...")
             
@@ -2618,7 +2818,7 @@ def main():
             return 1
     
     # Initialize implementation
-    implementation = HybridResiLinkImplementation(args.ryu_url, args.reward_threshold)
+    implementation = HybridResiLinkImplementation(args.ryu_url, args.reward_threshold, args.simulation_mode)
     
     try:
         if args.single_cycle:

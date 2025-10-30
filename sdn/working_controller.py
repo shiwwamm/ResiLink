@@ -28,14 +28,18 @@ from ryu.ofproto import ofproto_v1_3
 from ryu.lib.packet import packet, ethernet, ether_types, arp, ipv4, icmp
 from ryu.topology import event
 from ryu.topology.api import get_switch, get_link, get_host
-from ryu.app.wsgi import ControllerWSGI, WSGIApplication, route
+from ryu.app.wsgi import WSGIApplication, route
 from ryu.lib import hub
 
 import json
 import time
 import logging
 from collections import defaultdict
-from webob import Response
+
+try:
+    from webob import Response
+except ImportError:
+    from ryu.lib.packet import Response
 
 # Configure logging
 logging.basicConfig(
@@ -311,11 +315,11 @@ class WorkingController(app_manager.RyuApp):
         }
 
 
-class ControllerAPI(ControllerWSGI):
+class ControllerAPI(object):
     """REST API for the working controller."""
     
     def __init__(self, req, link, data, **config):
-        super(ControllerAPI, self).__init__(req, link, data, **config)
+        super(ControllerAPI, self).__init__()
         self.controller_app = data['controller_app']
     
     @route('topology', '/v1.0/topology/switches', methods=['GET'])
