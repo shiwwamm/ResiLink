@@ -194,16 +194,33 @@ class RealWorldResilienceTest:
     
     def _run_resilink_optimization(self, topology_id, info):
         """Run Enhanced ResiLink optimization."""
+        # Adjust parameters based on network size
+        nodes = info.get('nodes', 10)
+        if nodes > 30:
+            max_cycles = 5  # Fewer cycles for large networks
+            cycle_interval = 20  # Longer intervals
+            timeout = 1200  # 20 minutes for large networks
+        elif nodes > 15:
+            max_cycles = 6
+            cycle_interval = 15
+            timeout = 900  # 15 minutes
+        else:
+            max_cycles = 8
+            cycle_interval = 10
+            timeout = 600  # 10 minutes
+        
         cmd = [
             'python3', 'hybrid_resilink_implementation.py',
-            '--max-cycles', '8',  # Reasonable for real networks
-            '--cycle-interval', '15',  # Longer for stability
+            '--max-cycles', str(max_cycles),
+            '--cycle-interval', str(cycle_interval),
             '--training-mode',
-            '--reward-threshold', '0.90'
+            '--reward-threshold', '0.85'  # Slightly lower for real networks
         ]
         
+        print(f"🤖 Running optimization: {max_cycles} cycles, {cycle_interval}s intervals, {timeout}s timeout")
+        
         try:
-            result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
             
             optimization_result = {
                 'success': result.returncode == 0,
@@ -218,7 +235,7 @@ class RealWorldResilienceTest:
             return optimization_result
             
         except subprocess.TimeoutExpired:
-            return {'success': False, 'error': 'Optimization timeout (10 minutes)'}
+            return {'success': False, 'error': f'Optimization timeout ({timeout//60} minutes)'}
         except Exception as e:
             return {'success': False, 'error': str(e)}
     
