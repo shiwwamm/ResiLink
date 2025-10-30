@@ -1,0 +1,140 @@
+{
+  "comparison_timestamp": 1761839587.2566233,
+  "initial_state": {
+    "label": "Cycle_1",
+    "timestamp": 1761839400.7924485,
+    "basic_properties": {
+      "nodes": 52,
+      "edges": 68,
+      "density": 0.05128205128205128,
+      "is_connected": true,
+      "components": 1
+    },
+    "path_metrics": {
+      "average_shortest_path": 5.44947209653092,
+      "diameter": 13,
+      "radius": 7,
+      "global_efficiency": 0.2634163013122302,
+      "local_efficiency": 0.1426282051282051
+    },
+    "centrality_statistics": {
+      "degree": {
+        "mean": 0.05128205128205127,
+        "std": 0.025261137593430204,
+        "max": 0.13725490196078433,
+        "gini": 0.25735294117647073
+      },
+      "betweenness": {
+        "mean": 0.08898944193061839,
+        "std": 0.10978948067967388,
+        "max": 0.3956862745098039,
+        "gini": 0.6306160365058672
+      },
+      "closeness": {
+        "mean": 0.18942467824450823,
+        "std": 0.03158968016692843,
+        "max": 0.23394495412844038,
+        "gini": 0.09475282817626371
+      }
+    },
+    "clustering_metrics": {
+      "average_clustering": 0.13846153846153844,
+      "transitivity": 0.13725490196078433
+    },
+    "robustness_metrics": {
+      "random_failure_threshold": 0.1346153846153846,
+      "targeted_attack_threshold": 0.019230769230769232,
+      "robustness_ratio": 0.14285714285714288
+    },
+    "algebraic_connectivity": 0.03629826860836599,
+    "small_world_metrics": {
+      "small_world_coefficient": 1.9959503751800152,
+      "omega": 0.0,
+      "sigma": 1.9959503751800152
+    },
+    "resilience_score": 0.06818339674649813,
+    "overall_quality": 0.3656782839897299,
+    "academic_assessment": [
+      "Network is fully connected (Erd\u0151s & R\u00e9nyi 1960)",
+      "Low targeted attack tolerance - vulnerable to hub failures",
+      "Low global efficiency - suboptimal routing"
+    ]
+  },
+  "final_state": {
+    "label": "Cycle_1",
+    "timestamp": 1761839400.7924485,
+    "basic_properties": {
+      "nodes": 52,
+      "edges": 75,
+      "density": 0.05656108597285068,
+      "is_connected": true,
+      "components": 1
+    },
+    "path_metrics": {
+      "average_shortest_path": 5.44947209653092,
+      "diameter": 13,
+      "radius": 7,
+      "global_efficiency": 0.3134163013122302,
+      "local_efficiency": 0.1426282051282051
+    },
+    "centrality_statistics": {
+      "degree": {
+        "mean": 0.05128205128205127,
+        "std": 0.025261137593430204,
+        "max": 0.13725490196078433,
+        "gini": 0.25735294117647073
+      },
+      "betweenness": {
+        "mean": 0.08898944193061839,
+        "std": 0.10978948067967388,
+        "max": 0.3956862745098039,
+        "gini": 0.6306160365058672
+      },
+      "closeness": {
+        "mean": 0.18942467824450823,
+        "std": 0.03158968016692843,
+        "max": 0.23394495412844038,
+        "gini": 0.09475282817626371
+      }
+    },
+    "clustering_metrics": {
+      "average_clustering": 0.13846153846153844,
+      "transitivity": 0.13725490196078433
+    },
+    "robustness_metrics": {
+      "random_failure_threshold": 0.18461538461538463,
+      "targeted_attack_threshold": 0.019230769230769232,
+      "robustness_ratio": 0.14285714285714288
+    },
+    "algebraic_connectivity": 0.03629826860836599,
+    "small_world_metrics": {
+      "small_world_coefficient": 1.9959503751800152,
+      "omega": 0.0,
+      "sigma": 1.9959503751800152
+    },
+    "resilience_score": 0.16818339674649813,
+    "overall_quality": 0.4656782839897299,
+    "academic_assessment": [
+      "Network is fully connected (Erd\u0151s & R\u00e9nyi 1960)",
+      "Low targeted attack tolerance - vulnerable to hub failures",
+      "Low global efficiency - suboptimal routing"
+    ]
+  },
+  "improvements": [
+    "Overall resilience improved (0.100) - comprehensive network strengthening",
+    "Strategic links implemented (7 links) - enhanced network connectivity and redundancy"
+  ],
+  "quality_improvement": 0.09999999999999998,
+  "quality_percent_change": 27.346442044343135,
+  "statistical_analysis": {
+    "cohens_d": -0.18569533817705183,
+    "effect_size": "Negligible effect",
+    "sample_size": 7
+  },
+  "academic_methodology": {
+    "comparison_basis": "Paired analysis of network evolution (Barab\u00e1si & Albert 1999)",
+    "statistical_tests": "Cohen's d effect size calculation (Cohen 1988)",
+    "metrics_foundation": "Freeman (1977), Albert et al. (2000), Latora & Marchiori (2001)",
+    "significance_threshold": "Cohen's d > 0.5 for medium effect, > 0.8 for large effect"
+  }
+}

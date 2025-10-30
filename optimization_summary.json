@@ -1,0 +1,36 @@
+{
+  "total_links_suggested": 7,
+  "suggested_links": [
+    [
+      2,
+      27
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      23
+    ],
+    [
+      2,
+      38
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      37
+    ],
+    [
+      1,
+      44
+    ]
+  ],
+  "final_quality": 0.0,
+  "quality_threshold": 0.95,
+  "optimization_complete": false
+}
