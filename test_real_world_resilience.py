@@ -91,7 +91,9 @@ class RealWorldResilienceTest:
             
             # Start controller
             print(f"\n🎮 Starting Enhanced Academic Controller...")
-            self._start_controller()
+            if not self._start_controller():
+                print(f"❌ Controller failed to start")
+                return None
             
             # Wait for controller to be ready
             print(f"⏳ Waiting for controller to be ready...")
@@ -191,6 +193,19 @@ class RealWorldResilienceTest:
     
     def _start_controller(self):
         """Start the Enhanced Academic Controller."""
+        # First check if port 8080 is already in use
+        try:
+            import socket
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            result = sock.connect_ex(('localhost', 8080))
+            sock.close()
+            if result == 0:
+                print("⚠️  Port 8080 already in use, killing existing processes...")
+                subprocess.run(['sudo', 'pkill', '-f', 'ryu-manager'], capture_output=True)
+                time.sleep(2)
+        except:
+            pass
+        
         cmd = [
             'ryu-manager',
             'src/sdn_controller/enhanced_academic_controller.py',
@@ -199,12 +214,28 @@ class RealWorldResilienceTest:
             '--wsapi-port', '8080'
         ]
         
+        print(f"🔧 Starting controller with command: {' '.join(cmd)}")
+        
         self.controller_process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             preexec_fn=os.setsid
         )
+        
+        # Give it a moment to start
+        time.sleep(3)
+        
+        # Check if process is still running
+        if self.controller_process.poll() is not None:
+            stdout, stderr = self.controller_process.communicate()
+            print(f"❌ Controller process exited immediately")
+            print(f"   stdout: {stdout.decode()[:500]}")
+            print(f"   stderr: {stderr.decode()[:500]}")
+            return False
+        
+        print(f"✅ Controller process started (PID: {self.controller_process.pid})")
+        return True
     
     def _wait_for_controller_ready(self, timeout=30):
         """Wait for controller to be ready and accessible."""
