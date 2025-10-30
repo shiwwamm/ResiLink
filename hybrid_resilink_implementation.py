@@ -65,6 +65,9 @@ def setup_logging():
 
 setup_logging()
 
+# Create logger
+logger = logging.getLogger(__name__)
+
 class NetworkFeatureExtractor:
     """Extract network features from Ryu controller with academic justification."""
     
