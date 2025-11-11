@@ -30,6 +30,9 @@ import time
 import logging
 from pathlib import Path
 from geographic_network_analyzer import GeographicNetworkAnalyzer, GeographicConstraints
+import matplotlib.pyplot as plt
+import seaborn as sns
+from matplotlib.gridspec import GridSpec
 import argparse
 import sys
 import os
@@ -1045,22 +1048,119 @@ class HybridResiLinkImplementation:
             return np.zeros(len(candidate_edges))
     
     def _simulate_edge_addition_reward(self, network_data, edge):
-        """Simulate reward for adding an edge."""
-        # Simple reward based on centrality improvement
+        """
+        Enhanced RL reward function based on network improvement theory.
+        
+        Academic Foundation:
+        - Reward shaping: Ng et al. (1999) - Policy invariant reward shaping
+        - Network improvement: Beygelzimer et al. (2005) - Edge modification rewards
+        - Multi-objective RL: Liu et al. (2014) - Pareto-optimal policies
+        """
+        try:
+            # Calculate current network quality
+            current_quality = self._calculate_network_quality(network_data)
+            
+            # Simulate network with added edge
+            G = self._build_networkx_graph(network_data)
+            src, dst = edge
+            
+            # Create temporary graph with new edge
+            G_new = G.copy()
+            G_new.add_edge(src, dst)
+            
+            # Create temporary network data for new graph
+            temp_network_data = network_data.copy()
+            temp_network_data['graph_properties']['edges'] = G_new.number_of_edges()
+            temp_network_data['graph_properties']['density'] = nx.density(G_new)
+            temp_network_data['graph_properties']['is_connected'] = nx.is_connected(G_new)
+            
+            # Calculate new network quality
+            new_quality = self._calculate_network_quality(temp_network_data)
+            
+            # Quality improvement reward (primary component)
+            quality_improvement = new_quality - current_quality
+            quality_reward = quality_improvement * 10.0  # Scale up improvement
+            
+            # Strategic value reward (secondary component)
+            strategic_reward = self._calculate_strategic_reward(network_data, edge, G, G_new)
+            
+            # Efficiency reward (tertiary component)
+            efficiency_reward = self._calculate_efficiency_reward(G, G_new)
+            
+            # Cost penalty (small but important)
+            cost_penalty = -0.05  # Small cost for adding any edge
+            
+            # Combine rewards with academic weighting
+            total_reward = (0.6 * quality_reward +      # Primary: overall improvement
+                           0.25 * strategic_reward +    # Secondary: strategic value
+                           0.1 * efficiency_reward +    # Tertiary: efficiency gain
+                           0.05 * cost_penalty)         # Cost consideration
+            
+            return total_reward
+            
+        except Exception as e:
+            logging.error(f"Error calculating RL reward: {e}")
+            # Fallback to simple reward
+            return self._simple_fallback_reward(network_data, edge)
+    
+    def _calculate_strategic_reward(self, network_data, edge, G_old, G_new):
+        """Calculate strategic value reward for edge addition."""
+        try:
+            src, dst = edge
+            
+            # Centrality-based reward
+            centralities = network_data.get('centralities', {})
+            src_betweenness = centralities.get('betweenness', {}).get(str(src), 0.0)
+            dst_betweenness = centralities.get('betweenness', {}).get(str(dst), 0.0)
+            
+            # Reward for connecting important nodes
+            centrality_reward = (src_betweenness + dst_betweenness) * 0.5
+            
+            # Connectivity improvement reward
+            old_connected = nx.is_connected(G_old)
+            new_connected = nx.is_connected(G_new)
+            connectivity_reward = 2.0 if (new_connected and not old_connected) else 0.0
+            
+            # Robustness improvement reward
+            try:
+                old_algebraic = nx.algebraic_connectivity(G_old) if old_connected else 0.0
+                new_algebraic = nx.algebraic_connectivity(G_new) if new_connected else 0.0
+                robustness_reward = (new_algebraic - old_algebraic) * 5.0
+            except:
+                robustness_reward = 0.1 if new_connected else 0.0
+            
+            return centrality_reward + connectivity_reward + robustness_reward
+            
+        except Exception:
+            return 0.1
+    
+    def _calculate_efficiency_reward(self, G_old, G_new):
+        """Calculate efficiency improvement reward."""
+        try:
+            old_efficiency = nx.global_efficiency(G_old)
+            new_efficiency = nx.global_efficiency(G_new)
+            
+            efficiency_improvement = new_efficiency - old_efficiency
+            
+            # Reward efficiency gains, penalize efficiency losses
+            if efficiency_improvement > 0:
+                return efficiency_improvement * 3.0
+            else:
+                return efficiency_improvement * 1.0  # Smaller penalty for efficiency loss
+                
+        except Exception:
+            return 0.0
+    
+    def _simple_fallback_reward(self, network_data, edge):
+        """Simple fallback reward function."""
         src, dst = edge
         centralities = network_data.get('centralities', {})
-        
         src_betweenness = centralities.get('betweenness', {}).get(str(src), 0.0)
         dst_betweenness = centralities.get('betweenness', {}).get(str(dst), 0.0)
         
-        # Higher reward for connecting high-centrality nodes
         centrality_reward = (src_betweenness + dst_betweenness) * 0.5
-        
-        # Connectivity reward
         connectivity_reward = 0.3 if network_data['graph_properties']['is_connected'] else 0.5
-        
-        # Small cost for adding link
-        cost = -0.1
+        cost = -0.05
         
         return centrality_reward + connectivity_reward + cost
     
@@ -1159,13 +1259,19 @@ class HybridResiLinkImplementation:
     
     def _calculate_network_quality(self, network_data):
         """
-        Calculate overall network quality score.
+        Enhanced Network Quality Function with Academic Justification.
         
-        Based on academic metrics:
-        - Connectivity: Is network fully connected?
-        - Density: How close to complete graph?
-        - Resilience: Algebraic connectivity, robustness
-        - Efficiency: Average path length, global efficiency
+        Based on Multi-Objective Network Optimization Theory:
+        - Robustness: Attack tolerance and failure resilience (Albert et al. 2000)
+        - Efficiency: Communication performance (Latora & Marchiori 2001)
+        - Structural Balance: Degree distribution and centrality (Newman 2003)
+        - Connectivity: Algebraic and spectral properties (Fiedler 1973)
+        - Cost-Effectiveness: Link efficiency ratio (Crucitti et al. 2004)
+        
+        Academic Foundation:
+        - Multi-criteria optimization: Pareto efficiency (Miettinen 1999)
+        - Network resilience theory: Gao et al. (2016)
+        - Small-world optimization: Watts & Strogatz (1998)
         """
         try:
             G = self._build_networkx_graph(network_data)
@@ -1173,38 +1279,210 @@ class HybridResiLinkImplementation:
             if G.number_of_nodes() < 2:
                 return 0.0
             
-            # Connectivity score (30%)
-            connectivity_score = 1.0 if nx.is_connected(G) else 0.0
+            n = G.number_of_nodes()
+            m = G.number_of_edges()
             
-            # Density score (25%) - how close to complete graph
-            current_density = nx.density(G)
-            density_score = current_density
+            # 1. ROBUSTNESS COMPONENT (35%) - Most critical for network resilience
+            robustness_score = self._calculate_robustness_score(G, n, m)
             
-            # Resilience score (25%)
-            resilience_score = 0.0
-            if nx.is_connected(G):
-                try:
-                    # Algebraic connectivity (Fiedler 1973)
-                    algebraic_conn = nx.algebraic_connectivity(G)
-                    # Normalize by number of nodes
-                    resilience_score = min(algebraic_conn / G.number_of_nodes(), 1.0)
-                except:
-                    resilience_score = 0.5 if nx.is_connected(G) else 0.0
+            # 2. EFFICIENCY COMPONENT (25%) - Communication performance
+            efficiency_score = self._calculate_efficiency_score(G, n)
             
-            # Efficiency score (20%)
-            efficiency_score = nx.global_efficiency(G)
+            # 3. STRUCTURAL BALANCE COMPONENT (20%) - Network topology quality
+            structural_score = self._calculate_structural_balance_score(G, n, m)
             
-            # Weighted combination
-            quality = (0.30 * connectivity_score + 
-                      0.25 * density_score + 
-                      0.25 * resilience_score + 
-                      0.20 * efficiency_score)
+            # 4. CONNECTIVITY COMPONENT (15%) - Fundamental connectivity
+            connectivity_score = self._calculate_connectivity_score(G, n)
             
-            return quality
+            # 5. COST-EFFECTIVENESS COMPONENT (5%) - Resource efficiency
+            cost_effectiveness_score = self._calculate_cost_effectiveness_score(G, n, m)
+            
+            # Weighted combination based on network optimization priorities
+            quality = (0.35 * robustness_score + 
+                      0.25 * efficiency_score + 
+                      0.20 * structural_score + 
+                      0.15 * connectivity_score + 
+                      0.05 * cost_effectiveness_score)
+            
+            return min(quality, 1.0)  # Ensure bounded [0,1]
             
         except Exception as e:
-            logging.error(f"Error calculating network quality: {e}")
+            logging.error(f"Error calculating enhanced network quality: {e}")
             return 0.0
+    
+    def _calculate_robustness_score(self, G, n, m):
+        """
+        Calculate network robustness based on attack tolerance.
+        Academic basis: Albert et al. (2000), Schneider et al. (2011)
+        """
+        if not nx.is_connected(G):
+            return 0.0
+        
+        try:
+            # Algebraic connectivity (spectral robustness)
+            algebraic_conn = nx.algebraic_connectivity(G)
+            spectral_score = min(algebraic_conn / (n * 0.1), 1.0)  # Normalized
+            
+            # Degree distribution robustness (avoid hub vulnerability)
+            degrees = [d for n, d in G.degree()]
+            degree_variance = np.var(degrees) if degrees else 0
+            max_possible_variance = (n-1)**2 / 4  # Maximum variance for given n
+            degree_balance = 1.0 - (degree_variance / max_possible_variance) if max_possible_variance > 0 else 1.0
+            
+            # Edge connectivity (minimum cut)
+            try:
+                edge_connectivity = nx.edge_connectivity(G)
+                edge_conn_score = min(edge_connectivity / (n * 0.1), 1.0)
+            except:
+                edge_conn_score = 0.5
+            
+            # Combine robustness metrics
+            robustness = 0.5 * spectral_score + 0.3 * degree_balance + 0.2 * edge_conn_score
+            return robustness
+            
+        except Exception:
+            return 0.3 if nx.is_connected(G) else 0.0
+    
+    def _calculate_efficiency_score(self, G, n):
+        """
+        Calculate communication efficiency.
+        Academic basis: Latora & Marchiori (2001), Crucitti et al. (2003)
+        """
+        try:
+            # Global efficiency (inverse of average shortest path)
+            global_eff = nx.global_efficiency(G)
+            
+            # Local efficiency (clustering-based efficiency)
+            try:
+                local_eff = nx.local_efficiency(G)
+            except:
+                local_eff = nx.average_clustering(G)
+            
+            # Diameter penalty (prefer smaller diameter)
+            if nx.is_connected(G):
+                diameter = nx.diameter(G)
+                diameter_score = 1.0 / (1.0 + diameter / n)  # Normalized diameter penalty
+            else:
+                diameter_score = 0.0
+            
+            # Combine efficiency metrics
+            efficiency = 0.5 * global_eff + 0.3 * local_eff + 0.2 * diameter_score
+            return efficiency
+            
+        except Exception:
+            return nx.global_efficiency(G) if G.number_of_edges() > 0 else 0.0
+    
+    def _calculate_structural_balance_score(self, G, n, m):
+        """
+        Calculate structural balance and topology quality.
+        Academic basis: Newman (2003), Watts & Strogatz (1998)
+        """
+        try:
+            # Clustering coefficient (local structure)
+            clustering = nx.average_clustering(G)
+            
+            # Assortativity (degree correlation)
+            try:
+                assortativity = nx.degree_assortativity_coefficient(G)
+                # Prefer slight disassortativity for robustness (Albert et al. 2000)
+                assort_score = 1.0 - abs(assortativity + 0.2)  # Optimal around -0.2
+                assort_score = max(0.0, assort_score)
+            except:
+                assort_score = 0.5
+            
+            # Small-world coefficient (Watts & Strogatz 1998)
+            try:
+                # Compare to random graph with same degree sequence
+                random_clustering = (2 * m) / (n * (n - 1)) if n > 1 else 0
+                if random_clustering > 0:
+                    clustering_ratio = clustering / random_clustering
+                else:
+                    clustering_ratio = 1.0
+                
+                # Path length comparison (approximate)
+                if nx.is_connected(G):
+                    avg_path = nx.average_shortest_path_length(G)
+                    random_path = np.log(n) / np.log(2 * m / n) if m > 0 else n
+                    path_ratio = random_path / avg_path if avg_path > 0 else 1.0
+                else:
+                    path_ratio = 0.0
+                
+                small_world = clustering_ratio * path_ratio
+                small_world_score = min(small_world / 10.0, 1.0)  # Normalize
+            except:
+                small_world_score = clustering
+            
+            # Combine structural metrics
+            structure = 0.4 * clustering + 0.3 * assort_score + 0.3 * small_world_score
+            return structure
+            
+        except Exception:
+            return nx.average_clustering(G)
+    
+    def _calculate_connectivity_score(self, G, n):
+        """
+        Calculate fundamental connectivity properties.
+        Academic basis: Fiedler (1973), Van Mieghem et al. (2013)
+        """
+        try:
+            # Basic connectivity
+            is_connected = nx.is_connected(G)
+            base_score = 1.0 if is_connected else 0.0
+            
+            if not is_connected:
+                # Penalty based on number of components
+                num_components = nx.number_connected_components(G)
+                component_penalty = 1.0 / num_components
+                return base_score * component_penalty
+            
+            # Node connectivity (minimum vertex cut)
+            try:
+                node_connectivity = nx.node_connectivity(G)
+                node_conn_score = min(node_connectivity / (n * 0.1), 1.0)
+            except:
+                node_conn_score = 0.5
+            
+            # Spectral gap (second smallest eigenvalue of Laplacian)
+            try:
+                laplacian_eigenvals = nx.laplacian_spectrum(G)
+                spectral_gap = laplacian_eigenvals[1] if len(laplacian_eigenvals) > 1 else 0
+                spectral_score = min(spectral_gap / n, 1.0)
+            except:
+                spectral_score = 0.5
+            
+            # Combine connectivity metrics
+            connectivity = 0.5 * base_score + 0.3 * node_conn_score + 0.2 * spectral_score
+            return connectivity
+            
+        except Exception:
+            return 1.0 if nx.is_connected(G) else 0.0
+    
+    def _calculate_cost_effectiveness_score(self, G, n, m):
+        """
+        Calculate cost-effectiveness (benefit per edge).
+        Academic basis: Ghosh et al. (2008), Sydney et al. (2013)
+        """
+        try:
+            if m == 0:
+                return 0.0
+            
+            # Efficiency per edge
+            global_eff = nx.global_efficiency(G)
+            efficiency_per_edge = global_eff / m if m > 0 else 0.0
+            
+            # Connectivity per edge
+            max_possible_edges = n * (n - 1) / 2
+            edge_utilization = m / max_possible_edges if max_possible_edges > 0 else 0.0
+            
+            # Prefer sparse but efficient networks
+            sparsity_bonus = 1.0 - edge_utilization  # Bonus for using fewer edges
+            
+            # Cost-effectiveness combines efficiency and sparsity
+            cost_effectiveness = 0.6 * efficiency_per_edge + 0.4 * sparsity_bonus
+            return min(cost_effectiveness, 1.0)
+            
+        except Exception:
+            return 0.5
     
     def _analyze_link_strategic_value(self, src_dpid, dst_dpid, network_data, candidate_edges, combined_scores):
         """
