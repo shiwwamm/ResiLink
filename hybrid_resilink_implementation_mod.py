@@ -92,19 +92,20 @@ class HybridResiLinkImplementation(BaseImpl):
         for suggested_link in getattr(self, 'suggested_links', set()):
             existing_links.add(suggested_link)
 
-        # Build graph
-        try:
-            G = self._build_networkx_graph(network_data)
-        except Exception:
+        # Build graph - try to use existing graph first
+        G = None
+        if 'network_graph' in network_data and isinstance(network_data['network_graph'], nx.Graph):
+            G = network_data['network_graph']
+        else:
             try:
-                switches_fmt = [{'dpid': f'{s:016x}'} for s in switches]
-                links_fmt = [{'src': {'dpid': f'{l["src_dpid"]:016x}', 'port_no': '00000001'},
-                              'dst': {'dpid': f'{l["dst_dpid"]:016x}', 'port_no': '00000001'}}
-                              for l in network_data['topology']['switch_switch_links']]
-                hosts_fmt = []
-                G = self._build_network_graph(switches_fmt, links_fmt, hosts_fmt)
-            except Exception:
-                G = None
+                G = self._build_networkx_graph(network_data)
+            except Exception as e:
+                # Fallback: build simple graph from topology
+                G = nx.Graph()
+                for switch in switches:
+                    G.add_node(switch)
+                for link in network_data['topology']['switch_switch_links']:
+                    G.add_edge(link['src_dpid'], link['dst_dpid'])
 
         # Raw candidates
         candidates = []
@@ -211,29 +212,68 @@ class HybridResiLinkImplementation(BaseImpl):
 # ---------- Utilities for evaluation ----------
 
 def build_network_data_from_graph(G, impl):
-    switches = [{'dpid': f'{i:016x}'} for i in range(1, G.number_of_nodes()+1)]
-    id_map = {n:i+1 for i,n in enumerate(G.nodes())}
-    links = []
-    for u,v in G.edges():
-        links.append({'src': {'dpid': f'{id_map[u]:016x}', 'port_no': '00000001'},
-                      'dst': {'dpid': f'{id_map[v]:016x}', 'port_no': '00000001'}})
-    hosts = []
-    network_graph = impl._build_network_graph(switches, links, hosts)
-    centralities = impl._calculate_centralities(network_graph)
-    switch_stats = {}
-    for sw in switches:
-        switch_stats[int(sw['dpid'],16)] = {'flows': [], 'ports': {}, 'flow_count': 0, 'total_packets': 0, 'total_bytes': 0}
+    """Build network_data structure from a NetworkX graph."""
+    # Create switch list with integer IDs
+    switches = list(range(1, G.number_of_nodes() + 1))
+    id_map = {n: i + 1 for i, n in enumerate(G.nodes())}
+    
+    # Build switch-switch links
+    switch_switch_links = []
+    for u, v in G.edges():
+        switch_switch_links.append({
+            'src_dpid': id_map[u],
+            'dst_dpid': id_map[v],
+            'src_port': 1,
+            'dst_port': 1,
+            'bandwidth_mbps': 1000.0,
+            'stats': {
+                'tx_packets': 0, 'tx_bytes': 0,
+                'rx_packets': 0, 'rx_bytes': 0,
+                'tx_dropped': 0, 'rx_dropped': 0
+            }
+        })
+    
+    # Calculate centralities directly on the graph
+    centralities = impl._calculate_centralities(G)
+    
+    # Build nodes list with attributes
+    nodes = []
+    for node_id in switches:
+        nodes.append({
+            'id': node_id,
+            'attributes': {
+                'type': 'switch',
+                'num_flows': 0,
+                'total_packets': 0,
+                'total_bytes': 0,
+                'centrality_scores': {
+                    'degree': centralities['degree'].get(str(node_id), 0.0),
+                    'betweenness': centralities['betweenness'].get(str(node_id), 0.0),
+                    'closeness': centralities['closeness'].get(str(node_id), 0.0)
+                }
+            }
+        })
+    
+    # Build network data structure
     network_data = {
+        'timestamp': 0,
         'topology': {
-            'switches': [int(sw['dpid'],16) for sw in switches],
-            'switch_switch_links': [{'src_dpid': int(l['src']['dpid'],16), 'dst_dpid': int(l['dst']['dpid'],16)} for l in links],
+            'switches': switches,
+            'hosts': [],
+            'switch_switch_links': switch_switch_links,
             'host_switch_links': []
         },
-        'switch_stats': switch_stats,
+        'nodes': nodes,
         'centralities': centralities,
-        'graph_properties': {},
-        'network_graph': network_graph
+        'graph_properties': {
+            'num_nodes': G.number_of_nodes(),
+            'num_edges': G.number_of_edges(),
+            'is_connected': nx.is_connected(G),
+            'density': nx.density(G)
+        },
+        'network_graph': G  # Store the original graph
     }
+    
     return network_data
 
 
