@@ -85,31 +85,39 @@ class GraphPPOEnv(gym.Env):
         return cands[:200]  # Limit for discrete space
 
     def _get_state(self) -> np.ndarray:
-        """12-dim state: topology + capacity features."""
+        """12-dim state."""
         if not nx.is_connected(self.G):
-            return np.zeros(12)
-        
+            return np.zeros(12, dtype=np.float32)
+
+        degrees = [d for _, d in self.G.degree()]
+        caps = [self._parse_capacity(e.get('capacity', '10 Gbps'))
+                for _, _, e in self.G.edges(data=True)]
+
         props = [
             self.G.number_of_nodes() / 100.0,
             self.G.number_of_edges() / 100.0,
             nx.density(self.G),
             float(nx.is_connected(self.G)),
-            np.mean([d for _, d in self.G.degree()]),
+            np.mean(degrees),
+            np.std(degrees),                    # 6th
             nx.diameter(self.G) / 10.0,
+            np.mean(caps) / 1e9,
+            np.std(caps) / 1e9,
+            np.max(caps) / 1e9,
+            len(caps) / 100.0,
+            np.median(caps) / 1e9,
         ]
-        caps = [self._parse_capacity(e.get('capacity', '0 Gbps')) for _, _, e in self.G.edges(data=True)]
-        props += [np.mean(caps)/1e9, np.std(caps)/1e9, np.max(caps)/1e9, len(caps)/100.0, np.median(caps)/1e9]
         return np.clip(np.array(props, dtype=np.float32), -1, 1)
 
     def _parse_capacity(self, cap_str: str) -> float:
-        """Parse '10 Gbps' to bps."""
+        """Parse '10 Gbps' → 1e10 bps. Default: 10 Gbps."""
         try:
-            cap_str = cap_str.lower().replace('<', '').replace(' ', '')
-            if 'gbps' in cap_str:
-                return float(cap_str.replace('gbps', '')) * 1e9
-            elif 'mbps' in cap_str:
-                return float(cap_str.replace('mbps', '')) * 1e6
-            return 1e9  # Default 1 Gbps
+            s = str(cap_str).lower().replace('<', '').replace(' ', '')
+            if 'gbps' in s:
+                return float(s.replace('gbps', '')) * 1e9
+            if 'mbps' in s:
+                return float(s.replace('mbps', '')) * 1e6
+            return 1e9  # default
         except:
             return 1e9
 
