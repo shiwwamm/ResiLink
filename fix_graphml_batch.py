@@ -29,8 +29,11 @@ def fix_graphml(input_path: Path, output_path: Path):
 
     # 3. Clean edges
     G.remove_edges_from(nx.selfloop_edges(G))
-    if not nx.is_simple_graph(G):
-        G = nx.Graph(G)  # drop parallel
+    # Convert to simple graph (removes parallel edges if MultiGraph)
+    if isinstance(G, (nx.MultiGraph, nx.MultiDiGraph)):
+        G = nx.Graph(G)
+    elif isinstance(G, nx.DiGraph):
+        G = G.to_undirected()
 
     # 4. Normalize capacity
     for u, v, d in G.edges(data=True):
