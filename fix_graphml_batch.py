@@ -1,241 +1,73 @@
 #!/usr/bin/env python3
 """
-Batch GraphML Cleaner for ResiLink
-----------------------------------
-Fixes common GraphML issues so that hybrid_resilink_implementation.py
-can parse any topology from the Topology Zoo or similar sources.
-
-Usage:
-    python3 fix_graphml_batch.py path/to/files/*.graphml
-    python3 fix_graphml_batch.py path/to/folder/ --recursive
+Fix GraphML files for ResiLink v2:
+- String node IDs ("n0", "n1")
+- Add label attribute
+- Remove self-loops / parallel edges
+- Normalize capacity field
+- Ensure connected
 """
-
+import networkx as nx
 import argparse
-import sys
-import os
-import shutil
 from pathlib import Path
-from lxml import etree
-from typing import List, Set, Dict
 import logging
 
-# --------------------------------------------------------------------------- #
-# Configuration
-# --------------------------------------------------------------------------- #
-NAMESPACE = "http://graphml.graphdrawing.org/xmlns"
-NSMAP = {None: NAMESPACE}
-ET = etree.ElementTree
-Q = etree.QName
-
-# Capacity string normalization
-CAPACITY_MAP = {
-    "< 10Gbps": "< 10 Gbps",
-    "< 2.5Gbps": "< 2.5 Gbps",
-    "< 1Gbps": "< 1 Gbps",
-    "< 155Mbps": "< 155 Mbps",
-    "< 622Mbps": "< 622 Mbps",
-}
-
-# --------------------------------------------------------------------------- #
-# Logging
-# --------------------------------------------------------------------------- #
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout)]
-)
 log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
-# --------------------------------------------------------------------------- #
-# Helper Functions
-# --------------------------------------------------------------------------- #
-def normalize_capacity(text: str) -> str:
-    """Normalize capacity strings."""
-    return CAPACITY_MAP.get(text.strip(), text.strip())
+def fix_graphml(input_path: Path, output_path: Path):
+    G = nx.read_graphml(input_path)
+    log.info(f"Loaded {input_path.name}: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges")
 
-def make_node_id(old_id: str) -> str:
-    """Convert numeric ID to 'n0', 'n1', etc."""
-    return f"n{old_id}"
+    # 1. String node IDs
+    mapping = {n: f"n{n}" if not str(n).startswith('n') else str(n) for n in G.nodes()}
+    G = nx.relabel_nodes(G, mapping)
 
-def make_edge_id(idx: int) -> str:
-    """Generate sequential edge ID."""
-    return f"e{idx}"
+    # 2. Add label
+    for n in G.nodes():
+        G.nodes[n]['label'] = n
 
-# --------------------------------------------------------------------------- #
-# Core Fixer
-# --------------------------------------------------------------------------- #
-def fix_graphml_file(input_path: Path, output_path: Path, backup: bool = True) -> bool:
-    """
-    Fix a single GraphML file.
-    Returns True if changes were made.
-    """
-    try:
-        parser = etree.XMLParser(remove_blank_text=True)
-        tree = etree.parse(str(input_path), parser)
-        root = tree.getroot()
+    # 3. Clean edges
+    G.remove_edges_from(nx.selfloop_edges(G))
+    if not nx.is_simple_graph(G):
+        G = nx.Graph(G)  # drop parallel
 
-        if root.tag != Q(NAMESPACE, "graphml").text:
-            log.error(f"{input_path.name}: Root is not <graphml>")
-            return False
-
-        changed = False
-
-        # --- 1. Deduplicate <key> elements ---
-        seen_keys: Set[str] = set()
-        keys_to_remove = []
-        for key_elem in root.findall(f".//{{{NAMESPACE}}}key"):
-            key_id = key_elem.get("id")
-            if key_id in seen_keys:
-                keys_to_remove.append(key_elem)
-                changed = True
-            else:
-                seen_keys.add(key_id)
-
-        for k in keys_to_remove:
-            root.remove(k)
-            log.debug(f"Removed duplicate key id={k.get('id')}")
-
-        # --- 2. Fix nodes: ensure string IDs ---
-        node_map: Dict[str, str] = {}  # old_id -> new_id
-        for node in root.findall(f".//{{{NAMESPACE}}}node"):
-            old_id = node.get("id")
-            if old_id is None:
-                log.error(f"{input_path.name}: Node missing id")
-                return False
-            new_id = make_node_id(old_id)
-            if new_id != old_id:
-                node.set("id", new_id)
-                node_map[old_id] = new_id
-                changed = True
-
-        # --- 3. Fix edges: add id, normalize capacity, remap source/target ---
-        edge_elems = root.findall(f".//{{{NAMESPACE}}}edge")
-        for idx, edge in enumerate(edge_elems):
-            # Add missing id
-            if edge.get("id") is None:
-                edge.set("id", make_edge_id(idx))
-                changed = True
-
-            # Remap source/target using node_map
-            src = edge.get("source")
-            tgt = edge.get("target")
-            if src in node_map:
-                edge.set("source", node_map[src])
-                changed = True
-            if tgt in node_map:
-                edge.set("target", node_map[tgt])
-                changed = True
-
-            # Normalize capacity in <data key="..."> (usually LinkLabel or capacity)
-            for data in edge.findall(f".//{{{NAMESPACE}}}data"):
-                key = data.get("key")
-                if key and "LinkLabel" in key or "capacity" in key.lower():
-                    old_text = data.text or ""
-                    new_text = normalize_capacity(old_text)
-                    if new_text != old_text:
-                        data.text = new_text
-                        changed = True
-
-        # --- 4. Write output ---
-        if changed:
-            if backup and output_path.exists():
-                backup_path = output_path.with_suffix(output_path.suffix + ".bak")
-                shutil.copy2(output_path, backup_path)
-                log.info(f"Backup created: {backup_path.name}")
-
-            tree.write(
-                str(output_path),
-                pretty_print=True,
-                xml_declaration=True,
-                encoding="utf-8"
-            )
-            log.info(f"Fixed: {input_path.name} → {output_path.name}")
+    # 4. Normalize capacity
+    for u, v, d in G.edges(data=True):
+        cap = d.get('capacity', '10 Gbps')
+        cap = str(cap).strip().lower()
+        if 'gbps' in cap:
+            d['capacity'] = cap.replace('gbps', '').strip() + ' Gbps'
+        elif 'mbps' in cap:
+            d['capacity'] = cap.replace('mbps', '').strip() + ' Mbps'
         else:
-            log.info(f"No changes needed: {input_path.name}")
+            d['capacity'] = '10 Gbps'
 
-        return changed
+    # 5. Ensure connected (minimal tree)
+    if not nx.is_connected(G):
+        components = list(nx.connected_components(G))
+        for i in range(len(components)-1):
+            c1, c2 = components[i], components[i+1]
+            n1, n2 = next(iter(c1)), next(iter(c2))
+            G.add_edge(n1, n2, capacity='10 Gbps')
+        log.info("  Added tree edges to connect components")
 
-    except etree.XMLSyntaxError as e:
-        log.error(f"XML syntax error in {input_path.name}: {e}")
-        return False
-    except Exception as e:
-        log.error(f"Failed to process {input_path.name}: {e}")
-        return False
+    # Save
+    nx.write_graphml(G, output_path)
+    log.info(f"  Fixed → {output_path}")
 
-# --------------------------------------------------------------------------- #
-# Batch Processor
-# --------------------------------------------------------------------------- #
-def process_files(file_patterns: List[str], recursive: bool = False, dry_run: bool = False):
-    """
-    Process all GraphML files matching patterns.
-    """
-    paths = []
-    for pattern in file_patterns:
-        p = Path(pattern)
-        if p.is_dir():
-            glob_pattern = "**/*.graphml" if recursive else "*.graphml"
-            paths.extend(p.glob(glob_pattern))
-        else:
-            paths.extend(Path().glob(pattern) if "*" in pattern else [p])
-
-    paths = [p.resolve() for p in paths if p.suffix.lower() in {".graphml", ".xml"}]
-    if not paths:
-        log.warning("No GraphML files found.")
-        return
-
-    log.info(f"Found {len(paths)} GraphML file(s) to process.")
-
-    for input_path in paths:
-        output_path = input_path  # overwrite same file
-        if dry_run:
-            log.info(f"[DRY RUN] Would fix: {input_path}")
-            continue
-        fix_graphml_file(input_path, output_path)
-
-# --------------------------------------------------------------------------- #
-# CLI
-# --------------------------------------------------------------------------- #
 def main():
-    parser = argparse.ArgumentParser(
-        description="Batch fix GraphML files for ResiLink compatibility",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
-    parser.add_argument(
-        "files",
-        nargs="+",
-        help="GraphML files or glob patterns (e.g. 'topologies/*.graphml')"
-    )
-    parser.add_argument(
-        "-r", "--recursive",
-        action="store_true",
-        help="Recursively search directories"
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Show what would be fixed without writing"
-    )
-    parser.add_argument(
-        "--no-backup",
-        action="store_true",
-        help="Do not create .bak files"
-    )
-    parser.add_argument(
-        "-v", "--verbose",
-        action="store_true",
-        help="Enable debug logging"
-    )
-
+    parser = argparse.ArgumentParser()
+    parser.add_argument("files", nargs="+", help="GraphML files or glob")
     args = parser.parse_args()
 
-    if args.verbose:
-        logging.getLogger().setLevel(logging.DEBUG)
-
-    process_files(
-        file_patterns=args.files,
-        recursive=args.recursive,
-        dry_run=args.dry_run
-    )
+    for pattern in args.files:
+        for path in Path(".").glob(pattern):
+            if path.suffix != ".graphml": continue
+            out_path = path.parent / f"fixed_{path.name}"
+            fix_graphml(path, out_path)
+            # Overwrite original for benchmark
+            out_path.replace(path)
 
 if __name__ == "__main__":
     main()
