@@ -11,6 +11,11 @@ torch-geometric>=2.1.0
 torch-scatter>=2.0.9
 torch-sparse>=0.6.15
 
+# Reinforcement Learning
+stable-baselines3>=2.0.0
+gymnasium>=0.28.0
+shimmy>=2.0.0
+
 # Data processing
 scikit-learn>=1.0.0
 

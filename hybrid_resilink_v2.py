@@ -25,8 +25,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
-import gym
-from gym import spaces
+import gymnasium as gym
+from gymnasium import spaces
 from scipy.sparse.linalg import eigsh  # For algebraic connectivity
 from collections import deque
 
