@@ -64,12 +64,18 @@ class GraphPPOEnv(gym.Env):
         for n in self.G.nodes():
             self.G.nodes[n]['id'] = str(n)  # Ensure string IDs
 
-    def reset(self):
+    def reset(self, seed=None, options=None):
+        # Gymnasium compatibility: accept seed and options parameters
+        if seed is not None:
+            np.random.seed(seed)
+        
         self._load_graph()
         self.step_count = 0
         self.G_prev = self.G.copy()
         self.candidates = self._get_candidates()
-        return self._get_state()
+        
+        # Gymnasium expects (observation, info) tuple
+        return self._get_state(), {}
 
     def _get_candidates(self) -> List[Tuple[str, str]]:
         """Feasible link candidates (degree < 8, no self-loops)."""
@@ -109,7 +115,8 @@ class GraphPPOEnv(gym.Env):
 
     def step(self, action: int):
         if action >= len(self.candidates) or self.step_count >= self.max_steps:
-            return self._get_state(), 0.0, True, {}
+            # Gymnasium expects 5 values: (obs, reward, terminated, truncated, info)
+            return self._get_state(), 0.0, True, False, {}
 
         u, v = self.candidates[action]
         self.G_prev = self.G.copy()
@@ -118,8 +125,11 @@ class GraphPPOEnv(gym.Env):
         reward = self._compute_reward()
         self.step_count += 1
         self.candidates = self._get_candidates()  # Update
-        done = self.step_count >= self.max_steps
-        return self._get_state(), reward, done, {}
+        terminated = self.step_count >= self.max_steps
+        truncated = False  # Not truncated by time limit
+        
+        # Gymnasium expects 5 values: (obs, reward, terminated, truncated, info)
+        return self._get_state(), reward, terminated, truncated, {}
 
     def _compute_reward(self) -> float:
         """GraphRARE Discrete Ternary Reward [Shu et al., 2023]."""
