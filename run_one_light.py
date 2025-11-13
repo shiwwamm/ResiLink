@@ -102,9 +102,15 @@ class GraphPPOEnv(gym.Env):
     def _maxflow_robustness(self, G):
         nodes = list(G.nodes())
         if len(nodes) < 2: return 0.0
+        
+        # Convert string capacities to numeric for flow calculation
+        for u, v, data in G.edges(data=True):
+            cap_str = data.get('capacity', '10 Gbps')
+            data['capacity_numeric'] = self._parse_capacity(cap_str) / 1e9  # Convert to Gbps
+        
         s, t = np.random.choice(nodes, 2, replace=False)
         try:
-            return nx.maximum_flow_value(G, s, t, capacity='capacity')
+            return nx.maximum_flow_value(G, s, t, capacity='capacity_numeric')
         except:
             return 0.0
 
@@ -144,18 +150,38 @@ class GraphPPOEnv(gym.Env):
 # ----------------------------------------------------------------------
 # Paper-specific metric functions
 # ----------------------------------------------------------------------
+def parse_capacity_to_gbps(cap_str: str) -> float:
+    """Convert capacity string to Gbps numeric value."""
+    try:
+        s = str(cap_str).lower().replace('<', '').replace(' ', '').strip()
+        if 'gbps' in s:
+            return float(s.replace('gbps', ''))
+        elif 'mbps' in s:
+            return float(s.replace('mbps', '')) / 1000.0
+        return 10.0  # Default 10 Gbps
+    except:
+        return 10.0
+
+
 def throughput_proxy(G):
-    """NeuroPlan-style: max flow between random s-t pair (10 Gbps edges)"""
+    """NeuroPlan-style: max flow between random s-t pair (numeric Gbps capacities)"""
     if not nx.is_connected(G):
         return 0.0
     nodes = list(G.nodes())
     if len(nodes) < 2:
         return 0.0
+    
+    # Convert string capacities to numeric Gbps for flow calculation
+    G_numeric = G.copy()
+    for u, v, data in G_numeric.edges(data=True):
+        cap_str = data.get('capacity', '10 Gbps')
+        data['capacity_numeric'] = parse_capacity_to_gbps(cap_str)
+    
     s, t = np.random.choice(nodes, 2, replace=False)
     try:
-        flow = nx.maximum_flow_value(G, s, t, capacity='capacity')
+        flow = nx.maximum_flow_value(G_numeric, s, t, capacity='capacity_numeric')
         return float(flow)
-    except:
+    except Exception as e:
         return 0.0
 
 
@@ -194,25 +220,40 @@ def main():
     # ------------------------------------------------------------------
     print("Training done. Extracting links...")
     obs = env.reset()[0]
-    G_final = nx.read_graphml(args.graphml)
     added_links = []
+    
+    env_inst = env.envs[0]
+    print(f"Initial candidates: {len(env_inst.candidates)} possible links")
+    if len(env_inst.candidates) > 0:
+        print(f"First 5 candidates: {env_inst.candidates[:5]}")
 
     for step in range(args.steps):
+        # Get candidates BEFORE taking action
+        cand = env_inst.candidates  # Use the current candidates from environment
+        
         action, _ = model.predict(obs, deterministic=True)
+        action_int = int(action)
+        
+        print(f"Step {step+1}: Action={action_int}, Candidates available={len(cand)}")
+        
+        # Record the link BEFORE stepping
+        if action_int < len(cand):
+            u, v = cand[action_int]
+            added_links.append((u, v))
+            print(f"  Added link: {u} — {v}")
+        else:
+            print(f"  WARNING: Action {action_int} out of range (max {len(cand)-1})")
+        
+        # Now take the step (this updates the environment's graph)
         obs, reward, dones, infos = env.step([action])
         terminated = dones[0]
         obs = obs[0]
 
-        env_inst = env.envs[0]
-        cand = env_inst._get_candidates()
-        if action < len(cand):
-            u, v = cand[action]
-            G_final.add_edge(u, v, capacity="10 Gbps")
-            added_links.append((u, v))
-            print(f"  Added link: {u} — {v}")
-
         if terminated:
             break
+    
+    # Get the final graph from the environment (it has all the added links)
+    G_final = env_inst.G.copy()
 
     # ------------------------------------------------------------------
     # 3. Compute metrics
