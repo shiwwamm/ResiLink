@@ -64,15 +64,26 @@ class GraphPPOEnv(gym.Env):
         return cands[:200]
 
     def _get_obs(self):
+        node_list = list(self.G.nodes())
         node_feat = self._node_features()
-        edge_index = torch.tensor([[self.G.nodes().index(u), self.G.nodes().index(v)]
-                                  for u, v in self.G.edges()], dtype=torch.long).t()
-        cand_idx = torch.tensor([[self.G.nodes().index(u), self.G.nodes().index(v)]
-                                for u, v in self.candidates[:200]], dtype=torch.long)
+        edge_index = torch.tensor([
+            [node_list.index(u), node_list.index(v)]
+            for u, v in self.G.edges()
+        ], dtype=torch.long).t()
+        
+        cand_idx = torch.tensor([
+            [node_list.index(u), node_list.index(v)]
+            for u, v in self.candidates[:200]
+        ], dtype=torch.long)
+        
+        if cand_idx.shape[0] < 200:
+            pad = torch.zeros((200 - cand_idx.shape[0], 2), dtype=torch.long)
+            cand_idx = torch.cat([cand_idx, pad], dim=0)
+        
         return {
             "node_feat": node_feat,
             "edge_index": edge_index,
-            "candidates": torch.nn.functional.pad(cand_idx, (0,0,0,200-len(cand_idx)), value=0)
+            "candidates": cand_idx
         }
 
     def _node_features(self):
@@ -120,7 +131,8 @@ class GraphPPOEnv(gym.Env):
             return self._get_obs(), 0.0, True, False, {"plateau": False, "links": self.step_count}
 
         u_idx, v_idx = self.candidates[action]
-        u, v = list(self.G.nodes())[u_idx], list(self.G.nodes())[v_idx]
+        node_list = list(self.G.nodes())
+        u, v = node_list[u_idx], node_list[v_idx]
         self.G_prev = self.G.copy()
         self.G.add_edge(u, v, capacity='10 Gbps')
 
