@@ -79,15 +79,27 @@ class GraphPPOEnv(gym.Env):
         betweenness = nx.betweenness_centrality(self.G)
         clustering = nx.clustering(self.G)
         ecc = nx.eccentricity(self.G) if nx.is_connected(self.G) else {n: 1 for n in self.G.nodes()}
+        
         feats = []
         for n in self.G.nodes():
+            neighbors = list(self.G.neighbors(n))
+            local_conn = 0
+            if neighbors:
+                target = neighbors[0]
+                try:
+                    local_conn = nx.node_connectivity(self.G, n, target)
+                except:
+                    local_conn = 0
+            else:
+                local_conn = 0
+
             feats.append([
                 self.G.degree(n),
                 betweenness.get(n, 0),
                 clustering.get(n, 0),
-                1.0 if 'core' in n.lower() else 0.0,
-                1.0 if self.G.degree(n) >= 4 else 0.0,
-                nx.node_connectivity(self.G, n) if self.G.degree(n) > 0 else 0,
+                1.0 if 'core' in str(n).lower() else 0.0,
+                1.1 if self.G.degree(n) >= 4 else 0.0,
+                local_conn,
                 1.0 / (ecc.get(n, 1) + 1)
             ])
         return np.array(feats, dtype=np.float32)
