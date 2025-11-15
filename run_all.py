@@ -7,7 +7,7 @@ import networkx as nx
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
 from env import GraphPPOEnv
-from train import GNNPolicy
+from train import GNNFeatureExtractor
 
 TOPOLOGIES = ["Aarnet"]
 
@@ -33,14 +33,15 @@ for topo in TOPOLOGIES:
         env = DummyVecEnv([env_fn])
 
         policy_kwargs = dict(
-            features_extractor_class=GNNPolicy,
-            features_extractor_kwargs=dict(features_dim=32)
+            features_extractor_class=GNNFeatureExtractor,
+            features_extractor_kwargs=dict(features_dim=128),
+            net_arch=[dict(pi=[128, 64], vf=[128, 64])]
         )
 
         model = PPO(
             "MultiInputPolicy",
             env,
-            policy_kwargs=dict(features_extractor_class=GNNPolicy, features_extractor_kwargs=dict(features_dim=128), net_arch=[128]),
+            policy_kwargs=policy_kwargs,
             verbose=0,
             device="cpu",
             seed=42
