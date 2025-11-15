@@ -35,18 +35,26 @@ for topo in TOPOLOGIES:
         policy_kwargs = dict(
             features_extractor_class=GNNFeatureExtractor,
             features_extractor_kwargs=dict(features_dim=128),
-            net_arch=[dict(pi=[128, 64], vf=[128, 64])]
+            net_arch=dict(pi=[128, 64], vf=[128, 64])
         )
 
         model = PPO(
             "MultiInputPolicy",
             env,
             policy_kwargs=policy_kwargs,
+            learning_rate=3e-4,
+            n_steps=2048,
+            batch_size=64,
+            n_epochs=10,
+            gamma=0.99,
+            gae_lambda=0.95,
+            clip_range=0.2,
+            ent_coef=0.01,
             verbose=0,
             device="cpu",
             seed=42
         )
-        model.learn(total_timesteps=5000)
+        model.learn(total_timesteps=20000)
 
         # INFERENCE: FIXED
         obs = env.reset()
