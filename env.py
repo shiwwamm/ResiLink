@@ -1,4 +1,4 @@
-# env.py — FINAL FIXED: PADDED EDGE_INDEX
+# env.py — IMPROVED: 2 links/node, softer plateau
 import gymnasium as gym
 from gymnasium import spaces
 import networkx as nx
@@ -7,7 +7,7 @@ from pathlib import Path
 import torch
 
 class GraphPPOEnv(gym.Env):
-    def __init__(self, graphml_path: str, max_steps: int = 20, plateau_steps: int = 8, plateau_threshold: float = 0.005):
+    def __init__(self, graphml_path: str, max_steps: int = 30, plateau_steps: int = 5, plateau_threshold: float = 0.05):
         super().__init__()
         self.graphml_path = Path(graphml_path)
         self.max_steps = max_steps
@@ -24,9 +24,8 @@ class GraphPPOEnv(gym.Env):
 
         self._load_graph()
         n_nodes = self.G.number_of_nodes()
-        max_edges = n_nodes * (n_nodes - 1) // 2  # Complete graph
+        max_edges = n_nodes * (n_nodes - 1) // 2
 
-        # FIXED: PADDED SHAPES
         self.observation_space = spaces.Dict({
             "node_feat": spaces.Box(low=-np.inf, high=np.inf, shape=(n_nodes, 7), dtype=np.float32),
             "edge_index": spaces.Box(low=0, high=n_nodes-1, shape=(2, max_edges), dtype=np.int64),
@@ -57,59 +56,23 @@ class GraphPPOEnv(gym.Env):
             if not self.G_prev.has_edge(u, v):
                 current_added[u] += 1
                 current_added[v] += 1
-        
-        # Find min-cut partition to identify bottleneck
-        try:
-            min_cut_value, partition = nx.stoer_wagner(self.G)
-            partition_a, partition_b = partition
-        except:
-            partition_a = set(node_list[:len(node_list)//2])
-            partition_b = set(node_list[len(node_list)//2:])
-        
-        # Compute betweenness to identify bottleneck nodes
-        try:
-            node_betweenness = nx.betweenness_centrality(self.G)
-        except:
-            node_betweenness = {n: 0 for n in node_list}
-        
         cands = []
         for i in range(len(node_list)):
             for j in range(i+1, len(node_list)):
                 u, v = node_list[i], node_list[j]
                 if (not self.G.has_edge(u, v)
-                    and self.G.degree(u) < 8
-                    and self.G.degree(v) < 8
-                    and current_added[u] < 2
+                    and self.original_degrees[u] < 8
+                    and self.original_degrees[v] < 8
+                    and current_added[u] < 2  # ← 2 links/node
                     and current_added[v] < 2):
-                    
-                    # Priority factors:
-                    # 1. Links that bridge min-cut partition (highest priority)
-                    bridges_partition = ((u in partition_a and v in partition_b) or 
-                                       (u in partition_b and v in partition_a))
-                    partition_bonus = 100.0 if bridges_partition else 0.0
-                    
-                    # 2. High betweenness nodes (bottlenecks)
-                    betweenness_score = node_betweenness.get(u, 0) + node_betweenness.get(v, 0)
-                    
-                    # 3. Longer shortest paths (bridge distant parts)
-                    try:
-                        shortest_path = nx.shortest_path_length(self.G, u, v)
-                    except:
-                        shortest_path = 10  # Not connected or far apart
-                    
-                    priority = partition_bonus + betweenness_score * 10 + shortest_path
-                    cands.append((u, v, priority))
-        
-        # Sort by priority (higher is better) and take top 200
-        cands.sort(key=lambda x: x[2], reverse=True)
-        return [(u, v) for u, v, _ in cands[:200]]
+                    cands.append((u, v))
+        return cands[:200]
 
     def _get_obs(self):
         node_list = list(self.G.nodes())
         node_to_idx = {node: i for i, node in enumerate(node_list)}
         node_feat = self._node_features()
 
-        # PAD edge_index to max_edges
         edge_list = [(node_to_idx[u], node_to_idx[v]) for u, v in self.G.edges()]
         edge_tensor = torch.zeros((2, self.observation_space["edge_index"].shape[1]), dtype=torch.long)
         if edge_list:
@@ -156,10 +119,7 @@ class GraphPPOEnv(gym.Env):
         min_cut = nx.stoer_wagner(self.G)[0]
         λ2 = nx.algebraic_connectivity(self.G)
         imbalance = np.var([self.G.degree(n) for n in self.G.nodes()])
-        
-        # Higher weight on min-cut, bonus for reaching min-cut >= 2
-        min_cut_bonus = 5.0 if min_cut >= 2 else 0.0
-        return 2.0 * min_cut + 0.5 * λ2 - 0.1 * imbalance + min_cut_bonus
+        return 0.6 * min_cut + 0.3 * λ2 - 0.1 * imbalance + (1.0 if min_cut >= 2 else 0.0)
 
     def _check_plateau(self):
         if len(self.recent_U) < self.plateau_steps + 1: return False
@@ -170,31 +130,9 @@ class GraphPPOEnv(gym.Env):
             return self._get_obs(), 0.0, True, False, {"plateau": False, "links": self.step_count}
         u, v = self.candidates[action]
         self.G_prev = self.G.copy()
-        
-        # Track min-cut before adding edge
-        prev_min_cut = nx.stoer_wagner(self.G)[0]
-        
         self.G.add_edge(u, v, capacity='10 Gbps')
-        
-        # Compute metrics after
-        prev_U = self.best_U
         current_U = self._compute_U()
-        new_min_cut = nx.stoer_wagner(self.G)[0]
-        
-        # Reward shaping with emphasis on min-cut improvement
-        utility_gain = current_U - prev_U
-        min_cut_gain = new_min_cut - prev_min_cut
-        
-        if min_cut_gain > 0:
-            # Big reward for increasing min-cut
-            reward = 10.0 * min_cut_gain + utility_gain
-        elif utility_gain > 0:
-            # Moderate reward for other improvements
-            reward = utility_gain
-        else:
-            # Small exploration bonus
-            reward = 0.01
-        
+        reward = max(0, current_U - self.best_U)
         self.best_U = max(self.best_U, current_U)
         self.recent_U.append(current_U)
         if len(self.recent_U) > self.plateau_steps + 1: self.recent_U.pop(0)
@@ -202,5 +140,5 @@ class GraphPPOEnv(gym.Env):
         self.candidates = self._get_candidates()
         plateau = self._check_plateau()
         done = self.step_count >= self.max_steps or plateau
-        info = {"plateau": plateau, "min_cut": new_min_cut, "links": self.step_count}
+        info = {"plateau": plateau, "min_cut": nx.stoer_wagner(self.G)[0], "links": self.step_count}
         return self._get_obs(), reward, done, False, info
