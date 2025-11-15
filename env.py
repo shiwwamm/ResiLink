@@ -57,6 +57,15 @@ class GraphPPOEnv(gym.Env):
             if not self.G_prev.has_edge(u, v):
                 current_added[u] += 1
                 current_added[v] += 1
+        
+        # Compute betweenness to identify bottleneck nodes
+        try:
+            edge_betweenness = nx.edge_betweenness_centrality(self.G)
+            node_betweenness = nx.betweenness_centrality(self.G)
+        except:
+            edge_betweenness = {}
+            node_betweenness = {n: 0 for n in node_list}
+        
         cands = []
         for i in range(len(node_list)):
             for j in range(i+1, len(node_list)):
@@ -66,8 +75,19 @@ class GraphPPOEnv(gym.Env):
                     and self.original_degrees[v] < 8
                     and current_added[u] < 1
                     and current_added[v] < 1):
-                    cands.append((u, v))
-        return cands[:200]
+                    # Prioritize links between high-betweenness nodes (bottlenecks)
+                    # and links that span long distances (bridge communities)
+                    try:
+                        shortest_path = nx.shortest_path_length(self.G, u, v)
+                    except:
+                        shortest_path = 999  # Not connected
+                    
+                    priority = (node_betweenness.get(u, 0) + node_betweenness.get(v, 0)) * shortest_path
+                    cands.append((u, v, priority))
+        
+        # Sort by priority (higher is better) and take top 200
+        cands.sort(key=lambda x: x[2], reverse=True)
+        return [(u, v) for u, v, _ in cands[:200]]
 
     def _get_obs(self):
         node_list = list(self.G.nodes())
@@ -121,7 +141,10 @@ class GraphPPOEnv(gym.Env):
         min_cut = nx.stoer_wagner(self.G)[0]
         λ2 = nx.algebraic_connectivity(self.G)
         imbalance = np.var([self.G.degree(n) for n in self.G.nodes()])
-        return 0.6 * min_cut + 0.3 * λ2 - 0.1 * imbalance + (1.0 if min_cut >= 2 else 0.0)
+        
+        # Higher weight on min-cut, bonus for reaching min-cut >= 2
+        min_cut_bonus = 5.0 if min_cut >= 2 else 0.0
+        return 2.0 * min_cut + 0.5 * λ2 - 0.1 * imbalance + min_cut_bonus
 
     def _check_plateau(self):
         if len(self.recent_U) < self.plateau_steps + 1: return False
@@ -133,8 +156,21 @@ class GraphPPOEnv(gym.Env):
         u, v = self.candidates[action]
         self.G_prev = self.G.copy()
         self.G.add_edge(u, v, capacity='10 Gbps')
+        
+        # Compute metrics before and after
+        prev_U = self.best_U
         current_U = self._compute_U()
-        reward = max(0, current_U - self.best_U)
+        
+        # Better reward shaping: reward any improvement + exploration bonus
+        utility_gain = current_U - prev_U
+        
+        # Small reward for adding links that improve connectivity even slightly
+        if utility_gain > 0:
+            reward = utility_gain
+        else:
+            # Small exploration bonus to encourage trying different placements
+            reward = 0.01
+        
         self.best_U = max(self.best_U, current_U)
         self.recent_U.append(current_U)
         if len(self.recent_U) > self.plateau_steps + 1: self.recent_U.pop(0)

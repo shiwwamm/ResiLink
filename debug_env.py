@@ -33,22 +33,25 @@ for topo in topologies:
     print(f"  Candidates: {len(env.candidates)}")
     print(f"  Initial utility: {env.best_U:.4f}")
     
-    # Take random actions
-    print(f"\nTaking 5 random actions:")
-    for step in range(5):
+    # Take actions using prioritized candidates
+    print(f"\nTaking 10 prioritized actions:")
+    total_reward = 0
+    for step in range(10):
         if len(env.candidates) == 0:
             print(f"  Step {step}: No candidates available!")
             break
             
-        action = 0  # Take first candidate
+        action = 0  # Take first (highest priority) candidate
         obs, reward, done, truncated, info = env.step(action)
+        total_reward += reward
         
         current_cut = info.get('min_cut', 0)
-        print(f"  Step {step}: Added link, reward={reward:.4f}, min_cut={current_cut}, candidates={len(env.candidates)}")
+        print(f"  Step {step}: reward={reward:.4f}, min_cut={current_cut}, utility={env.best_U:.4f}, candidates={len(env.candidates)}")
         
         if done:
             print(f"  Episode ended (plateau={info.get('plateau', False)})")
             break
     
     print(f"\nFinal utility: {env.best_U:.4f}")
-    print(f"Improvement: {env.best_U - env._compute_U():.4f}")
+    print(f"Total reward: {total_reward:.4f}")
+    print(f"Final min-cut: {info.get('min_cut', 0)}")
