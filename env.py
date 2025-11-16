@@ -1,4 +1,9 @@
-# env.py — IMPROVED: 2 links/node, softer plateau
+# env.py — RESILINK v4 (November 16, 2025)
+# Upgrades:
+# - 4 links per node
+# - 40 max steps
+# - 0.1 plateau threshold
+# - v4 reward: min-cut + λ₂ + node_conn + diameter + bonus
 import gymnasium as gym
 from gymnasium import spaces
 import networkx as nx
@@ -7,7 +12,7 @@ from pathlib import Path
 import torch
 
 class GraphPPOEnv(gym.Env):
-    def __init__(self, graphml_path: str, max_steps: int = 30, plateau_steps: int = 5, plateau_threshold: float = 0.05):
+    def __init__(self, graphml_path: str, max_steps: int = 40, plateau_steps: int = 5, plateau_threshold: float = 0.1):
         super().__init__()
         self.graphml_path = Path(graphml_path)
         self.max_steps = max_steps
@@ -63,8 +68,8 @@ class GraphPPOEnv(gym.Env):
                 if (not self.G.has_edge(u, v)
                     and self.original_degrees[u] < 8
                     and self.original_degrees[v] < 8
-                    and current_added[u] < 2  # ← 2 links/node
-                    and current_added[v] < 2):
+                    and current_added[u] < 4  # ← 4 links per node
+                    and current_added[v] < 4):
                     cands.append((u, v))
         return cands[:200]
 
@@ -115,11 +120,38 @@ class GraphPPOEnv(gym.Env):
         return np.array(feats, dtype=np.float32)
 
     def _compute_U(self):
-        if not nx.is_connected(self.G): return -100.0
+        if not nx.is_connected(self.G): 
+            return -100.0
+        
         min_cut = nx.stoer_wagner(self.G)[0]
         λ2 = nx.algebraic_connectivity(self.G)
+        
+        # Diameter
+        try:
+            diameter = nx.diameter(self.G.to_undirected())
+        except:
+            diameter = 999
+        
+        # Node connectivity (sample 5 source, 5 target)
+        try:
+            node_conn = min(
+                nx.node_connectivity(self.G, s, t)
+                for s in list(self.G.nodes())[:5]
+                for t in list(self.G.nodes())[-5:]
+                if s != t
+            )
+        except:
+            node_conn = 0
+        
         imbalance = np.var([self.G.degree(n) for n in self.G.nodes()])
-        return 0.6 * min_cut + 0.3 * λ2 - 0.1 * imbalance + (1.0 if min_cut >= 2 else 0.0)
+        bonus = 2.0 if min_cut >= 3 else (1.0 if min_cut >= 2 else 0.0)
+        
+        return (0.5 * min_cut 
+                + 0.3 * λ2 
+                + 0.1 * node_conn 
+                - 0.05 * imbalance 
+                - 0.05 * diameter
+                + bonus)
 
     def _check_plateau(self):
         if len(self.recent_U) < self.plateau_steps + 1: return False

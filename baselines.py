@@ -84,25 +84,38 @@ def degree_topology(G, max_links=10):
     
     return G, added
 
-def betweenness_topology(G, max_links=10):
-    """Betweenness-based: connect high-betweenness nodes"""
+# def betweenness_topology(G, max_links=10):
+#     """Betweenness-based: connect high-betweenness nodes"""
+#     G = G.copy()
+#     betweenness = nx.betweenness_centrality(G)
+    
+#     # Sort nodes by betweenness
+#     nodes = sorted(G.nodes(), key=lambda n: betweenness[n], reverse=True)
+    
+#     added = []
+#     for i in range(len(nodes)):
+#         if len(added) >= max_links:
+#             break
+#         for j in range(i + 1, len(nodes)):
+#             u, v = nodes[i], nodes[j]
+#             if (not G.has_edge(u, v) and 
+#                 G.degree(u) < 8 and G.degree(v) < 8):
+#                 G.add_edge(u, v)
+#                 added.append((u, v))
+#                 if len(added) >= max_links:
+#                     break
+    
+#     return G, added
+
+    def betweenness_topology(G, max_links=10):
     G = G.copy()
-    betweenness = nx.betweenness_centrality(G)
-    
-    # Sort nodes by betweenness
-    nodes = sorted(G.nodes(), key=lambda n: betweenness[n], reverse=True)
-    
+    candidates = [(u,v) for u,v in nx.non_edges(G) if G.degree(u)<8 and G.degree(v)<8]
+    bc = nx.betweenness_centrality(G)
+    scores = [(bc[u] + bc[v], u, v) for u,v in candidates]
+    scores.sort(reverse=True)
     added = []
-    for i in range(len(nodes)):
-        if len(added) >= max_links:
-            break
-        for j in range(i + 1, len(nodes)):
-            u, v = nodes[i], nodes[j]
-            if (not G.has_edge(u, v) and 
-                G.degree(u) < 8 and G.degree(v) < 8):
-                G.add_edge(u, v)
-                added.append((u, v))
-                if len(added) >= max_links:
-                    break
-    
+    for _, u, v in scores[:max_links]:
+        if G.degree(u)<8 and G.degree(v)<8:
+            G.add_edge(u,v)
+            added.append((u,v))
     return G, added
