@@ -1,1 +1,4 @@
-
+Topology,Nodes,Links_Added,Orig_TPut,Final_TPut,Gain_%,Time_s
+Abilene,11,19,20.0,50.0,150.0,491.7
+Aarnet,19,20,10.0,40.0,300.0,579.3
+Geant2012,40,20,10.0,20.0,100.0,1616.7

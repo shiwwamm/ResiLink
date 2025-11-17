@@ -9,7 +9,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 from env import GraphPPOEnv
 from train import GNNFeatureExtractor
 
-TOPOLOGIES = ["Aarnet"]
+TOPOLOGIES = ["Abilene", "Aarnet", "Geant2012"]
 
 OUT_DIR = Path("optimized_graphs")
 OUT_DIR.mkdir(exist_ok=True)

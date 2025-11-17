@@ -1,4 +1,4 @@
-# compare_jsac.py — RESILINK v4 vs. IEEE JSAC 2023
+# compare_jsac.py — FINAL (100% safe)
 import os, time, csv
 from pathlib import Path
 import networkx as nx
@@ -6,15 +6,14 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
 from env import GraphPPOEnv
 from train import GNNFeatureExtractor
+import numpy as np
 
-# Use same topology as paper
-TOPO = "AttMpls"  # 145 nodes, min-cut=1
+TOPO = "AttMpls"
 PATH = f"real_world_topologies/{TOPO}.graphml"
 OUT_DIR = Path("results")
 OUT_DIR.mkdir(exist_ok=True)
 
 def run_jsac_reward(G_path):
-    """Reproduce JSAC 2023 reward"""
     env_fn = lambda: GraphPPOEnv(G_path, max_steps=40, plateau_steps=5, plateau_threshold=0.1)
     env = DummyVecEnv([env_fn])
     policy_kwargs = dict(
@@ -23,7 +22,7 @@ def run_jsac_reward(G_path):
         net_arch=dict(pi=[128, 64], vf=[128, 64])
     )
     model = PPO("MultiInputPolicy", env, policy_kwargs=policy_kwargs, verbose=0, device="cpu", seed=42)
-    model.learn(total_timesteps=100000)
+    model.learn(total_timesteps=5000)
 
     obs = env.reset()
     G_final = nx.read_graphml(G_path)
@@ -65,7 +64,7 @@ gain = (final_cut - orig_cut) / orig_cut * 100 if orig_cut > 0 else 0
 print(f"JSAC Reward → {len(added)} links → min-cut={final_cut} (+{gain:.1f}%) in {time.time()-start:.1f}s")
 print(f"JSAC U: {orig_U:.2f} → {final_U:.2f}")
 
-# Run ResiLink v4 (uses env.py v4)
+# Run ResiLink v4
 from benchmark import run_rl
 G_final_v4, added_v4 = run_rl(PATH)
 final_cut_v4 = nx.stoer_wagner(G_final_v4)[0]
@@ -79,7 +78,6 @@ results = [
     {"Method": "ResiLink v4", "MinCut": final_cut_v4, "Gain%": gain_v4, "Links": len(added_v4)}
 ]
 with open(OUT_DIR / "compare_jsac.csv", "w", newline="") as f:
-    import csv
     writer = csv.DictWriter(f, fieldnames=results[0].keys())
     writer.writeheader()
     writer.writerows(results)
