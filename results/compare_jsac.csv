@@ -1,0 +1,4 @@
+Method,MinCut,Gain%,Links,JSAC_Utility,ResiLink_Utility,Time_s
+Original,2,0.0,0,1.75,8.82,0.0
+ResiLink (50k timesteps),3,50.0,10,2.41,11.00,3196.8
+JSAC-style (5k timesteps),2,0.0,6,1.77,8.85,388.5
