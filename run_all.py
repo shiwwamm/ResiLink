@@ -54,7 +54,7 @@ for topo in TOPOLOGIES:
             device="cpu",
             seed=42
         )
-        model.learn(total_timesteps=20000)
+        model.learn(total_timesteps=50000)
 
         # INFERENCE: FIXED
         obs = env.reset()

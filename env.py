@@ -12,7 +12,7 @@ from pathlib import Path
 import torch
 
 class GraphPPOEnv(gym.Env):
-    def __init__(self, graphml_path: str, max_steps: int = 40, plateau_steps: int = 5, plateau_threshold: float = 0.1):
+    def __init__(self, graphml_path: str, max_steps: int = 20, plateau_steps: int = 5, plateau_threshold: float = 0.01):
         super().__init__()
         self.graphml_path = Path(graphml_path)
         self.max_steps = max_steps
